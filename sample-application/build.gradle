@@ -1,0 +1,6 @@
+dependencies {
+
+    implementation "org.apache.commons:commons-lang3:${rev_commons_lang}"
+    implementation "com.google.guava:guava:${rev_guava}"
+
+}

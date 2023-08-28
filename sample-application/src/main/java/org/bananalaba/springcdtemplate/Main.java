@@ -1,0 +1,9 @@
+package org.bananalaba.springcdtemplate;
+
+public class Main {
+
+    public static void main(String[] arguments) {
+        System.out.println("Hello, world");
+    }
+
+}
