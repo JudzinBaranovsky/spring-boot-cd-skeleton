@@ -1,9 +1,15 @@
+plugins {
+    id 'io.spring.dependency-management' version '1.1.3' apply false
+}
+
 subprojects {
 
     group = 'org.bananalaba.springcdtemplate'
     version = '1.0.0'
 
+    apply plugin: 'io.spring.dependency-management'
     apply plugin: 'java'
+
     sourceCompatibility = '1.20'
 
     repositories {
@@ -15,17 +21,35 @@ subprojects {
         useJUnitPlatform()
     }
 
+    dependencyManagement {
+        dependencies {
+            dependency "org.apache.commons:commons-lang3:$rev_commons_lang"
+            dependency "com.google.guava:guava:$rev_guava"
+
+            dependency "org.projectlombok:lombok:$rev_lombok"
+            dependency "org.projectlombok:lombok:$rev_lombok"
+
+            dependency "org.projectlombok:lombok:$rev_lombok"
+            dependency "org.projectlombok:lombok:$rev_lombok"
+
+            dependency "org.junit.jupiter:junit-jupiter:$rev_junit"
+            dependency "org.mockito:mockito-core:$rev_mockito"
+            dependency "org.mockito:mockito-junit-jupiter:$rev_mockito"
+            dependency "org.assertj:assertj-core:$rev_assertj"
+        }
+    }
+
     dependencies {
-        compileOnly "org.projectlombok:lombok:$rev_lombok"
-        annotationProcessor "org.projectlombok:lombok:$rev_lombok"
+        compileOnly "org.projectlombok:lombok"
+        annotationProcessor "org.projectlombok:lombok"
 
-        testCompileOnly "org.projectlombok:lombok:$rev_lombok"
-        testAnnotationProcessor "org.projectlombok:lombok:$rev_lombok"
+        testCompileOnly "org.projectlombok:lombok"
+        testAnnotationProcessor "org.projectlombok:lombok"
 
-        testImplementation "org.junit.jupiter:junit-jupiter:${rev_junit}"
-        testImplementation "org.mockito:mockito-core:${rev_mockito}"
-        testImplementation "org.mockito:mockito-junit-jupiter:${rev_mockito}"
-        testImplementation "org.assertj:assertj-core:${rev_assertj}"
+        testImplementation "org.junit.jupiter:junit-jupiter"
+        testImplementation "org.mockito:mockito-core"
+        testImplementation "org.mockito:mockito-junit-jupiter"
+        testImplementation "org.assertj:assertj-core"
     }
 
 }

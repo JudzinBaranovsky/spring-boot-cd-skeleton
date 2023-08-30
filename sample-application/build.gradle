@@ -1,6 +1,10 @@
+plugins {
+    id 'org.springframework.boot' version '3.1.3'
+}
+
 dependencies {
 
-    implementation "org.apache.commons:commons-lang3:${rev_commons_lang}"
-    implementation "com.google.guava:guava:${rev_guava}"
+    implementation "org.apache.commons:commons-lang3"
+    implementation "com.google.guava:guava"
 
 }
