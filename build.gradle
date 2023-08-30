@@ -26,6 +26,8 @@ subprojects {
             dependency "org.apache.commons:commons-lang3:$rev_commons_lang"
             dependency "com.google.guava:guava:$rev_guava"
 
+            dependency "com.fasterxml.jackson.core:jackson-databind:$rev_jackson"
+
             dependency "org.projectlombok:lombok:$rev_lombok"
             dependency "org.projectlombok:lombok:$rev_lombok"
 
