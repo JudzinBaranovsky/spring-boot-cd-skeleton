@@ -4,6 +4,7 @@
 .gradle/
 */build/
 */out/
+*/logs/
 gradle-app.setting
 !gradle-wrapper.jar
 .gradletasknamecache
