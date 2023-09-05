@@ -1,8 +1,10 @@
 plugins {
     id 'io.spring.dependency-management' version '1.1.3' apply false
+    id 'info.solidsoft.pitest' version '1.9.11' apply false
 }
 
 def checkstyleConfigs = layout.projectDirectory.dir("config/checkstyle")
+def checkstyleRules = checkstyleConfigs.file("checkstyle.xml").asFile
 def checkstyleReport = resources.text.fromFile(checkstyleConfigs.file("checkstyle-report.xsl"))
 
 subprojects {
@@ -59,7 +61,7 @@ subprojects {
     }
 
     tasks.withType(Checkstyle) {
-        configFile = checkstyleConfigs.file("checkstyle.xml").asFile
+        configFile = checkstyleRules
         reports {
             html.stylesheet = checkstyleReport
         }
