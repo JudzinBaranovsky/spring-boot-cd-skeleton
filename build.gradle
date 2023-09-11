@@ -4,6 +4,7 @@ plugins {
     id 'io.spring.dependency-management' version "$rev_spring_dependency_management" apply false
     id 'info.solidsoft.pitest' version "$rev_pit_test" apply false
     id 'com.github.spotbugs' version "$rev_spotbugs" apply false
+    id 'org.owasp.dependencycheck' version "$rev_owasp_dependency_check" apply false
 }
 
 def checkstyleConfigs = layout.projectDirectory.dir("config/checkstyle")
@@ -19,6 +20,7 @@ subprojects {
     apply plugin: 'java'
     apply plugin: 'checkstyle'
     apply plugin: 'com.github.spotbugs'
+    apply plugin: 'org.owasp.dependencycheck'
 
     sourceCompatibility = '1.20'
 
@@ -81,6 +83,10 @@ subprojects {
                 required = true
             }
         }
+    }
+
+    dependencyCheck {
+        failBuildOnCVSS = 10
     }
 
 }
