@@ -7,12 +7,12 @@ import org.junit.jupiter.api.Test;
 
 public class SampleControllerTest {
 
-    private final SampleController controller = new SampleController();
+    private final SampleController controller = new SampleController("192.168.0.1");
 
     @Test
     public void shouldGreet() {
         var actual = controller.hello();
-        assertThat(actual).isEqualTo(new SampleDto("Hello, World"));
+        assertThat(actual).isEqualTo(new SampleDto("Hello, World from IP: 192.168.0.1"));
     }
 
 }

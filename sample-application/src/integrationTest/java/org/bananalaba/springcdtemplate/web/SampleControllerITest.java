@@ -13,6 +13,10 @@ import org.springframework.test.web.servlet.MockMvc;
 @AutoConfigureMockMvc
 public class SampleControllerITest {
 
+    static {
+        System.setProperty("node.ip", "192.168.0.1");
+    }
+
     @Autowired
     private MockMvc mvc;
 
@@ -22,7 +26,7 @@ public class SampleControllerITest {
 
         assertThat(actual.getStatus()).isEqualTo(200);
         assertThat(actual.getContentType()).isEqualTo("application/json");
-        assertThat(actual.getContentAsString()).isEqualTo("{\"message\":\"Hello, World\"}");
+        assertThat(actual.getContentAsString()).isEqualTo("{\"message\":\"Hello, World from IP: 192.168.0.1\"}");
     }
 
 }

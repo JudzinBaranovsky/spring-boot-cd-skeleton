@@ -50,3 +50,7 @@ task itest(type: Test) {
 tasks.getByName('build').configure {
     dependsOn itest
 }
+
+tasks.named('bootBuildImage') {
+    imageName = 'ci-cd-project/sample-application'
+}
