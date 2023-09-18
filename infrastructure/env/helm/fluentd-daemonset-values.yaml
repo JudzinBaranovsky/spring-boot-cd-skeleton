@@ -1,0 +1,11 @@
+secret:
+  - name: FLUENT_ELASTICSEARCH_USER
+    secret_name: es-credentials
+    secret_key: ES_USERNAME
+  - name: FLUENT_ELASTICSEARCH_PASSWORD
+    secret_name: es-credentials
+    secret_key: ES_PASSWORD
+elasticsearch:
+  hosts: ["host.docker.internal:9200"]
+  auth:
+    enabled: true
