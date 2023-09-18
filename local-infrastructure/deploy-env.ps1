@@ -1,5 +1,18 @@
-docker-compose --project-directory env/docker up -d
-kubectl apply -f env/k8s
+$secrets = ConvertFrom-StringData (Get-Content secrets.properties)
+
+if ($null -eq $secrets['elasticsearch_password'])
+{
+    throw 'elasticsearch_password not found in secrets.properties'
+}
+$elasticSearchPasswordBytes = [System.Text.Encoding]::UTF8.GetBytes($secrets['elasticsearch_password'])
+$elasticSearchPasswordBase64 = [Convert]::ToBase64String($elasticSearchPasswordBytes)
+
+$fluentdSecrets = Get-Content 'template\k8s\fluentd-secrets.yaml'
+$fluentdSecrets = $fluentdSecrets.Replace('_elasticsearch_password_', $elasticSearchPasswordBase64)
+Set-Content -Path '.\env\generated\k8s\fluent-secrets.yaml' -Value $fluentdSecrets
+
+docker-compose --project-directory env/docker --env-file secrets.properties up -d
+kubectl apply -f env/generated/k8s
 helm repo add kiwigrid https://kiwigrid.github.io
 helm install fluentd-logging kiwigrid/fluentd-elasticsearch -f env/helm/fluentd-daemonset-values.yaml
 
