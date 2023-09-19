@@ -8,3 +8,6 @@
 gradle-app.setting
 !gradle-wrapper.jar
 .gradletasknamecache
+
+/local-infrastructure/**/generated/
+/local-infrastructure/secrets.properties
