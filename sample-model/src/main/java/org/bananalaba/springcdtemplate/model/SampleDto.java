@@ -16,5 +16,7 @@ public class SampleDto {
 
     @NonNull
     private final String message;
+    @NonNull
+    private final String nodeIp;
 
 }

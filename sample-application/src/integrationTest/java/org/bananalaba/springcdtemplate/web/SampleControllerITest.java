@@ -26,7 +26,7 @@ public class SampleControllerITest {
 
         assertThat(actual.getStatus()).isEqualTo(200);
         assertThat(actual.getContentType()).isEqualTo("application/json");
-        assertThat(actual.getContentAsString()).isEqualTo("{\"message\":\"Hello, World from IP: 192.168.0.1\"}");
+        assertThat(actual.getContentAsString()).isEqualTo("{\"message\":\"Hello, World\",\"nodeIp\":\"192.168.0.1\"}");
     }
 
 }

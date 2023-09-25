@@ -1,0 +1,36 @@
+sourceSets {
+    acceptanceTest {
+        compileClasspath += sourceSets.main.output
+        runtimeClasspath += sourceSets.main.output
+
+        java {
+        }
+    }
+}
+
+configurations {
+    acceptanceTestImplementation.extendsFrom(testImplementation)
+    acceptanceTestRuntimeOnly.extendsFrom(testRuntimeOnly)
+}
+
+dependencies {
+    testImplementation "org.springframework.boot:spring-boot-starter-test"
+    testImplementation "org.springframework.boot:spring-boot-starter-web"
+
+    acceptanceTestImplementation "org.junit.platform:junit-platform-suite"
+
+    acceptanceTestImplementation "io.cucumber:cucumber-java"
+    acceptanceTestImplementation "io.cucumber:cucumber-junit-platform-engine"
+    acceptanceTestImplementation "io.cucumber:cucumber-spring"
+
+    testImplementation "org.skyscreamer:jsonassert"
+}
+
+task acceptanceTest(type: Test) {
+    description = "Run acceptance tests"
+    group = "verification"
+    testClassesDirs = sourceSets.acceptanceTest.output.classesDirs
+    classpath = sourceSets.acceptanceTest.runtimeClasspath
+
+    useJUnitPlatform()
+}

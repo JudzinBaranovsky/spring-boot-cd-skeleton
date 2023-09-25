@@ -12,7 +12,7 @@ public class SampleControllerTest {
     @Test
     public void shouldGreet() {
         var actual = controller.hello();
-        assertThat(actual).isEqualTo(new SampleDto("Hello, World from IP: 192.168.0.1"));
+        assertThat(actual).isEqualTo(new SampleDto("Hello, World", "192.168.0.1"));
     }
 
 }

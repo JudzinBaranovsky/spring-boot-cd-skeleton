@@ -5,6 +5,7 @@ plugins {
     id 'info.solidsoft.pitest' version "$rev_pit_test" apply false
     id 'com.github.spotbugs' version "$rev_spotbugs" apply false
     id 'org.owasp.dependencycheck' version "$rev_owasp_dependency_check" apply false
+    id 'org.springframework.boot' version "$rev_spring_boot" apply false
 }
 
 def checkstyleConfigs = layout.projectDirectory.dir("config/checkstyle")
@@ -47,11 +48,20 @@ subprojects {
             dependency "org.projectlombok:lombok:$rev_lombok"
 
             dependency "org.junit.jupiter:junit-jupiter:$rev_junit"
+            dependency "org.junit.platform:junit-platform-suite:$rev_junit_suite"
             dependency "org.mockito:mockito-core:$rev_mockito"
             dependency "org.mockito:mockito-junit-jupiter:$rev_mockito"
             dependency "org.assertj:assertj-core:$rev_assertj"
+            dependency "org.skyscreamer:jsonassert:$rev_json_assert"
 
             dependency "com.h3xstream.findsecbugs:findsecbugs-plugin:$rev_findsecbugs"
+
+            dependency "io.cucumber:cucumber-java:$rev_cucumber"
+            dependency "io.cucumber:cucumber-junit-platform-engine:$rev_cucumber"
+            dependency "io.cucumber:cucumber-spring:$rev_cucumber"
+
+            dependency "org.springframework.boot:spring-boot-starter-test:$rev_spring_boot"
+            dependency "org.springframework.boot:spring-boot-starter-web:$rev_spring_boot"
         }
     }
 

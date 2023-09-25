@@ -22,7 +22,7 @@ public class SampleController {
     @GetMapping(path = "/hello", produces = "application/json")
     public SampleDto hello() {
         log.info("received a hello request");
-        return new SampleDto("Hello, World from IP: " + nodeIp);
+        return new SampleDto("Hello, World", nodeIp);
     }
 
 }
