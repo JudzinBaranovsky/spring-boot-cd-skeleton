@@ -58,6 +58,11 @@ tasks.named('bootBuildImage') {
 }
 
 publishing {
+    publications {
+        bootJava(MavenPublication) {
+            artifact tasks.named("bootJar")
+        }
+    }
     repositories {
         maven {
             name = "GitHubPackages"
