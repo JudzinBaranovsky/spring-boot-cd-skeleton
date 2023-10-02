@@ -29,3 +29,8 @@ jobs:
 
       - name: Compile, test, and JAR
         run: ./gradlew build -DspotBugsEnabled=false
+
+      - name: Publish JAR
+        run: ./gradlew publishAllPublicationsToGitHubPackagesRepository -DspotBugsEnabled=false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

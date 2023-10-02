@@ -1,6 +1,7 @@
 plugins {
     id 'org.springframework.boot'
     id 'info.solidsoft.pitest'
+    id 'maven-publish'
 }
 
 sourceSets {
@@ -54,4 +55,17 @@ tasks.getByName('build').configure {
 
 tasks.named('bootBuildImage') {
     imageName = 'ci-cd-project/sample-application'
+}
+
+publishing {
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = "https://maven.pkg.github.com/JudzinBaranovsky/spring-boot-cd-skeleton"
+            credentials {
+                username = System.getenv("GITHUB_ACTOR")
+                password = System.getenv("GITHUB_TOKEN")
+            }
+        }
+    }
 }
