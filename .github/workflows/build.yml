@@ -1,0 +1,29 @@
+name: basic-build
+on:
+  push:
+    branches:
+      - 'main'
+      - 'releases/**'
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'The branch to build'
+        required: true
+jobs:
+  produce-jar:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: temurin
+          java-version: 20
+
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
+
+      - name: Compile, test, and JAR
+        run: ./gradlew build -DspotBugsEnabled=false

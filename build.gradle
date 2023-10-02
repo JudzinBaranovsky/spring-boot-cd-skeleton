@@ -87,7 +87,9 @@ subprojects {
         }
     }
 
+    def spotBugsEnabled = Boolean.parseBoolean(System.getProperty("spotBugsEnabled", "true"))
     tasks.withType(SpotBugsTask) {
+        enabled = spotBugsEnabled
         reports {
             html {
                 required = true
