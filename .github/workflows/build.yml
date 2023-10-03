@@ -68,4 +68,4 @@ jobs:
         run: |
           ./gradlew bootBuildImage
           docker tag ci-cd-project/sample-application:latest ${{ secrets.DOCKERHUB_USERNAME }}/ci-cd-project/sample-application:latest
-          docker push ${{ secrets.DOCKERHUB_USERNAME }}/ci-cd-project/sample-application:latest
+          docker push ${{ env.REGISTRY }}/${{ secrets.DOCKERHUB_USERNAME }}/ci-cd-project/sample-application:latest
