@@ -9,6 +9,10 @@ on:
       branch:
         description: 'The branch to build'
         required: true
+
+env:
+  REGISTRY: ghcr.io
+
 jobs:
   produce-jar:
     runs-on: ubuntu-22.04
@@ -34,3 +38,34 @@ jobs:
         run: ./gradlew publishAllPublicationsToGitHubPackagesRepository -DspotBugsEnabled=false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  build-docker-image:
+    runs-on: ubuntu-22.04
+    needs: [produce-jar]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: temurin
+          java-version: 20
+
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
+
+      - run: chmod +x gradlew
+
+      - name: Docker Login
+        uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Docker Build-Tag-Push
+        run: |
+          ./gradlew bootBuildImage
+          docker tag ci-cd-project/sample-application:latest ${{ secrets.DOCKERHUB_USERNAME }}/ci-cd-project/sample-application:latest
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/ci-cd-project/sample-application:latest
