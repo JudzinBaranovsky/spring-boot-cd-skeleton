@@ -67,5 +67,5 @@ jobs:
       - name: Docker Build-Tag-Push
         run: |
           ./gradlew bootBuildImage
-          docker tag ci-cd-project/sample-application:latest ${{ secrets.DOCKERHUB_USERNAME }}/ci-cd-project/sample-application:latest
+          docker tag ci-cd-project/sample-application:latest ${{ env.REGISTRY }}/${{ secrets.DOCKERHUB_USERNAME }}/ci-cd-project/sample-application:latest
           docker push ${{ env.REGISTRY }}/${{ secrets.DOCKERHUB_USERNAME }}/ci-cd-project/sample-application:latest
