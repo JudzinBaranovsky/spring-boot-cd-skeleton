@@ -39,6 +39,12 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Publish code style report
+        uses: actions/upload-artifact@v3
+        with:
+          name: checkstyle-report
+          path: "**/build/reports/checkstyle/*.html"
+
   build-docker-image:
     runs-on: ubuntu-22.04
     needs: [produce-jar]
@@ -69,3 +75,39 @@ jobs:
           ./gradlew bootBuildImage
           docker tag ci-cd-project/sample-application:latest ${{ env.REGISTRY }}/${{ secrets.DOCKERHUB_USERNAME }}/ci-cd-project/sample-application:latest
           docker push ${{ env.REGISTRY }}/${{ secrets.DOCKERHUB_USERNAME }}/ci-cd-project/sample-application:latest
+
+  scan-quality:
+    runs-on: ubuntu-22.04
+    needs: [ produce-jar ]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: temurin
+          java-version: 20
+
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
+
+      - run: chmod +x gradlew
+
+      - name: Scan for bugs
+        run: ./gradlew spotBugsMain
+
+      - name: Scan for vulnerable dependencies
+        run: ./gradlew dependencyCheckAggregate
+
+      - name: Calculate unit test coverage
+        run: ./gradlew pitest
+
+      - name: Publish reports
+        uses: actions/upload-artifact@v3
+        with:
+          name: scans-and-coverage
+          path: |
+            "**/build/reports/spotbugs/*.html"
+            "**/build/reports/dependency-check-report.html"
+            "**/build/reports/pitest"
