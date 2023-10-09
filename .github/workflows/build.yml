@@ -16,9 +16,23 @@ env:
 jobs:
   produce-jar:
     runs-on: ubuntu-22.04
+    outputs:
+      project-version: ${{ steps.printVersion.version }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Print Project Version
+        id: printVersion
+        run: ./gradlew -q printVersion >> "$GITHUB_OUTPUT"
+
+      - name: Remove JAR snapshot
+        uses: actions/delete-package-versions@v4
+        with:
+          package-version-ids: ${{ steps.printVersion.version }}
+          package-name: spring-boot-cd-skeleton/org/bananalaba/springcdtemplate/sample-application
+          package-type: maven
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Setup Java
         uses: actions/setup-java@v3
@@ -49,6 +63,14 @@ jobs:
     runs-on: ubuntu-22.04
     needs: [produce-jar]
     steps:
+      - name: Remove Docker Image snapshot
+        uses: actions/delete-package-versions@v4
+        with:
+          package-version-ids: ${{needs.produe-jar.outputs.project-version}}
+          package-name: ci-cd-project/sample-application
+          package-type: docker
+          token: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Checkout
         uses: actions/checkout@v4
 
