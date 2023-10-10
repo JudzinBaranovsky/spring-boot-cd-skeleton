@@ -102,9 +102,3 @@ subprojects {
     }
 
 }
-
-task printVersion {
-    doLast {
-        println "version=$rev_project"
-    }
-}
