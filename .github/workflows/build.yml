@@ -22,17 +22,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Java
-        uses: actions/setup-java@v3
-        with:
-          distribution: temurin
-          java-version: 20
-
-      - name: Setup Gradle
-        uses: gradle/gradle-build-action@v2
-
-      - run: chmod +x gradlew
-
       - name: Print Project Version
         id: printVersion
         run: ./gradlew -q printVersion >> "$GITHUB_OUTPUT"
@@ -44,6 +33,17 @@ jobs:
           package-name: spring-boot-cd-skeleton/org/bananalaba/springcdtemplate/sample-application
           package-type: maven
           token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: temurin
+          java-version: 20
+
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
+
+      - run: chmod +x gradlew
 
       - name: Compile, test, and JAR
         run: ./gradlew build -DspotBugsEnabled=false
