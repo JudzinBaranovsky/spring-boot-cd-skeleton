@@ -17,6 +17,13 @@ jobs:
   produce-jar:
     runs-on: ubuntu-22.04
     steps:
+      - name: Cleanup existing Maven publications
+        uses: actions/delete-package-versions@v4
+        with:
+          package-name: org.bananalaba.springcdtemplate.sample-application
+          package-type: maven
+          min-versions-to-keep: 0
+
       - name: Checkout
         uses: actions/checkout@v4
 
@@ -49,6 +56,13 @@ jobs:
     runs-on: ubuntu-22.04
     needs: [produce-jar]
     steps:
+      - name: Cleanup existing Docker publications
+        uses: actions/delete-package-versions@v4
+        with:
+          package-name: ci-cd-project%2Fsample-application
+          package-type: container
+          min-versions-to-keep: 0
+
       - name: Checkout
         uses: actions/checkout@v4
 
