@@ -20,7 +20,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - run: ./.github/scripts/cleanup-publications.sh
+      - run: chmod +x ./.github/scripts/cleanup-publications.sh
 
       - name: Cleanup existing Maven publications
         run: ./.github/scripts/cleanup-publications.sh
