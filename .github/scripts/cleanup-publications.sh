@@ -35,7 +35,7 @@ then
   exit 1
 fi
 
-if [ "$status" != "200" ] && [ "$status" != '404' ]
+if [ "$status" != "204" ] && [ "$status" != '404' ]
 then
   echo "bad status code: $status"
   exit 1
