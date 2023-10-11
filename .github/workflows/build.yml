@@ -58,15 +58,17 @@ jobs:
     runs-on: ubuntu-22.04
     needs: [produce-jar]
     steps:
-      - name: Cleanup existing Docker publications
-        uses: actions/delete-package-versions@v4
-        with:
-          package-name: ci-cd-project%2Fsample-application
-          package-type: container
-          min-versions-to-keep: 0
-
       - name: Checkout
         uses: actions/checkout@v4
+
+      - run: chmod +x ./.github/scripts/cleanup-publications.sh
+
+      - name: Cleanup existing Maven publications
+        run: ./.github/scripts/cleanup-publications.sh
+        env:
+          PACKAGE_NAME: ci-cd-project%2Fsample-application
+          PACKAGE_TYPE: container
+          API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Setup Java
         uses: actions/setup-java@v3
