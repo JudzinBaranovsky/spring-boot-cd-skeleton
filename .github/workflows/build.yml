@@ -18,11 +18,11 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: Cleanup existing Maven publications
-        uses: actions/delete-package-versions@v4
-        with:
-          package-name: org.bananalaba.springcdtemplate.sample-application
-          package-type: maven
-          min-versions-to-keep: 0
+        run: ./.github/scripts/cleanup-publications.sh
+        env:
+          PACKAGE_NAME: org.bananalaba.springcdtemplate.sample-application
+          PACKAGE_TYPE: maven
+          API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Checkout
         uses: actions/checkout@v4
