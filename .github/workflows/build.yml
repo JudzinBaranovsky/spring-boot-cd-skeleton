@@ -17,15 +17,15 @@ jobs:
   produce-jar:
     runs-on: ubuntu-22.04
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
       - name: Cleanup existing Maven publications
         run: ./.github/scripts/cleanup-publications.sh
         env:
           PACKAGE_NAME: org.bananalaba.springcdtemplate.sample-application
           PACKAGE_TYPE: maven
           API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Checkout
-        uses: actions/checkout@v4
 
       - name: Setup Java
         uses: actions/setup-java@v3
