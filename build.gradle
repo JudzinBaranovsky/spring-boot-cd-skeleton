@@ -1,7 +1,6 @@
 import com.github.spotbugs.snom.SpotBugsTask
 
 plugins {
-    id 'io.spring.dependency-management' version "$rev_spring_dependency_management" apply false
     id 'info.solidsoft.pitest' version "$rev_pit_test" apply false
     id 'com.github.spotbugs' version "$rev_spotbugs" apply false
     id 'org.owasp.dependencycheck' version "$rev_owasp_dependency_check" apply false
@@ -17,7 +16,6 @@ subprojects {
     group = 'org.bananalaba.springcdtemplate'
     version = "$rev_project"
 
-    apply plugin: 'io.spring.dependency-management'
     apply plugin: 'java'
     apply plugin: 'checkstyle'
     apply plugin: 'com.github.spotbugs'
@@ -34,50 +32,19 @@ subprojects {
         useJUnitPlatform()
     }
 
-    dependencyManagement {
-        dependencies {
-            dependency "org.apache.commons:commons-lang3:$rev_commons_lang"
-            dependency "com.google.guava:guava:$rev_guava"
-
-            dependency "com.fasterxml.jackson.core:jackson-databind:$rev_jackson"
-
-            dependency "org.projectlombok:lombok:$rev_lombok"
-            dependency "org.projectlombok:lombok:$rev_lombok"
-
-            dependency "org.projectlombok:lombok:$rev_lombok"
-            dependency "org.projectlombok:lombok:$rev_lombok"
-
-            dependency "org.junit.jupiter:junit-jupiter:$rev_junit"
-            dependency "org.junit.platform:junit-platform-suite:$rev_junit_suite"
-            dependency "org.mockito:mockito-core:$rev_mockito"
-            dependency "org.mockito:mockito-junit-jupiter:$rev_mockito"
-            dependency "org.assertj:assertj-core:$rev_assertj"
-            dependency "org.skyscreamer:jsonassert:$rev_json_assert"
-
-            dependency "com.h3xstream.findsecbugs:findsecbugs-plugin:$rev_findsecbugs"
-
-            dependency "io.cucumber:cucumber-java:$rev_cucumber"
-            dependency "io.cucumber:cucumber-junit-platform-engine:$rev_cucumber"
-            dependency "io.cucumber:cucumber-spring:$rev_cucumber"
-
-            dependency "org.springframework.boot:spring-boot-starter-test:$rev_spring_boot"
-            dependency "org.springframework.boot:spring-boot-starter-web:$rev_spring_boot"
-        }
-    }
-
     dependencies {
-        compileOnly "org.projectlombok:lombok"
-        annotationProcessor "org.projectlombok:lombok"
+        compileOnly libs.lombok
+        annotationProcessor libs.lombok
 
-        testCompileOnly "org.projectlombok:lombok"
-        testAnnotationProcessor "org.projectlombok:lombok"
+        testCompileOnly libs.lombok
+        testAnnotationProcessor libs.lombok
 
-        testImplementation "org.junit.jupiter:junit-jupiter"
-        testImplementation "org.mockito:mockito-core"
-        testImplementation "org.mockito:mockito-junit-jupiter"
-        testImplementation "org.assertj:assertj-core"
+        testImplementation libs.junit.jupiter
+        testImplementation libs.mockito.core
+        testImplementation libs.mockito.junit
+        testImplementation libs.assertj
 
-        spotbugsPlugins "com.h3xstream.findsecbugs:findsecbugs-plugin"
+        spotbugsPlugins libs.find.sec.bugs
     }
 
     tasks.withType(Checkstyle) {

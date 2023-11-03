@@ -32,3 +32,7 @@
 2. To dispose the local deployment, from the `local-infrastructure` folder
    1. Run `dispose-app.ps1` to bring down the application itself.
    2. Run `dispose-env.ps1 -mode <mode>` where `mode` may be `all` or `fluentd`.
+
+## Local E2E
+1. Run locally (see above).
+2. Run the tests: `gradlew :e2e-tests:acceptanceTest`

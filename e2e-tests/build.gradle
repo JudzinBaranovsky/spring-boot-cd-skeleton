@@ -14,16 +14,16 @@ configurations {
 }
 
 dependencies {
-    testImplementation "org.springframework.boot:spring-boot-starter-test"
-    testImplementation "org.springframework.boot:spring-boot-starter-web"
+    testImplementation libs.springBoot.starter.test
+    testImplementation libs.springBoot.starter.web
 
-    acceptanceTestImplementation "org.junit.platform:junit-platform-suite"
+    acceptanceTestImplementation libs.junit.platform.suite
 
-    acceptanceTestImplementation "io.cucumber:cucumber-java"
-    acceptanceTestImplementation "io.cucumber:cucumber-junit-platform-engine"
-    acceptanceTestImplementation "io.cucumber:cucumber-spring"
+    acceptanceTestImplementation libs.cucumber.java
+    acceptanceTestImplementation libs.cucumber.junit
+    acceptanceTestImplementation libs.cucumber.spring
 
-    testImplementation "org.skyscreamer:jsonassert"
+    testImplementation libs.jsonassert
 }
 
 task acceptanceTest(type: Test) {

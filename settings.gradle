@@ -1,3 +1,31 @@
 include("sample-application")
 include 'sample-model'
 include 'e2e-tests'
+
+dependencyResolutionManagement {
+    versionCatalogs {
+        libs {
+            library("commons-lang", "org.apache.commons:commons-lang3:$rev_commons_lang")
+            library("guava", "com.google.guava:guava:$rev_guava")
+
+            library("jackson-databind", "com.fasterxml.jackson.core:jackson-databind:$rev_jackson")
+            library("lombok", "org.projectlombok:lombok:$rev_lombok")
+            library("find-sec-bugs", "com.h3xstream.findsecbugs:findsecbugs-plugin:$rev_findsecbugs")
+
+            library("junit-jupiter", "org.junit.jupiter:junit-jupiter:$rev_junit")
+            library("junit-platform-suite", "org.junit.platform:junit-platform-suite:$rev_junit_suite")
+            library("mockito-core", "org.mockito:mockito-core:$rev_mockito")
+            library("mockito-junit", "org.mockito:mockito-junit-jupiter:$rev_mockito")
+            library("assertj", "org.assertj:assertj-core:$rev_assertj")
+            library("jsonassert", "org.skyscreamer:jsonassert:$rev_json_assert")
+
+            library("cucumber-java", "io.cucumber:cucumber-java:$rev_cucumber")
+            library("cucumber-junit", "io.cucumber:cucumber-junit-platform-engine:$rev_cucumber")
+            library("cucumber-spring", "io.cucumber:cucumber-spring:$rev_cucumber")
+
+            library("springBoot-starter-test", "org.springframework.boot:spring-boot-starter-test:$rev_spring_boot")
+            library("springBoot-starter-web", "org.springframework.boot:spring-boot-starter-web:$rev_spring_boot")
+            library("springBoot-starter-actuator", "org.springframework.boot:spring-boot-starter-actuator:$rev_spring_boot")
+        }
+    }
+}
