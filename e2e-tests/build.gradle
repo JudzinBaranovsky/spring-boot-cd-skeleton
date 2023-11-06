@@ -26,7 +26,7 @@ dependencies {
     testImplementation libs.jsonassert
 }
 
-task acceptanceTest(type: Test) {
+tasks.register("acceptanceTest", Test) {
     description = "Run acceptance tests"
     group = "verification"
     testClassesDirs = sourceSets.acceptanceTest.output.classesDirs

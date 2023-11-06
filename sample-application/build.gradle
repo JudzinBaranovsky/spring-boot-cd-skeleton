@@ -39,7 +39,7 @@ dependencies {
     testImplementation libs.springBoot.starter.test
 }
 
-task itest(type: Test) {
+tasks.register("itest", Test) {
     description = "Run integration tests"
     group = "verification"
     testClassesDirs = sourceSets.integrationTest.output.classesDirs
@@ -48,7 +48,7 @@ task itest(type: Test) {
     useJUnitPlatform()
 }
 
-tasks.getByName('build').configure {
+tasks.named('build').configure {
     dependsOn itest
 }
 
