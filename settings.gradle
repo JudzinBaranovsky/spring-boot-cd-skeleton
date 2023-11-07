@@ -26,6 +26,10 @@ dependencyResolutionManagement {
             library("springBoot-starter-test", "org.springframework.boot:spring-boot-starter-test:$rev_spring_boot")
             library("springBoot-starter-web", "org.springframework.boot:spring-boot-starter-web:$rev_spring_boot")
             library("springBoot-starter-actuator", "org.springframework.boot:spring-boot-starter-actuator:$rev_spring_boot")
+
+            library("springBoot-cloud-resilience4j", "org.springframework.cloud:spring-cloud-starter-circuitbreaker-resilience4j:3.0.3")
+            library("springBoot-cloud-feign", "org.springframework.cloud:spring-cloud-starter-openfeign:4.0.4")
+            library("springBoot-cloud-loadBalancer", "org.springframework.cloud:spring-cloud-starter-loadbalancer:4.0.4")
         }
     }
 }

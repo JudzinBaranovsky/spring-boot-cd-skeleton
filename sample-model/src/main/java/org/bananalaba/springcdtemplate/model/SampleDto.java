@@ -5,6 +5,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import lombok.ToString;
 import lombok.extern.jackson.Jacksonized;
 
 @Getter
@@ -12,6 +13,7 @@ import lombok.extern.jackson.Jacksonized;
 @Jacksonized
 @Builder
 @EqualsAndHashCode
+@ToString
 public class SampleDto {
 
     @NonNull

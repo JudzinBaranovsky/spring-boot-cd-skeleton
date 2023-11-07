@@ -33,6 +33,9 @@ dependencies {
 
     implementation libs.springBoot.starter.web
     implementation libs.springBoot.starter.actuator
+    implementation libs.springBoot.cloud.resilience4j
+    implementation libs.springBoot.cloud.feign
+    implementation libs.springBoot.cloud.loadBalancer
 
     implementation project(":sample-model")
 
