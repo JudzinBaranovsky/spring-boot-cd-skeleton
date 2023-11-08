@@ -54,7 +54,7 @@ subprojects {
         }
     }
 
-    def spotBugsEnabled = Boolean.parseBoolean(System.getProperty("spotBugsEnabled", "false"))
+    def spotBugsEnabled = Boolean.parseBoolean(System.getProperty("spotBugsEnabled", "true"))
     tasks.withType(SpotBugsTask).configureEach {
         enabled = spotBugsEnabled
         reports {
