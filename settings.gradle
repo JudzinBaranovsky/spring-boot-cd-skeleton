@@ -1,5 +1,6 @@
 include("sample-application")
 include 'sample-model'
+include 'number-service'
 include 'e2e-tests'
 
 dependencyResolutionManagement {
@@ -22,6 +23,7 @@ dependencyResolutionManagement {
             library("cucumber-java", "io.cucumber:cucumber-java:$rev_cucumber")
             library("cucumber-junit", "io.cucumber:cucumber-junit-platform-engine:$rev_cucumber")
             library("cucumber-spring", "io.cucumber:cucumber-spring:$rev_cucumber")
+            library("wiremock", "org.wiremock:wiremock:3.3.1")
 
             library("springBoot-starter-test", "org.springframework.boot:spring-boot-starter-test:$rev_spring_boot")
             library("springBoot-starter-web", "org.springframework.boot:spring-boot-starter-web:$rev_spring_boot")

@@ -18,5 +18,7 @@ public class SampleDto {
     private final String message;
     @NonNull
     private final String nodeIp;
+    @NonNull
+    private final Long luckyNumber;
 
 }

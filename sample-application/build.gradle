@@ -37,6 +37,8 @@ dependencies {
     implementation project(":sample-model")
 
     testImplementation libs.springBoot.starter.test
+
+    integrationTestImplementation libs.wiremock
 }
 
 tasks.register("itest", Test) {
