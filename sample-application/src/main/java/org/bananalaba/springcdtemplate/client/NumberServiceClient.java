@@ -1,5 +1,6 @@
 package org.bananalaba.springcdtemplate.client;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,6 +15,7 @@ public class NumberServiceClient {
     @Value("${client.numberService.host}")
     private final String host;
     @NonNull
+    @SuppressFBWarnings(value = "EI_EXPOSE_REP2", justification = "this object is not mutable")
     private final RestOperations restTemplate;
 
     public Long getRandomNumber() {
