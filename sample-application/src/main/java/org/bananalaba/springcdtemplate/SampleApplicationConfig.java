@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpInputMessage;
@@ -17,7 +18,7 @@ import org.springframework.web.client.RestTemplate;
 public class SampleApplicationConfig {
 
     @Bean
-    public RestTemplate numberServiceTemplate() {
+    public RestTemplate numberServiceTemplate(RestTemplateBuilder builder) {
         var numberConverter = new HttpMessageConverter<Long>() {
 
             @Override
@@ -50,10 +51,8 @@ public class SampleApplicationConfig {
 
         };
 
-        var template = new RestTemplate();
-        template.setMessageConverters(List.of(numberConverter));
-
-        return template;
+        return builder.additionalMessageConverters(numberConverter)
+            .build();
     }
 
 }
