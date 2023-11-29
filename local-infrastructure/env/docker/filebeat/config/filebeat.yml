@@ -1,0 +1,42 @@
+## Filebeat configuration
+## https://github.com/elastic/beats/blob/main/deploy/docker/filebeat.docker.yml
+#
+
+name: filebeat
+
+filebeat.config:
+  modules:
+    path: ${path.config}/modules.d/*.yml
+    reload.enabled: false
+
+filebeat.inputs:
+  - type: filestream
+    id: app-logs-stream
+    paths:
+      - /var/log/app-logs/*
+    processors:
+      - dissect:
+          tokenizer: '%{time} %{level} [%{traceId},%{spanId}] [%{thread}] %{text}'
+          field: "message"
+          target_prefix: ""
+
+setup.template.enabled: true
+setup.template.name: "app-logs"
+setup.template.pattern: "app-logs"
+setup.template.overwrite: false
+setup.template.settings:
+  index.number_of_shards: 1
+  index.number_of_replicas: 0
+  index.hidden: false
+
+output.elasticsearch:
+  hosts: [ http://elasticsearch:9200 ]
+  username: filebeat_internal
+  password: ${FILEBEAT_INTERNAL_PASSWORD}
+  index: "filebeat-app-logs"
+
+logging.level: info
+
+http:
+  enabled: true
+  host: 0.0.0.0
