@@ -2,6 +2,7 @@ plugins {
     id 'org.springframework.boot'
     id 'info.solidsoft.pitest'
     id 'maven-publish'
+    id 'io.spring.dependency-management'
 }
 
 sourceSets {
@@ -31,12 +32,17 @@ dependencies {
     implementation libs.commons.lang
     implementation libs.guava
 
-    implementation libs.springBoot.starter.web
-    implementation libs.springBoot.starter.actuator
+    implementation "org.springframework.boot:spring-boot-starter-web"
+    implementation "org.springframework.boot:spring-boot-starter-actuator"
+    implementation "org.springframework.boot:spring-boot-starter-aop"
+
+    implementation "io.micrometer:micrometer-tracing"
+    implementation "io.micrometer:micrometer-tracing-bridge-otel"
+    implementation "io.opentelemetry:opentelemetry-exporter-otlp"
 
     implementation project(":sample-model")
 
-    testImplementation libs.springBoot.starter.test
+    testImplementation "org.springframework.boot:spring-boot-starter-test"
 }
 
 tasks.register("itest", Test) {

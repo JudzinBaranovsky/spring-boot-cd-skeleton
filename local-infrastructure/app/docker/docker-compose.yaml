@@ -1,0 +1,14 @@
+version: '3.7'
+
+services:
+  sample-application:
+    image: ci-cd-project/sample-application:latest
+    ports:
+      - 8080:8080
+    environment:
+      node.ip: 127.0.0.1
+      management.otlp.tracing.endpoint: http://host.docker.internal:4318/v1/traces
+    volumes:
+      - type: bind
+        source: ../../logs
+        target: /workspace/logs

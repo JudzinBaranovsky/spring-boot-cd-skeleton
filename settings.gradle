@@ -23,10 +23,6 @@ dependencyResolutionManagement {
             library("cucumber-java", "io.cucumber:cucumber-java:$rev_cucumber")
             library("cucumber-junit", "io.cucumber:cucumber-junit-platform-engine:$rev_cucumber")
             library("cucumber-spring", "io.cucumber:cucumber-spring:$rev_cucumber")
-
-            library("springBoot-starter-test", "org.springframework.boot:spring-boot-starter-test:$rev_spring_boot")
-            library("springBoot-starter-web", "org.springframework.boot:spring-boot-starter-web:$rev_spring_boot")
-            library("springBoot-starter-actuator", "org.springframework.boot:spring-boot-starter-actuator:$rev_spring_boot")
         }
     }
 }

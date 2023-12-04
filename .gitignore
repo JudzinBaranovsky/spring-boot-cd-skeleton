@@ -5,6 +5,7 @@
 */build/
 */out/
 /**/logs/
+local-infrastructure/env/docker/.env
 gradle-app.setting
 !gradle-wrapper.jar
 .gradletasknamecache
