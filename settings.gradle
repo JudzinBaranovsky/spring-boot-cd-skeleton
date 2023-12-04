@@ -11,6 +11,7 @@ dependencyResolutionManagement {
             library("jackson-databind", "com.fasterxml.jackson.core:jackson-databind:$rev_jackson")
             library("lombok", "org.projectlombok:lombok:$rev_lombok")
             library("find-sec-bugs", "com.h3xstream.findsecbugs:findsecbugs-plugin:$rev_findsecbugs")
+            library("spotbugs-annotations", "com.github.spotbugs:spotbugs-annotations:4.8.1")
 
             library("junit-jupiter", "org.junit.jupiter:junit-jupiter:$rev_junit")
             library("junit-platform-suite", "org.junit.platform:junit-platform-suite:$rev_junit_suite")

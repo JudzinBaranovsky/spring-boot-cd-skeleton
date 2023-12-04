@@ -33,6 +33,8 @@ subprojects {
     }
 
     dependencies {
+        compileOnly libs.spotbugs.annotations
+
         compileOnly libs.lombok
         annotationProcessor libs.lombok
 
