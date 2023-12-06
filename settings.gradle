@@ -23,6 +23,8 @@ dependencyResolutionManagement {
             library("cucumber-java", "io.cucumber:cucumber-java:$rev_cucumber")
             library("cucumber-junit", "io.cucumber:cucumber-junit-platform-engine:$rev_cucumber")
             library("cucumber-spring", "io.cucumber:cucumber-spring:$rev_cucumber")
+
+            library("cache.caffeine", "com.github.ben-manes.caffeine:caffeine:3.1.8")
         }
     }
 }

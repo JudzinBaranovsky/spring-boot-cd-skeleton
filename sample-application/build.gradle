@@ -40,6 +40,9 @@ dependencies {
     implementation "io.micrometer:micrometer-tracing-bridge-otel"
     implementation "io.opentelemetry:opentelemetry-exporter-otlp"
 
+    implementation "org.springframework.boot:spring-boot-starter-cache"
+    implementation libs.cache.caffeine
+
     implementation project(":sample-model")
 
     testImplementation "org.springframework.boot:spring-boot-starter-test"
