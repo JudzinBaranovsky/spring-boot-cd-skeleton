@@ -41,11 +41,14 @@ dependencies {
     implementation "io.opentelemetry:opentelemetry-exporter-otlp"
 
     implementation "org.springframework.boot:spring-boot-starter-cache"
+    implementation "org.springframework.boot:spring-boot-starter-data-redis"
     implementation libs.cache.caffeine
 
     implementation project(":sample-model")
 
     testImplementation "org.springframework.boot:spring-boot-starter-test"
+    testImplementation libs.testContainers.redis
+    testImplementation libs.testContainers.core
 }
 
 tasks.register("itest", Test) {

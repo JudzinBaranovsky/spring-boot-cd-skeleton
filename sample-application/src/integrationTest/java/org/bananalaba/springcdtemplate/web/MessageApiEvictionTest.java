@@ -10,17 +10,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 
-@SpringBootTest(
-    properties = {
-        "node.ip=192.168.0.1",
-        "message.cache.expireAfterWriteMs=1000"
-    }
-)
 @AutoConfigureMockMvc
-public class MessageApiEvictionTest {
+public abstract class MessageApiEvictionTest {
 
     @Autowired
     private MockMvc mvc;

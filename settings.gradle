@@ -20,6 +20,9 @@ dependencyResolutionManagement {
             library("assertj", "org.assertj:assertj-core:$rev_assertj")
             library("jsonassert", "org.skyscreamer:jsonassert:$rev_json_assert")
 
+            library("testContainers-redis", "com.redis:testcontainers-redis:2.0.1")
+            library("testContainers-core", "org.testcontainers:junit-jupiter:1.19.3")
+
             library("cucumber-java", "io.cucumber:cucumber-java:$rev_cucumber")
             library("cucumber-junit", "io.cucumber:cucumber-junit-platform-engine:$rev_cucumber")
             library("cucumber-spring", "io.cucumber:cucumber-spring:$rev_cucumber")
