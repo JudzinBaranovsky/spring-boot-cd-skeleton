@@ -3,6 +3,7 @@ plugins {
     id 'info.solidsoft.pitest'
     id 'maven-publish'
     id 'io.spring.dependency-management'
+    id 'org.graalvm.buildtools.native'
 }
 
 sourceSets {
@@ -45,7 +46,7 @@ dependencies {
     testImplementation "org.springframework.boot:spring-boot-starter-test"
 }
 
-tasks.register("itest", Test) {
+def itest = tasks.register("itest", Test) {
     description = "Run integration tests"
     group = "verification"
     testClassesDirs = sourceSets.integrationTest.output.classesDirs
@@ -60,6 +61,10 @@ tasks.named('build').configure {
 
 tasks.named('bootBuildImage') {
     imageName = 'ci-cd-project/sample-application'
+    buildpacks = ['gcr.io/paketo-buildpacks/java-native-image']
+    environment = [
+        'BP_JVM_VERSION' : '21'
+    ]
 }
 
 publishing {
@@ -78,4 +83,23 @@ publishing {
             }
         }
     }
+}
+
+graalvmNative {
+    registerTestBinary("integrationTest") {
+        usingSourceSet(sourceSets.integrationTest)
+        forTestTask(itest)
+    }
+    binaries {
+        main {
+            buildArgs.add('-H:-CheckToolchain')
+        }
+        integrationTest {
+            buildArgs.add('-H:-CheckToolchain')
+        }
+    }
+}
+
+tasks.matching {it.name.startsWith("checkstyleAot")}.all {
+    enabled = false
 }

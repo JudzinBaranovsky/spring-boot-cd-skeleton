@@ -46,16 +46,16 @@
     2. Run `local-infrastructure/manage-env.ps1 setup` - this will deploy ElasticSearch 8 + Kibana 8 + Jaeger all-in-one for monitoring.
 1. From the `local-infrastructure` folder
     1. Run `manage-env.ps1 start`.
-    2. Run `manage-app.ps1 start`.
+    2. Run `manage-apps.ps1 start`.
     3. Use `http://localhost:8080` to interact with the application.
-    4. Use `http://localhost:5601` to search logs in Kibana (authorise as `elastic` with ELASTIC_PASSWORD).
+    4. Use `http://localhost:6601` to search logs in Kibana (authorise as `elastic` with ELASTIC_PASSWORD).
     5. Use 'http:localhost:16686' to search traces in Jaeger.
 2. Other commands
     1. `manage-env.ps1 recreate` - delete the application and monitoring containers, and create the monitoring containers from scratch
     2. `manage-env.ps1 destroy` - delete the application and monitoring containers
     3. `manage-env.ps1 stop` - stop the application and monitoring containers
-    4. `manage-app.ps1 stop` - stop the application container
-    5. `manage-app.ps1 destroy` - stop and remove the application container
+    4. `manage-apps.ps1 stop` - stop the application container
+    5. `manage-apps.ps1 destroy` - stop and remove the application container
 
 ## Local E2E
 1. Run locally (see above).
