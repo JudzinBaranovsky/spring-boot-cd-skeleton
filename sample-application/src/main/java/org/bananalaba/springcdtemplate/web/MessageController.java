@@ -1,0 +1,40 @@
+package org.bananalaba.springcdtemplate.web;
+
+import lombok.RequiredArgsConstructor;
+import org.bananalaba.springcdtemplate.data.Message;
+import org.bananalaba.springcdtemplate.logging.Loggable;
+import org.bananalaba.springcdtemplate.service.MessageService;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping(value = "/api/v1/messages", produces = "application/json", consumes = "application/json")
+@RequiredArgsConstructor
+@Loggable
+public class MessageController {
+
+    private final MessageService service;
+
+    @PostMapping("/{key}")
+    public void save(@PathVariable("key") String key, @RequestBody Message message) {
+        service.save(key, message);
+    }
+
+    @DeleteMapping("/{key}")
+    public void delete(@PathVariable("key") String key) {
+        service.delete(key);
+    }
+
+    @GetMapping("/{key}")
+    @ResponseBody
+    public Message get(@PathVariable("key") String key) {
+        return service.get(key);
+    }
+
+}
