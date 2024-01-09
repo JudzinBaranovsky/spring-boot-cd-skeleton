@@ -9,5 +9,11 @@ management:
       sampling.probability: 1.0
   endpoints.web.exposure.include: health
 
+okta:
+  oauth2:
+    issuer: https://dev-5xk4kg2ztj2u5h3n.us.auth0.com/
+    client-id: a3cO6gBMBfVkK6v152UP4SOBRPobj7Qp
+    client-secret: REPLACE_ME
+
 server:
   port: 8090
