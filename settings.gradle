@@ -1,6 +1,7 @@
 include("sample-application")
 include 'sample-model'
 include 'e2e-tests'
+include 'message-store-ui'
 
 dependencyResolutionManagement {
     versionCatalogs {
@@ -23,6 +24,9 @@ dependencyResolutionManagement {
             library("cucumber-java", "io.cucumber:cucumber-java:$rev_cucumber")
             library("cucumber-junit", "io.cucumber:cucumber-junit-platform-engine:$rev_cucumber")
             library("cucumber-spring", "io.cucumber:cucumber-spring:$rev_cucumber")
+
+            library("spring-okta-starter", "com.okta.spring:okta-spring-boot-starter:3.0.5")
         }
     }
 }
+

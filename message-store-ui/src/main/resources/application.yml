@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: message-store-ui
+
+management:
+  otlp:
+    tracing:
+      endpoint: http://localhost:4318/v1/traces
+      sampling.probability: 1.0
+  endpoints.web.exposure.include: health
+
+server:
+  port: 8090
