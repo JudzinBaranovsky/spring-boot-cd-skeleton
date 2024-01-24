@@ -14,14 +14,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(value = "/api/v1/messages", produces = "application/json", consumes = "application/json")
+@RequestMapping(value = "/api/v1/messages")
 @RequiredArgsConstructor
 @Loggable
 public class MessageController {
 
     private final MessageService service;
 
-    @PostMapping("/{key}")
+    @PostMapping(path = "/{key}", consumes = "application/json")
     public void save(@PathVariable("key") String key, @RequestBody Message message) {
         service.save(key, message);
     }
@@ -31,7 +31,7 @@ public class MessageController {
         service.delete(key);
     }
 
-    @GetMapping("/{key}")
+    @GetMapping(path = "/{key}", produces = "application/json")
     @ResponseBody
     public Message get(@PathVariable("key") String key) {
         return service.get(key);

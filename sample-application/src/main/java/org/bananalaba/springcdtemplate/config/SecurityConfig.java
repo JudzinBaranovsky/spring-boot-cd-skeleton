@@ -29,6 +29,7 @@ public class SecurityConfig {
                 .requestMatchers(DELETE, "api/v1/messages/**").hasAuthority("SCOPE_delete:message")
                 .requestMatchers(POST, "api/v1/messages/**").hasAuthority("SCOPE_write:message")
                 .requestMatchers(OPTIONS, "api/v1/messages/**").permitAll()
+                .requestMatchers(GET, "/error").permitAll()
             )
             .oauth2ResourceServer(server -> server.jwt(withDefaults()))
             .build();
