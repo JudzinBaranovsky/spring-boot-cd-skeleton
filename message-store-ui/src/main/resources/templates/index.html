@@ -56,7 +56,7 @@
                 font-weight: bold;
             }
 
-            #get-button,#set-button {
+            #get-button,#set-button, #delete-button {
                 font-size: 16px;
                 background: linear-gradient(#ffbc00 5%, #ffdd7f 100%);
                 border: 1px solid #e5a900;
@@ -69,7 +69,7 @@
                 padding: 7px 0;
             }
 
-            #get-button:hover, #set-button:hover {
+            #get-button:hover, #set-button:hover, #delete-button:hover {
                 background: linear-gradient(#ffdd7f 5%, #ffbc00 100%);
             }
 
@@ -80,22 +80,94 @@
 
         <script th:inline="javascript">
             var authToken = "[(${authToken})]";
+            var csrfToken = "[(${_csrf.token})]";
+            var csrfHeaderName = "[(${_csrf.headerName})]";
 
-            async function get() {
+            async function getMessage() {
                 var key = document.getElementById("message-key").value;
-                const response = await fetch(
+                await fetch(
                   "[(${messageApiHost})]" + "/api/v1/messages/" + key,
                   {
                     method: "GET",
                     headers: {
                       "Accept": "application/json",
+                      "Authorization": "Bearer " + authToken,
+                    }
+                  }
+                )
+                .then(response => {
+                    if (response.status != 200) {
+                        showStatus("Unexpected status code: " + response.status);
+                    }
+
+                    response.text().then(rawMessage => {
+                        const message = (rawMessage.length > 0) ? JSON.parse(rawMessage).text : "";
+
+                        document.getElementById("message-value").value = message;
+                        if (message.length == 0) {
+                            showStatus("Empty message");
+                        }
+                    });
+                })
+                .catch(error => {
+                    showStatus(error);
+                });
+            }
+
+            async function setMessage() {
+                var key = document.getElementById("message-key").value;
+                var value = document.getElementById("message-value").value;
+
+                await fetch(
+                  "[(${messageApiHost})]" + "/api/v1/messages/" + key,
+                  {
+                    method: "POST",
+                    headers: {
+                      "Content-Type": "application/json",
+                      "Authorization": "Bearer " + authToken
+                    },
+                    body: JSON.stringify({text: value})
+                  }
+                )
+                .then(response => {
+                    if (response.status == 200) {
+                        showStatus("Message saved");
+                    } else {
+                        showStatus("Unexpected status code: " + response.status);
+                    }
+                })
+                .catch(error => {
+                    showStatus(error);
+                });
+            }
+
+            async function deleteMessage() {
+                var key = document.getElementById("message-key").value;
+
+                await fetch(
+                  "[(${messageApiHost})]" + "/api/v1/messages/" + key,
+                  {
+                    method: "DELETE",
+                    headers: {
+                      "Content-Type": "application/json",
                       "Authorization": "Bearer " + authToken
                     }
                   }
-                );
-                const message = await response.json();
+                )
+                .then(response => {
+                    if (response.status == 200) {
+                        showStatus("Message deleted");
+                    } else {
+                        showStatus("Unexpected status code: " + response.status);
+                    }
+                })
+                .catch(error => {
+                    showStatus(error);
+                });
+            }
 
-                document.getElementById("message-value").value = message.text;
+            function showStatus(message) {
+                document.getElementById("status-log").innerHTML = message;
             }
         </script>
     </head>
@@ -114,8 +186,11 @@
                     <label>Value :</label>
                     <input type="text" id="message-value" placeholder="value here..." />
 
-                    <input type="button" id="get-button" value="Get" onclick="get()" />
-                    <input type="button" id="set-button" value="Set" onclick="set()" />
+                    <input type="button" id="get-button" value="Get" onclick="getMessage()" />
+                    <input type="button" id="set-button" value="Set" onclick="setMessage()" />
+                    <input type="button" id="delete-button" value="Delete" onclick="deleteMessage()" />
+
+                    <textarea id="status-log" rows="4" cols="40" readonly=></textarea>
                 </form>
             </div>
         </div>

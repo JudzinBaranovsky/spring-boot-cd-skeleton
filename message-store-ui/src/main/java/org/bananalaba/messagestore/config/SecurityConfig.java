@@ -33,7 +33,7 @@ public class SecurityConfig {
             clientRegistrationRepository, OAuth2AuthorizationRequestRedirectFilter.DEFAULT_AUTHORIZATION_REQUEST_BASE_URI);
         authorizationRequestResolver.setAuthorizationRequestCustomizer(request -> {
             request.additionalParameters(Map.of("audience", messageApiAudience))
-                .scope("read:message", "profile", "email", "openid");
+                .scope("read:message", "write:message", "delete:message", "profile", "email", "openid");
         });
 
         return http

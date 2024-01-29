@@ -2,6 +2,7 @@ package org.bananalaba.springcdtemplate.config;
 
 import static org.springframework.http.HttpMethod.DELETE;
 import static org.springframework.http.HttpMethod.GET;
+import static org.springframework.http.HttpMethod.HEAD;
 import static org.springframework.http.HttpMethod.OPTIONS;
 import static org.springframework.http.HttpMethod.POST;
 import static org.springframework.security.config.Customizer.withDefaults;
@@ -31,6 +32,7 @@ public class SecurityConfig {
                 .requestMatchers(OPTIONS, "api/v1/messages/**").permitAll()
                 .requestMatchers(GET, "/error").permitAll()
             )
+            .csrf(csrf -> csrf.ignoringRequestMatchers("/api/v1/**"))
             .oauth2ResourceServer(server -> server.jwt(withDefaults()))
             .build();
     }
@@ -41,7 +43,9 @@ public class SecurityConfig {
 
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/api/v1/**").allowedOrigins(corsAllowedOrigins);
+                registry.addMapping("/api/v1/**")
+                    .allowedMethods(GET.name(), OPTIONS.name(), HEAD.name(), POST.name(), DELETE.name())
+                    .allowedOrigins(corsAllowedOrigins);
             }
 
         };
