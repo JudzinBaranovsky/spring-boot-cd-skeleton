@@ -6,10 +6,10 @@ import org.springframework.security.access.prepost.PreAuthorize;
 
 public interface MessageService {
 
-    @PreAuthorize("@aclManager.checkOrCaptureOwnership(#key)")
+    @PreAuthorize("isOwnedOrNew(#key)")
     void save(String key, MessageUpdate message);
 
-    @PreAuthorize("@aclManager.checkOwnership(#key)")
+    @PreAuthorize("isOwned(#key)")
     void delete(String key);
 
     Message get(String key);
