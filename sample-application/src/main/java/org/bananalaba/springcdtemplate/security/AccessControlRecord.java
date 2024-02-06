@@ -1,11 +1,11 @@
 package org.bananalaba.springcdtemplate.security;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 
 @Getter
-@RequiredArgsConstructor
+@Builder
 public class AccessControlRecord {
 
     @NonNull

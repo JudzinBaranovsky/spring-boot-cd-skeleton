@@ -1,7 +1,7 @@
 package org.bananalaba.springcdtemplate.service;
 
 import org.bananalaba.springcdtemplate.SampleApplication;
-import org.bananalaba.springcdtemplate.data.Message;
+import org.bananalaba.springcdtemplate.data.MessageUpdate;
 import org.bananalaba.springcdtemplate.service.MessageServiceTest.TestConfiguration;
 import org.bananalaba.springcdtemplate.stereotype.WebComponent;
 import org.junit.jupiter.api.BeforeEach;
@@ -30,7 +30,7 @@ public class MessageServiceTest {
 
     @Test
     public void shouldSaveNewMessage() {
-        var message = Message.builder().text("test").build();
+        var message = new MessageUpdate("test");
         service.save("123", message);
     }
 

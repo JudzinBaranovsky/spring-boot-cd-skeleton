@@ -30,7 +30,7 @@ public class AclManager {
 
     public AclManager(@NonNull final AccessControlRepository accessControlRepository,
                       @Value("${messageStore.security.acl.ownershipAcquisitionTimeoutSec:10}") final int ownershipAcquisitionTimeoutSec,
-                      @Value("${messageStore.security.acl.ownershipLockReuseTtlSec:60}")final int ownershipLockReuseTtlSec) {
+                      @Value("${messageStore.security.acl.ownershipLockReuseTtlSec:60}") final int ownershipLockReuseTtlSec) {
         this.accessControlRepository = accessControlRepository;
 
         checkArgument(ownershipAcquisitionTimeoutSec > 0, "ownershipAcquisitionTimeoutSec must be > 0");
@@ -52,7 +52,12 @@ public class AclManager {
         try {
             var record = accessControlRepository.getForMessage(key);
             if (record == null) {
-                accessControlRepository.save(new AccessControlRecord(getPrincipalId(), key));
+                var newRecord = AccessControlRecord.builder()
+                    .ownerId(getPrincipalId())
+                    .messageKey(key)
+                    .build();
+                accessControlRepository.save(newRecord);
+
                 return true;
             } else {
                 return record.getOwnerId().equals(getPrincipalId());

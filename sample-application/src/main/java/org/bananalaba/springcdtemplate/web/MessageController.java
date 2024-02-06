@@ -2,6 +2,7 @@ package org.bananalaba.springcdtemplate.web;
 
 import lombok.RequiredArgsConstructor;
 import org.bananalaba.springcdtemplate.data.Message;
+import org.bananalaba.springcdtemplate.data.MessageUpdate;
 import org.bananalaba.springcdtemplate.logging.Loggable;
 import org.bananalaba.springcdtemplate.service.MessageService;
 import org.bananalaba.springcdtemplate.stereotype.WebComponent;
@@ -23,7 +24,7 @@ public class MessageController implements WebComponent {
     private final MessageService service;
 
     @PostMapping(path = "/{key}", consumes = "application/json")
-    public void save(@PathVariable("key") String key, @RequestBody Message message) {
+    public void save(@PathVariable("key") String key, @RequestBody MessageUpdate message) {
         service.save(key, message);
     }
 
