@@ -20,10 +20,7 @@ public class InMemoryAccessControlRepository implements AccessControlRepository 
 
     @Override
     public AccessControlRecord getForMessage(String messageKey) {
-        var record = records.get(messageKey);
-        notNull(record, "no record for message key=" + messageKey);
-
-        return record;
+        return records.get(messageKey);
     }
 
 }

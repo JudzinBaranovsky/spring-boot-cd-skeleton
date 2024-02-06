@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.bananalaba.springcdtemplate.logging.Loggable;
 import org.bananalaba.springcdtemplate.model.SampleDto;
+import org.bananalaba.springcdtemplate.stereotype.WebComponent;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RequiredArgsConstructor
 @Loggable
-public class SampleController {
+public class SampleController implements WebComponent {
 
     @NonNull
     @Value("${node.ip}")

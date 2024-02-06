@@ -52,7 +52,7 @@ public class AclManager {
         try {
             var record = accessControlRepository.getForMessage(key);
             if (record == null) {
-                accessControlRepository.save(new AccessControlRecord(key, getPrincipalId()));
+                accessControlRepository.save(new AccessControlRecord(getPrincipalId(), key));
                 return true;
             } else {
                 return record.getOwnerId().equals(getPrincipalId());
@@ -74,7 +74,7 @@ public class AclManager {
             .filter(UserDetails.class::isInstance)
             .map(UserDetails.class::cast)
             .map(UserDetails::getUsername)
-            .orElse("<undefined>");
+            .orElse(null);
     }
 
 }
