@@ -8,7 +8,7 @@ import lombok.extern.jackson.Jacksonized;
 @Getter
 @Jacksonized
 @Builder
-public class Message {
+public class Message implements OwnershipSubject {
 
     @NonNull
     private final String text;
