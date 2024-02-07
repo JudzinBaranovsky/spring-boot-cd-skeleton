@@ -17,11 +17,11 @@ public class AccessControlExpressionRoot extends SecurityExpressionRoot {
         this.invocation = notNull(invocation, "invocation required");
     }
 
-    public void isOwnedOrNew(final String key) {
+    public void ownsOrIsCreatingNew(final String key) {
         throw new UnsupportedOperationException();
     }
 
-    public void isOwned(final String key) {
+    public void owns(final String key) {
         throw new UnsupportedOperationException();
     }
 
