@@ -4,6 +4,7 @@ import static org.apache.commons.lang3.Validate.notBlank;
 import static org.apache.commons.lang3.Validate.notNull;
 
 import java.util.Map;
+import java.util.Optional;
 
 import lombok.NonNull;
 import org.bananalaba.springcdtemplate.data.OwnershipSubjectRepository;
@@ -33,8 +34,8 @@ public class AclManager {
         notBlank(principalId, "principalId required");
 
         var subject = getRepository(subjectType).get(subjectKey);
-        if ((subject == null) && mayBeCreation) {
-            return true;
+        if (subject == null) {
+            return mayBeCreation;
         }
 
         if (subject.getOwnerId().equals(principalId)) {
@@ -42,7 +43,10 @@ public class AclManager {
         }
 
         var aclRecord = accessControlRepository.get(subjectType, subjectKey);
-        return aclRecord.getEditorIds().contains(principalId);
+        return Optional.ofNullable(aclRecord)
+            .map(AclRecord::getEditorIds)
+            .map(editorIds -> editorIds.contains(principalId))
+            .orElse(false);
     }
 
     private OwnershipSubjectRepository getRepository(final String subjectType) {
