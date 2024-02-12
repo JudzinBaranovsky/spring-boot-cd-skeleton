@@ -7,6 +7,7 @@ import java.util.function.Supplier;
 import org.aopalliance.intercept.MethodInvocation;
 import org.bananalaba.springcdtemplate.security.AclManager;
 import org.bananalaba.springcdtemplate.security.OwnershipSubjectType;
+import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.security.access.expression.SecurityExpressionRoot;
 import org.springframework.security.core.Authentication;
 
@@ -41,7 +42,7 @@ public class AccessControlExpressionRoot extends SecurityExpressionRoot {
     }
 
     private String getSubjectType(Class<?> invocationTarget) {
-        var typeAnnotation = invocationTarget.getAnnotation(OwnershipSubjectType.class);
+        var typeAnnotation = AnnotationUtils.findAnnotation(invocationTarget, OwnershipSubjectType.class);
         notNull(typeAnnotation, "invocation target " + invocationTarget + " doesn't have @OwnershipSubjectType");
 
         return typeAnnotation.value();
