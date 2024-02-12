@@ -2,6 +2,7 @@ package org.bananalaba.springcdtemplate.security.spring;
 
 import static org.apache.commons.lang3.Validate.notNull;
 
+import java.util.Optional;
 import java.util.function.Supplier;
 
 import org.aopalliance.intercept.MethodInvocation;
@@ -43,9 +44,9 @@ public class AccessControlExpressionRoot extends SecurityExpressionRoot {
 
     private String getSubjectType(Class<?> invocationTarget) {
         var typeAnnotation = AnnotationUtils.findAnnotation(invocationTarget, OwnershipSubjectType.class);
-        notNull(typeAnnotation, "invocation target " + invocationTarget + " doesn't have @OwnershipSubjectType");
-
-        return typeAnnotation.value();
+        return Optional.ofNullable(typeAnnotation)
+            .map(OwnershipSubjectType::value)
+            .orElseThrow(() -> new IllegalArgumentException("invocation target " + invocationTarget + " doesn't have @OwnershipSubjectType"));
     }
 
     private String getPrincipalId() {

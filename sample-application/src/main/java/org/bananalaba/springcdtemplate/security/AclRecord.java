@@ -2,20 +2,24 @@ package org.bananalaba.springcdtemplate.security;
 
 import java.util.List;
 
+import com.google.common.collect.ImmutableList;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NonNull;
 
 @Getter
-@Builder
 public class AclRecord {
 
-    @NonNull
     private final String subjectType;
-    @NonNull
     private final String subjectKey;
 
-    @NonNull
     private final List<String> editorIds;
+
+    @Builder
+    private AclRecord(@NonNull String subjectType, @NonNull String subjectKey, @NonNull List<String> editorIds) {
+        this.subjectType = subjectType;
+        this.subjectKey = subjectKey;
+        this.editorIds = ImmutableList.copyOf(editorIds);
+    }
 
 }

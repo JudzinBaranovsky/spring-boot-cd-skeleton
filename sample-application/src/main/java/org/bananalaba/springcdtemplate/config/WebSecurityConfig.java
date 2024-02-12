@@ -32,6 +32,7 @@ public class WebSecurityConfig implements WebComponent {
                 .requestMatchers(POST, "api/v1/messages/**").hasAuthority("SCOPE_write:message")
                 .requestMatchers(OPTIONS, "api/v1/messages/**").permitAll()
                 .requestMatchers(GET, "/error").permitAll()
+                .requestMatchers(GET, "/api/v1/sample/**").permitAll()
             )
             .csrf(csrf -> csrf.ignoringRequestMatchers("/api/v1/**"))
             .oauth2ResourceServer(server -> server.jwt(withDefaults()))

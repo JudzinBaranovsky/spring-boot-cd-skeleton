@@ -19,16 +19,16 @@ public class InMemoryAclRepository implements AclRepository {
         records.put(recordId(record), record);
     }
 
-    private String recordId(AclRecord record) {
-        return recordId(record.getSubjectType(), record.getSubjectKey());
-    }
-
     @Override
     public AclRecord get(final String subjectType, final String subjectKey) {
         notBlank(subjectType, "subjectType required");
         notBlank(subjectKey, "subjectKey required");
 
         return records.get(recordId(subjectType, subjectKey));
+    }
+
+    private String recordId(AclRecord record) {
+        return recordId(record.getSubjectType(), record.getSubjectKey());
     }
 
     private String recordId(final String subjectType, final String subjectKey) {
