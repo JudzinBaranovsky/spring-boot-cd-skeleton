@@ -1,5 +1,6 @@
 package org.bananalaba.springcdtemplate.data;
 
+import static org.apache.commons.lang3.Validate.isTrue;
 import static org.apache.commons.lang3.Validate.notBlank;
 import static org.apache.commons.lang3.Validate.notNull;
 
@@ -17,6 +18,14 @@ public class InMemoryMessageRepository implements MessageRepository {
     public void save(String key, Message message) {
         notBlank(key, "message key required");
         notNull(message, "message cannot be null");
+
+        var existing = memory.get(key);
+        if (existing != null) {
+            isTrue(
+                existing.getOwnerId().equals(message.getOwnerId()),
+                "cannot change owner of message " + key + " from " + existing.getOwnerId() + " to " + message.getOwnerId()
+            );
+        }
 
         memory.put(key, message);
     }
