@@ -39,7 +39,12 @@ public class AuthorisedMessageService implements MessageService {
 
     @Override
     public Message get(String key) {
-        return repository.get(key);
+        var message = repository.get(key);
+        if (message == null) {
+            throw new IllegalArgumentException("message with key=" + key + " not found");
+        }
+
+        return message;
     }
 
 }

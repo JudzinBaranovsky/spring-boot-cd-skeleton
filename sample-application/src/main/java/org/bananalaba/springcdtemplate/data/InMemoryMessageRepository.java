@@ -43,13 +43,7 @@ public class InMemoryMessageRepository implements MessageRepository {
     @Override
     public Message get(String key) {
         notBlank(key, "message key required");
-
-        var message = memory.get(key);
-        if (message == null) {
-            throw new IllegalArgumentException("message with key=" + key + " not found");
-        }
-
-        return message;
+        return memory.get(key);
     }
 
 }

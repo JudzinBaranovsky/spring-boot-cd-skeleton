@@ -49,7 +49,7 @@ public class AccessControlExpressionRoot extends SecurityExpressionRoot {
     }
 
     private String getPrincipalId() {
-        return null;
+        return getAuthentication().getName();
     }
 
 }
