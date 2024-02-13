@@ -23,10 +23,20 @@
 # How to build and run
 
 ## Prerequisites
-1. Docker daemon and Docker Compose CLI.
-2. K8s (minikube or K8s built into Docker Desktop).
-3. Kubectl.
-4. Helm.
+1. JDK 20+
+2. Docker daemon and Docker Compose CLI.
+
+## Modules
+1. sample-model - the models shared across the applications
+2. sample-application - a REST API for managing messages
+   1. CRUD API for messages protected with OAuth2 JWT authorisation
+   2. CORS controlled via the `web.cors.allowedOrigins` property
+   3. by default any authorised user with read permissions in JWT may read any message and create new messages
+   4. by default only the user created a message may delete/update that message
+3. message-store-ui - a very simplistic Spring Boot/Thymeleaf UI on top of the messages REST API
+   1. uses the authorisation grant OAuth2 flow via Auth0 to authenticate and authorise users
+   2. obtains JWT tokens with claims enabling access to user's profile, retrieval of messages, persistence of messages, and removal of messages
+   3. must be added to CORS allowed origins in the REST API
 
 ## Building
 1. Build, test, and analyse the code: `gradlew build`.
