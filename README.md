@@ -54,12 +54,16 @@
     ELASTIC_VERSION=8.7.1
    ```
     2. Run `local-infrastructure/manage-env.ps1 setup` - this will deploy ElasticSearch 8 + Kibana 8 + Jaeger all-in-one for monitoring.
+    3. Create a developer account in Auth0.
+       1. Consider using a VPN attached to a USA location to avoid registration issues.
 1. From the `local-infrastructure` folder
     1. Run `manage-env.ps1 start`.
     2. Run `manage-app.ps1 start`.
-    3. Use `http://localhost:8080` to interact with the application.
-    4. Use `http://localhost:5601` to search logs in Kibana (authorise as `elastic` with ELASTIC_PASSWORD).
-    5. Use 'http:localhost:16686' to search traces in Jaeger.
+    3. Use `http://localhost:8080` to interact with the REST application.
+    4. Use `http://localhost:8090/web/home` to interact with the UI application.
+       1. In case of issues with authorisation via Auth0, try a VPN connected to a USA location.
+    5. Use `http://localhost:5601` to search logs in Kibana (authorise as `elastic` with ELASTIC_PASSWORD).
+    6. Use 'http:localhost:16686' to search traces in Jaeger.
 2. Other commands
     1. `manage-env.ps1 recreate` - delete the application and monitoring containers, and create the monitoring containers from scratch
     2. `manage-env.ps1 destroy` - delete the application and monitoring containers
