@@ -11,14 +11,14 @@ management:
 
 okta:
   oauth2:
-    issuer: https://dev-5xk4kg2ztj2u5h3n.us.auth0.com/
-    client-id: a3cO6gBMBfVkK6v152UP4SOBRPobj7Qp
-    client-secret: REPLACE_ME
+    issuer: ${MESSAGE_API_AUTH0_ISSUER}
+    client-id: ${MESSAGE_API_AUTH0_UI_CLIENT_ID}
+    client-secret: ${MESSAGE_API_AUTH0_UI_CLIENT_SECRET}
 
 messageApi:
   host: REPLACE_ME
   oauth2:
-    audience: https://foo.service.com/api/messages
+    audience: ${MESSAGE_API_AUTH0_AUDIENCE}
 
 server:
   port: 8090

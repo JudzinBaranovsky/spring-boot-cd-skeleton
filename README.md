@@ -25,6 +25,7 @@
 ## Prerequisites
 1. JDK 20+
 2. Docker daemon and Docker Compose CLI.
+3. Auth0 account (free one is more than enough).
 
 ## Modules
 1. sample-model - the models shared across the applications
@@ -44,7 +45,11 @@
 
 ## Running locally
 0. **One-time setup**
-    1. Create a `local-infrastructure/env/docker/.env` file with the following properties:
+    1. In the Auth0 account
+       1. Create an API.
+       2. Enable RBAC in the API.
+       3. Create a regular web application.
+    2. Create a `local-infrastructure/env/docker/.env` file with the following properties:
    ```
     KIBANA_SYSTEM_PASSWORD=<some password>
     ELASTIC_PASSWORD=<some password>
@@ -52,6 +57,10 @@
     FILEBEAT_INTERNAL_PASSWORD=<some password>
     BEATS_SYSTEM_PASSWORD=<some password>
     ELASTIC_VERSION=8.7.1
+    MESSAGE_API_AUTH0_ISSUER=<Auth0 environment URL>
+    MESSAGE_API_AUTH0_UI_CLIENT_ID=<Auth0 web app client id>
+    MESSAGE_API_AUTH0_UI_CLIENT_SECRET=<Auth0 web app client secret>
+    MESSAGE_API_AUTH0_AUDIENCE=<Auth0 API audience URL>
    ```
     2. Run `local-infrastructure/manage-env.ps1 setup` - this will deploy ElasticSearch 8 + Kibana 8 + Jaeger all-in-one for monitoring.
     3. Create a developer account in Auth0.
