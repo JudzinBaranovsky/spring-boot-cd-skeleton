@@ -21,8 +21,8 @@ configurations {
 }
 
 pitest {
-    pitestVersion = '1.14.4'
-    junit5PluginVersion = '1.0.0'
+    pitestVersion = '1.17.1'
+    junit5PluginVersion = '1.2.1'
     threads = 4
     useClasspathFile = true
     outputFormats = ['XML', 'HTML']
