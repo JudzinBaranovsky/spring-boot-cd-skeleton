@@ -6,6 +6,7 @@ dependencyResolutionManagement {
     versionCatalogs {
         libs {
             library("commons-lang", "org.apache.commons:commons-lang3:$rev_commons_lang")
+            library("commons-lang-build", "org.apache.commons:commons-lang3:$rev_commons_lang_build")
             library("guava", "com.google.guava:guava:$rev_guava")
 
             library("jackson-databind", "com.fasterxml.jackson.core:jackson-databind:$rev_jackson")

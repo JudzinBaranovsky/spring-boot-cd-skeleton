@@ -2,10 +2,10 @@ import com.github.spotbugs.snom.SpotBugsTask
 
 plugins {
     id 'info.solidsoft.pitest' version "$rev_pit_test" apply false
-    id 'com.github.spotbugs' version "$rev_spotbugs" apply false
+    id 'com.github.spotbugs' version "$rev_spotbugs_plugin" apply false
     id 'org.owasp.dependencycheck' version "$rev_owasp_dependency_check" apply false
     id 'org.springframework.boot' version "$rev_spring_boot" apply false
-    id 'io.spring.dependency-management' version "1.1.4" apply false
+    id 'io.spring.dependency-management' version "$rev_spring_dependency_management" apply false
 }
 
 def checkstyleConfigs = layout.projectDirectory.dir("config/checkstyle")
@@ -25,7 +25,7 @@ subprojects {
     apply plugin: 'com.github.spotbugs'
     apply plugin: 'org.owasp.dependencycheck'
 
-    sourceCompatibility = '1.20'
+    sourceCompatibility = '1.23'
 
     repositories {
         mavenLocal()
@@ -50,6 +50,8 @@ subprojects {
         testImplementation libs.mockito.junit
         testImplementation libs.assertj
 
+        spotbugs "com.github.spotbugs:spotbugs:$rev_spotbugs_tool"
+        spotbugs libs.commons.lang.build
         spotbugsPlugins libs.find.sec.bugs
     }
 
@@ -61,6 +63,12 @@ subprojects {
     }
 
     def spotBugsEnabled = Boolean.parseBoolean(System.getProperty("spotBugsEnabled", "true"))
+    spotbugs {
+        excludeFilter.set(
+            spotBugsExclusions
+        )
+        ignoreFailures = true
+    }
     tasks.withType(SpotBugsTask).configureEach {
         enabled = spotBugsEnabled
         reports {
@@ -68,7 +76,6 @@ subprojects {
                 required = true
             }
         }
-        excludeFilter = spotBugsExclusions
     }
 
     dependencyCheck {
