@@ -8,7 +8,12 @@ services:
     environment:
       node.ip: 127.0.0.1
       management.otlp.tracing.endpoint: http://host.docker.internal:4318/v1/traces
+      JAVA_TOOL_OPTIONS: -Xss512k -XX:MaxRAM=400m
     volumes:
       - type: bind
         source: ../../logs
         target: /workspace/logs
+    deploy:
+      resources:
+        limits:
+          memory: 512m
