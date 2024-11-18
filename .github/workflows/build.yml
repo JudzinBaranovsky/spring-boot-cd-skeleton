@@ -4,6 +4,9 @@ on:
     branches:
       - 'master'
       - 'releases/**'
+    paths-ignore:
+      - '**.md'
+      - 'local-infrastructure/**'
   workflow_dispatch:
     inputs:
       branch:
