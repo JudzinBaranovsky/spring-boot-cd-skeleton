@@ -10,6 +10,7 @@ services:
       management.otlp.tracing.endpoint: http://host.docker.internal:4318/v1/traces
       JAVA_TOOL_OPTIONS: -Xss512k -XX:MaxRAM=400m
       spring.application.name: sample-application-docker
+      logging.file.enabled: true
     volumes:
       - type: bind
         source: ../../logs
