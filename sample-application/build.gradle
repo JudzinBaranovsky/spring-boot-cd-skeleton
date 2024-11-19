@@ -1,8 +1,15 @@
+buildscript {
+    dependencies {
+        classpath("org.ow2.asm:asm:9.7")
+    }
+}
+
 plugins {
     id 'org.springframework.boot'
     id 'info.solidsoft.pitest'
     id 'maven-publish'
     id 'io.spring.dependency-management'
+    id 'com.google.cloud.tools.jib' version '3.3.2'
 }
 
 sourceSets {
@@ -60,8 +67,13 @@ tasks.named('build').configure {
     dependsOn itest
 }
 
-tasks.named('bootBuildImage') {
-    imageName = 'ci-cd-project/sample-application'
+jib {
+    from {
+        image = "eclipse-temurin:23-jre-alpine"
+    }
+    to {
+        image = "ci-cd-project/sample-application:latest"
+    }
 }
 
 publishing {
