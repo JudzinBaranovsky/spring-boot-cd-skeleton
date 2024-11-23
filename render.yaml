@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: sample-application
+    runtime: image
+    image:
+      url: ghcr.io/judzinbaranovsky/ci-cd-project/sample-application:latest
+      creds:
+        fromRegistryCreds:
+          name: private-github-docker-credentials
+    plan: free
+    envVars:
+      - key: management.tracing.enabled
+        value: "false"
+      - key: JAVA_TOOL_OPTIONS
+        value: "-Xss512k -XX:MaxRAM=400m"
+      - key: server.port
+        value: 10000
+      - key: node.ip
+        value: "127.0.0.1"
+    region: frankfurt
+version: "1"
