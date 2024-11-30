@@ -19,7 +19,7 @@ public class CalculationController {
     @NonNull
     private final CalculationService calculationService;
 
-    @GetMapping(path = "/", produces = "application/json")
+    @GetMapping(produces = "application/json")
     public DataItemDto calculate(final @RequestParam("p") String parameter) {
         return calculationService.calculate(parameter);
     }

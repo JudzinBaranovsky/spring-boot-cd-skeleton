@@ -9,6 +9,8 @@ import org.bananalaba.springcdtemplate.service.Worker;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.client.RestOperations;
+import org.springframework.web.client.RestTemplate;
 
 @Configuration
 public class CalculationConfig {
@@ -28,6 +30,11 @@ public class CalculationConfig {
         var worker = new Worker("async worker", minDelaysMs, maxDelayMs, new Random());
 
         return new AsyncCalculation(worker, executor);
+    }
+
+    @Bean
+    public RestOperations restOperations() {
+        return new RestTemplate();
     }
 
 }

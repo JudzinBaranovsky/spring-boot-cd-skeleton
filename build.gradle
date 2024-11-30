@@ -83,3 +83,7 @@ subprojects {
     }
 
 }
+
+tasks.register("buildImages") {
+    dependsOn(":data-service:jibDockerBuild", ":sample-application:jibDockerBuild")
+}

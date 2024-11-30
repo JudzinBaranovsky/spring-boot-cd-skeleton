@@ -72,7 +72,7 @@ jib {
         image = "eclipse-temurin:23-jre-alpine"
     }
     to {
-        image = "ci-cd-project/sample-application:latest"
+        image = "ase-practice-perf-stand/main-service:latest"
     }
 }
 

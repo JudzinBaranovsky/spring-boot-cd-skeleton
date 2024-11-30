@@ -1,21 +1,38 @@
 version: '3.7'
 
 services:
-  sample-application:
-    image: ci-cd-project/sample-application:latest
+  main-service:
+    image: ase-practice-perf-stand/main-service:latest
     ports:
       - 8080:8080
     environment:
-      node.ip: 127.0.0.1
-      management.otlp.tracing.endpoint: http://host.docker.internal:4318/v1/traces
-      JAVA_TOOL_OPTIONS: -Xss512k -XX:MaxRAM=400m
-      spring.application.name: sample-application-docker
-      logging.file.enabled: true
-    volumes:
-      - type: bind
-        source: ../../logs
-        target: /workspace/logs
+      management.tracing.enabled: false
+      JAVA_TOOL_OPTIONS: -Xss512k -XX:MaxRAM=1024m
+      spring.application.name: main-service-docker
+      logging.file.enabled: false
+      client.dataService.host: http://host.docker.internal:8090
+      sync.worker.minDelaysMs: "${sync_worker_minDelaysMs}"
+      sync.worker.maxDelaysMs: "${sync_worker_maxDelaysMs}"
+      async.threads: "${async_threads}"
+      async.worker.minDelaysMs: "${async_worker_minDelaysMs}"
+      async.worker.maxDelaysMs: "${async_worker_maxDelaysMs}"
+      async.task.timeout_ms: "${async_task_timeout_ms}"
     deploy:
       resources:
         limits:
-          memory: 512m
+          memory: 1500m
+
+  dependency-service:
+    image: ase-practice-perf-stand/dependency-service:latest
+    ports:
+      - 8090:8080
+    environment:
+      management.tracing.enabled: false
+      JAVA_TOOL_OPTIONS: -Xss512k -XX:MaxRAM=1024m
+      spring.application.name: dependency-service-docker
+      dataService.minLatency: "${dataService_minLatency}"
+      dataService.maxLatency: "${dataService_maxLatency}"
+    deploy:
+      resources:
+        limits:
+          memory: 1500m

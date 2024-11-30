@@ -1,7 +1,14 @@
+buildscript {
+    dependencies {
+        classpath("org.ow2.asm:asm:9.7")
+    }
+}
+
 plugins {
     id 'org.springframework.boot'
     id 'maven-publish'
     id 'io.spring.dependency-management'
+    id 'com.google.cloud.tools.jib' version '3.3.2'
 }
 
 dependencies {
@@ -17,8 +24,13 @@ dependencies {
     testImplementation "org.springframework.boot:spring-boot-starter-test"
 }
 
-tasks.named('bootBuildImage') {
-    imageName = 'perf-stand/data-service'
+jib {
+    from {
+        image = "eclipse-temurin:23-jre-alpine"
+    }
+    to {
+        image = "ase-practice-perf-stand/dependency-service:latest"
+    }
 }
 
 publishing {

@@ -8,10 +8,7 @@ import java.util.function.Supplier;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.bananalaba.springcdtemplate.model.DataItemDto;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 
-@Component
 @Slf4j
 public class DataService {
 
@@ -21,8 +18,8 @@ public class DataService {
     private final Random random;
     private final Supplier<String> dataGenerator;
 
-    public DataService(@Value("${dataService.minLatency}") final long minLatency,
-                       @Value("${dataService.maxLatency}") final long maxLatency,
+    public DataService(final long minLatency,
+                       final long maxLatency,
                        @NonNull final Random random,
                        @NonNull final Supplier<String> dataGenerator) {
         verify(minLatency >= 0, "minLatency must be >= 0");
