@@ -12,11 +12,9 @@ import lombok.extern.jackson.Jacksonized;
 @Jacksonized
 @Builder
 @EqualsAndHashCode
-public class SampleDto {
+public class DataItemDto {
 
     @NonNull
-    private final String message;
-    @NonNull
-    private final String nodeIp;
+    private final String content;
 
 }

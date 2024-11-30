@@ -1,0 +1,30 @@
+plugins {
+    id 'org.springframework.boot'
+    id 'maven-publish'
+    id 'io.spring.dependency-management'
+}
+
+dependencies {
+    implementation libs.commons.lang
+    implementation libs.guava
+
+    implementation "org.springframework.boot:spring-boot-starter-web"
+    implementation "org.springframework.boot:spring-boot-starter-actuator"
+    implementation "org.springframework.boot:spring-boot-starter-aop"
+
+    implementation project(":sample-model")
+
+    testImplementation "org.springframework.boot:spring-boot-starter-test"
+}
+
+tasks.named('bootBuildImage') {
+    imageName = 'perf-stand/data-service'
+}
+
+publishing {
+    publications {
+        bootJava(MavenPublication) {
+            artifact tasks.named("bootJar")
+        }
+    }
+}
