@@ -5,9 +5,20 @@ services:
     image: ase-practice-perf-stand/main-service:latest
     ports:
       - 8080:8080
+      - 5006:5006
     environment:
       management.tracing.enabled: false
-      JAVA_TOOL_OPTIONS: -Xss512k -XX:MaxRAM=1024m
+      JAVA_TOOL_OPTIONS: >
+        -Xss512k
+        -XX:MaxRAM=1024m
+        -Dcom.sun.management.jmxremote=true
+        -Djava.rmi.server.hostname=localhost
+        -Dcom.sun.management.jmxremote.local.only=false
+        -Dcom.sun.management.jmxremote.port=5006
+        -Dcom.sun.management.jmxremote.rmi.port=5006
+        -Dcom.sun.management.jmxremote.ssl=false
+        -Dcom.sun.management.jmxremote.authenticate=false
+        -Djava.net.preferIPv4Stack=true
       spring.application.name: main-service-docker
       logging.file.enabled: false
       client.dataService.host: http://host.docker.internal:8090
