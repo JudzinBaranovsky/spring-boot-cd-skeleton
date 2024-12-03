@@ -1,0 +1,13 @@
+plugins {
+    id 'io.gatling.gradle' version "3.13.1"
+}
+
+gatling {
+    gatlingVersion = '3.8.3'
+    jvmArgs = ['-Xms512M', '-Xmx512M']
+}
+
+dependencies {
+    gatlingImplementation libs.commons.lang
+    gatlingImplementation libs.guava
+}
