@@ -1,6 +1,5 @@
 include("sample-application")
 include 'sample-model'
-include 'e2e-tests'
 include 'data-service'
 include 'perf-test'
 
