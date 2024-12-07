@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class CalculationService {
 
-    @Value("${async.task.timeout.ms:2000}")
+    @Value("${async.task.timeoutMs:2000}")
     private final long asyncTaskTimeoutMs;
     private final AsyncCalculation asyncCalculation;
 
