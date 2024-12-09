@@ -21,13 +21,25 @@ services:
         -Djava.net.preferIPv4Stack=true
       spring.application.name: main-service-docker
       logging.file.enabled: false
-      client.dataService.host: http://host.docker.internal:8090
+      client.dataService.host: http://host.docker.internal:8070
       sync.worker.minDelaysMs: "${sync_worker_minDelaysMs}"
       sync.worker.maxDelaysMs: "${sync_worker_maxDelaysMs}"
       async.threads: "${async_threads}"
       async.worker.minDelaysMs: "${async_worker_minDelaysMs}"
       async.worker.maxDelaysMs: "${async_worker_maxDelaysMs}"
       async.task.timeout_ms: "${async_task_timeout_ms}"
+      image-repository.cacheSize: "${image_repository_cacheSize}"
+      image-repository.blobGenerationGrowthFactor: "${image_repository_blobGenerationGrowthFactor}"
+      image-repository.blobGenerationMinIterations: "${image_repository_blobGenerationMinIterations}"
+      image-repository.blobGenerationMaxIterations: "${image_repository_blobGenerationMaxIterations}"
+      text-repository.cacheSize: "${text_repository_cacheSize}"
+      text-repository.blobGenerationGrowthFactor: "${text_repository_blobGenerationGrowthFactor}"
+      text-repository.blobGenerationMinIterations: "${text_repository_blobGenerationMinIterations}"
+      text-repository.blobGenerationMaxIterations: "${text_repository_blobGenerationMaxIterations}"
+      video-repository.cacheSize: "${video_repository_cacheSize}"
+      video-repository.blobGenerationGrowthFactor: "${video_repository_blobGenerationGrowthFactor}"
+      video-repository.blobGenerationMinIterations: "${video_repository_blobGenerationMinIterations}"
+      video-repository.blobGenerationMaxIterations: "${video_repository_blobGenerationMaxIterations}"
     deploy:
       resources:
         limits:

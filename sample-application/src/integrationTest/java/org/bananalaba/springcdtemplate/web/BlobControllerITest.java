@@ -15,9 +15,9 @@ import org.springframework.test.web.servlet.MockMvc;
 
 @SpringBootTest(properties = {
     "image-repository.cacheSize=1",
-    "image-repository.blobGenerationGrowthFactor=1",
-    "image-repository.blobGenerationMinIterations=2",
-    "image-repository.blobGenerationMaxIterations=2",
+    "image-repository.blobGenerationGrowthFactor=7",
+    "image-repository.blobGenerationMinIterations=7",
+    "image-repository.blobGenerationMaxIterations=7",
     "text-repository.cacheSize=1",
     "text-repository.blobGenerationGrowthFactor=1",
     "text-repository.blobGenerationMinIterations=2",
