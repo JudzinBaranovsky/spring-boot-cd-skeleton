@@ -43,7 +43,7 @@
 5. `manage-app.ps1 destroy` - stop and remove the application container
 
 # Running perf tests
-- `gradlew :perf-test:gatlingRun --test <scenario>`
+- `./gradlew :perf-test:gatlingRun --simulation=<scenario>`
 - here `scenario` is `org.bananalaba.perftest.CpuTest` or `org.bananalaba.perftest.MemoryTest`
 
 # Perf stand design
