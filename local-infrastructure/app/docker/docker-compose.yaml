@@ -22,9 +22,10 @@ services:
         -Djava.net.preferIPv4Stack=true
         -XX:HeapDumpPath=/workspace/logs
         -Xlog:gc=debug:file=/workspace/logs/gc.log::filecount=1,filesize=10M
+        -XX:NativeMemoryTracking=detail
       spring.application.name: main-service-docker
       logging.file.enabled: false
-      client.dataService.host: http://host.docker.internal:8070
+      client.dataService.host: http://host.docker.internal:8090
       sync.worker.minDelaysMs: "${sync_worker_minDelaysMs}"
       sync.worker.maxDelaysMs: "${sync_worker_maxDelaysMs}"
       async.threads: "${async_threads}"
