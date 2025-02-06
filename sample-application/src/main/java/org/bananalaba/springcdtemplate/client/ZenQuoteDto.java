@@ -1,9 +1,8 @@
-package org.bananalaba.springcdtemplate.model;
+package org.bananalaba.springcdtemplate.client;
 
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.jackson.Jacksonized;
 
@@ -12,11 +11,12 @@ import lombok.extern.jackson.Jacksonized;
 @Jacksonized
 @Builder
 @EqualsAndHashCode
-public class SampleDto {
+public class ZenQuoteDto {
 
-    @NonNull
-    private final String message;
-    @NonNull
-    private final String nodeIp;
+    private final String q;
+    private final String a;
+    private final String i;
+    private final int c;
+    private final String h;
 
 }

@@ -35,6 +35,17 @@ pitest {
     outputFormats = ['XML', 'HTML']
 }
 
+ext {
+    set('springCloudVersion', "2023.0.5")
+}
+
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
+}
+
 dependencies {
     implementation libs.commons.lang
     implementation libs.guava
@@ -42,6 +53,7 @@ dependencies {
     implementation "org.springframework.boot:spring-boot-starter-web"
     implementation "org.springframework.boot:spring-boot-starter-actuator"
     implementation "org.springframework.boot:spring-boot-starter-aop"
+    implementation "org.springframework.cloud:spring-cloud-starter-openfeign"
 
     implementation "io.micrometer:micrometer-tracing"
     implementation "io.micrometer:micrometer-tracing-bridge-otel"
@@ -52,6 +64,9 @@ dependencies {
     implementation project(":sample-model")
 
     testImplementation "org.springframework.boot:spring-boot-starter-test"
+
+    integrationTestCompileOnly libs.lombok
+    integrationTestAnnotationProcessor libs.lombok
 }
 
 tasks.register("itest", Test) {
