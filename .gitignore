@@ -6,6 +6,7 @@
 */out/
 /**/logs/
 local-infrastructure/env/docker/.env
+local-infrastructure/app/secrets
 gradle-app.setting
 !gradle-wrapper.jar
 .gradletasknamecache

@@ -5,5 +5,5 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 @RepositoryRestResource(collectionResourceRel = "messages", path = "messages")
-public interface MessageRecordRepository extends CrudRepository<MessageRecord, Long> {
+public interface MessageRecordRepository extends CrudRepository<MessageRecord, String> {
 }
