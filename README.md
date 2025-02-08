@@ -23,6 +23,7 @@
 # How to build and run
 
 ## !!! TO FIX ON THIS BRANCH
+### Local docker
 The Docker Compose in `local-infrastructure/app` needs adjustments:
 - add the following environment variables
 ```
@@ -37,6 +38,9 @@ to: /app/secrets/postgre-secrets.properties
 ```
 
 Alternatively, simply run the main class from the IDE and specify the above environment variables (the secrets file must be an absolute path).
+
+### E2E tests
+These need to be adjusted against the actual API changes.
 
 ## Prerequisites
 1. Docker daemon and Docker Compose CLI.
