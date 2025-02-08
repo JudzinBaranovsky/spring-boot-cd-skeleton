@@ -52,7 +52,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Publish code style report
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: codestyle-report
           path: "**/build/reports/checkstyle/*.html"
@@ -125,19 +125,19 @@ jobs:
         run: ./gradlew pitest
 
       - name: Publish Bugs Scan reports
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: scans-and-coverage
           path: "**/build/reports/spotbugs/*.html"
 
       - name: Publish Dependencies Scan reports
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: scans-and-coverage
           path: "**/build/reports/dependency-check-report.html"
 
       - name: Publish Coverage reports
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: scans-and-coverage
           path: "**/build/reports/pitest"
