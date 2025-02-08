@@ -17,5 +17,11 @@ services:
         value: 10000
       - key: node.ip
         value: "127.0.0.1"
+      - key: integration.zen-quotes.api.url
+        value: https://zenquotes.io/
+      - key: secrets.postgres.path
+        value: file:app/secrets/postgre-secrets.properties
+      - key: spring.profiles.active
+        value: prod
     region: frankfurt
 version: "1"
