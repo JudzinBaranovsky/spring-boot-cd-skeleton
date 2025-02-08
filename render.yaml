@@ -20,7 +20,7 @@ services:
       - key: integration.zen-quotes.api.url
         value: https://zenquotes.io/
       - key: secrets.postgres.path
-        value: file:app/secrets/postgre-secrets.properties
+        value: file:/etc/secrets/postgre-secrets.properties
       - key: spring.profiles.active
         value: prod
     region: frankfurt
