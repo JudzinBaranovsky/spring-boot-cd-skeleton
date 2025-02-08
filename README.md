@@ -22,6 +22,22 @@
 
 # How to build and run
 
+## !!! TO FIX ON THIS BRANCH
+The Docker Compose in `local-infrastructure/app` needs adjustments:
+- add the following environment variables
+```
+integration.zen-quotes.api.url=https://zenquotes.io/
+secrets.postgres.path=file:app/secrets/postgre-secrets.properties
+spring.profiles.active=prod
+```
+- add a mount volume
+```
+from: ./secrets/postgre-secrets.properties
+to: /app/secrets/postgre-secrets.properties
+```
+
+Alternatively, simply run the main class from the IDE and specify the above environment variables (the secrets file must be an absolute path).
+
 ## Prerequisites
 1. Docker daemon and Docker Compose CLI.
 2. K8s (minikube or K8s built into Docker Desktop).
