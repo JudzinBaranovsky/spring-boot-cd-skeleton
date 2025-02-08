@@ -127,17 +127,17 @@ jobs:
       - name: Publish Bugs Scan reports
         uses: actions/upload-artifact@v4
         with:
-          name: scans-and-coverage
+          name: spotbugs-report
           path: "**/build/reports/spotbugs/*.html"
 
       - name: Publish Dependencies Scan reports
         uses: actions/upload-artifact@v4
         with:
-          name: scans-and-coverage
+          name: dependencies-scan
           path: "**/build/reports/dependency-check-report.html"
 
       - name: Publish Coverage reports
         uses: actions/upload-artifact@v4
         with:
-          name: scans-and-coverage
+          name: pitest-coverage
           path: "**/build/reports/pitest"
