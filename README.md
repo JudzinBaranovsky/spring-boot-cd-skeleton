@@ -33,7 +33,8 @@
 2. Build an application image: `gradlew bootBuildImage`.
 
 ## Running locally
-0. **One-time setup**
+### Option A - Docker Compose - **TO BE FIXED, NOT UP TO DATE** 
+0. One-time setup
     1. Create a `local-infrastructure/env/docker/.env` file with the following properties:
    ```
     KIBANA_SYSTEM_PASSWORD=<some password>
@@ -56,6 +57,9 @@
     3. `manage-env.ps1 stop` - stop the application and monitoring containers
     4. `manage-app.ps1 stop` - stop the application container
     5. `manage-app.ps1 destroy` - stop and remove the application container
+
+### Option B - from IDE
+Simply run the `LocalRunner` main class from `sample-application/src/integrationTest`.
 
 ## Local E2E
 1. Run locally (see above).

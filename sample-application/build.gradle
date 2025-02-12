@@ -49,9 +49,16 @@ dependencies {
 
     implementation "org.codehaus.janino:janino:3.1.8"
 
+    implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
+    runtimeOnly 'org.postgresql:postgresql'
+
     implementation project(":sample-model")
 
     testImplementation "org.springframework.boot:spring-boot-starter-test"
+
+    integrationTestImplementation 'org.springframework.boot:spring-boot-testcontainers'
+    integrationTestImplementation 'org.testcontainers:junit-jupiter'
+    integrationTestImplementation 'org.testcontainers:postgresql'
 }
 
 tasks.register("itest", Test) {
