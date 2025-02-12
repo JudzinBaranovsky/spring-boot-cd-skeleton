@@ -14,7 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 
-@SpringBootTest(properties = "node.ip=127.0.0.1")
+@SpringBootTest
 @Import(LocalRunnerConfig.class)
 public class OrderRepositoryTest {
 

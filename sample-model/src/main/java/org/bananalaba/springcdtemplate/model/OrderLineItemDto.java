@@ -1,9 +1,10 @@
 package org.bananalaba.springcdtemplate.model;
 
+import java.math.BigDecimal;
+
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.jackson.Jacksonized;
 
@@ -11,12 +12,11 @@ import lombok.extern.jackson.Jacksonized;
 @RequiredArgsConstructor
 @Jacksonized
 @Builder
-@EqualsAndHashCode
-public class SampleDto {
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+public class OrderLineItemDto {
 
-    @NonNull
-    private final String message;
-    @NonNull
-    private final String nodeIp;
+    private final String productName;
+    private final int quantity;
+    private final BigDecimal priceUsd;
 
 }
