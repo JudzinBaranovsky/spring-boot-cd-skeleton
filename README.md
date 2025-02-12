@@ -61,6 +61,9 @@
 ### Option B - from IDE
 Simply run the `LocalRunner` main class from `sample-application/src/integrationTest`.
 
+### Exploring the APIs
+Visit `http://localhost:8080/swagger-ui/index.html` for interactive API docs.
+
 ## Local E2E
 1. Run locally (see above).
 2. Run the tests: `gradlew :e2e-tests:acceptanceTest`
