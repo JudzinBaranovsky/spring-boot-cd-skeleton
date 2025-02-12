@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: sample-application
+  datasource:
+    driver-class-name: org.postgresql.Driver
+  flyway:
+    locations: classpath:migrations/db
+
+management:
+  otlp:
+    tracing:
+      endpoint: http://localhost:4318/v1/traces
+  tracing:
+    sampling:
+      probability: 1.0
+  endpoints:
+    web:
+      exposure:
+        include: health

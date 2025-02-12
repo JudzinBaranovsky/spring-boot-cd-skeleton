@@ -51,6 +51,7 @@ dependencies {
 
     implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
     runtimeOnly 'org.postgresql:postgresql'
+    implementation "org.flywaydb:flyway-database-postgresql"
 
     implementation project(":sample-model")
 
