@@ -6,6 +6,7 @@ import org.bananalaba.springcdtemplate.logging.Loggable;
 import org.bananalaba.springcdtemplate.model.OrderDto;
 import org.bananalaba.springcdtemplate.model.OrderReferenceDto;
 import org.bananalaba.springcdtemplate.service.OrderService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,10 +28,11 @@ public class OrderController {
         return service.get(id);
     }
 
-    @PostMapping(path = "/", consumes = "application/json", produces = "application/json")
-    public OrderReferenceDto create(final @RequestBody OrderDto order) {
+    @PostMapping(path = "", consumes = "application/json", produces = "application/json")
+    public ResponseEntity<OrderReferenceDto> create(final @RequestBody OrderDto order) {
         var id = service.create(order);
-        return new OrderReferenceDto(id);
+        return ResponseEntity.status(201)
+            .body(new OrderReferenceDto(id));
     }
 
 }
