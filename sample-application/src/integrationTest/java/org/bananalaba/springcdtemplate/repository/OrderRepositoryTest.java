@@ -6,15 +6,17 @@ import java.math.BigDecimal;
 import java.util.Set;
 
 import org.bananalaba.springcdtemplate.local.LocalRunnerConfig;
-import org.bananalaba.springcdtemplate.persistence.model.Order;
-import org.bananalaba.springcdtemplate.persistence.model.OrderLineItem;
+import org.bananalaba.springcdtemplate.persistence.model.OrderEntity;
+import org.bananalaba.springcdtemplate.persistence.model.OrderLineItemEntity;
 import org.bananalaba.springcdtemplate.persistence.repository.OrderRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
+import org.springframework.test.context.ActiveProfiles;
 
 @SpringBootTest
+@ActiveProfiles("postgresql")
 @Import(LocalRunnerConfig.class)
 public class OrderRepositoryTest {
 
@@ -23,11 +25,11 @@ public class OrderRepositoryTest {
 
     @Test
     public void shouldSaveOrder() {
-        var order = new Order(
+        var order = new OrderEntity(
             null,
             System.currentTimeMillis(),
             Set.of(
-                new OrderLineItem("foo", 1, BigDecimal.ONE)
+                new OrderLineItemEntity("foo", 1, BigDecimal.ONE)
             )
         );
 

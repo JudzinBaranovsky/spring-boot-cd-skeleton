@@ -15,7 +15,7 @@ import org.springframework.data.relational.core.mapping.Table;
 @Getter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Table("line_item")
-public class OrderLineItem {
+public class OrderLineItemEntity {
 
     @Id
     @EqualsAndHashCode.Include
@@ -24,13 +24,13 @@ public class OrderLineItem {
     private final int quantity;
     private final BigDecimal priceUsd;
 
-    public OrderLineItem(final String productName, final int quantity, final BigDecimal priceUsd) {
+    public OrderLineItemEntity(final String productName, final int quantity, final BigDecimal priceUsd) {
         this(null, productName, quantity, priceUsd);
     }
 
     @Builder
     @PersistenceCreator
-    public OrderLineItem(final Long id, final @NonNull String productName, final int quantity, final @NonNull BigDecimal priceUsd) {
+    public OrderLineItemEntity(final Long id, final @NonNull String productName, final int quantity, final @NonNull BigDecimal priceUsd) {
         this.id = id;
         this.productName = productName;
 

@@ -22,7 +22,7 @@ import org.springframework.test.web.servlet.MockMvc;
 @SpringBootTest
 @Import(LocalRunnerConfig.class)
 @AutoConfigureMockMvc
-public class OrderControllerTest {
+public abstract class OrderControllerTest {
 
     @Autowired
     private MockMvc mvc;
@@ -62,7 +62,7 @@ public class OrderControllerTest {
     }
 
     @Test
-    public void shouldFailGettingMissingOrder() throws Exception{
+    public void shouldFailGettingMissingOrder() throws Exception {
         var responseOnGet = mvc.perform(get("/api/v1/orders/-1"))
             .andReturn()
             .getResponse();

@@ -26,14 +26,15 @@ public class OrderControllerTest {
     @Test
     public void shouldCreateOrder() {
         var order = new OrderDto(null, List.of(
-           new OrderLineItemDto("LG LCD", 1, new BigDecimal("1500"))
+            new OrderLineItemDto("LG LCD", 1, new BigDecimal("1500"))
         ));
 
         var expected = 123L;
         when(orderService.create(order)).thenReturn(expected);
 
         var actual = controller.create(order);
-        assertThat(actual.getId()).isEqualTo(expected);
+        assertThat(actual.getStatusCode().value()).isEqualTo(201);
+        assertThat(actual.getBody().getId()).isEqualTo(expected);
     }
 
 }

@@ -14,7 +14,7 @@ import org.springframework.data.relational.core.mapping.Table;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Getter
 @Table("order")
-public class Order {
+public class OrderEntity {
 
     @Id
     @With
@@ -22,7 +22,7 @@ public class Order {
     private final Long id;
     private final long dateTimeMillisCreated;
     @NonNull
-    private final Set<OrderLineItem> lineItems;
+    private final Set<OrderLineItemEntity> lineItems;
 
 
 }
