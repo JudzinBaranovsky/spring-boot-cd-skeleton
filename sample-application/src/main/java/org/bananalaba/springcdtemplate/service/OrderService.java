@@ -23,7 +23,7 @@ public class OrderService {
     public OrderDto get(final long id) {
         var model = repository.findById(id);
         return model.map(mapper::toDto)
-            .orElseThrow(() -> new IllegalArgumentException("Order not found"));
+            .orElseThrow(() -> new EntityNotFoundException("Order not found"));
     }
 
 }

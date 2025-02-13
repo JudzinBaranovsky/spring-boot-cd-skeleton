@@ -61,6 +61,15 @@ public class OrderControllerTest {
         assertThat(actual.getLineItems()).usingRecursiveFieldByFieldElementComparator().isEqualTo(order.getLineItems());
     }
 
+    @Test
+    public void shouldFailGettingMissingOrder() throws Exception{
+        var responseOnGet = mvc.perform(get("/api/v1/orders/-1"))
+            .andReturn()
+            .getResponse();
+
+        assertThat(responseOnGet.getStatus()).isEqualTo(404);
+    }
+
     private String toJson(Object object) {
         try {
             return jsonMapper.writeValueAsString(object);
