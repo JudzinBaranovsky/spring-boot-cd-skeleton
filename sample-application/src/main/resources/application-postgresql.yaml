@@ -3,3 +3,5 @@ spring:
     driver-class-name: org.postgresql.Driver
   flyway:
     locations: classpath:migrations/postgresql
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration

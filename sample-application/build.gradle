@@ -65,6 +65,9 @@ dependencies {
 
     implementation "org.mapstruct:mapstruct:${rev_mapstruct}"
     annotationProcessor "org.mapstruct:mapstruct-processor:${rev_mapstruct}"
+
+    implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
+    integrationTestImplementation "org.testcontainers:mongodb"
 }
 
 tasks.register("itest", Test) {
