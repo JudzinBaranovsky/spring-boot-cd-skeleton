@@ -68,6 +68,8 @@ dependencies {
 
     implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
     integrationTestImplementation "org.testcontainers:mongodb"
+    implementation "org.liquibase:liquibase-core"
+    implementation "org.liquibase.ext:liquibase-mongodb:4.31.0"
 }
 
 tasks.register("itest", Test) {
