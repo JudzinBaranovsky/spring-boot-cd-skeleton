@@ -24,7 +24,7 @@ public class OrderController {
     private OrderService service;
 
     @GetMapping(path = "/{id}", produces = "application/json")
-    public OrderDto getById(final @PathVariable long id) {
+    public OrderDto getById(final @PathVariable String id) {
         return service.get(id);
     }
 

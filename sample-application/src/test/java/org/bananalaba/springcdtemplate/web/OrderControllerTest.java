@@ -29,7 +29,7 @@ public class OrderControllerTest {
             new OrderLineItemDto("LG LCD", 1, new BigDecimal("1500"))
         ));
 
-        var expected = 123L;
+        var expected = "123";
         when(orderService.create(order)).thenReturn(expected);
 
         var actual = controller.create(order);

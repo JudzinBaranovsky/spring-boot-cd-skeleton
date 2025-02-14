@@ -6,9 +6,9 @@ import java.math.BigDecimal;
 import java.util.Set;
 
 import org.bananalaba.springcdtemplate.local.LocalRunnerConfig;
-import org.bananalaba.springcdtemplate.persistence.model.OrderEntity;
-import org.bananalaba.springcdtemplate.persistence.model.OrderLineItemEntity;
-import org.bananalaba.springcdtemplate.persistence.repository.OrderRepository;
+import org.bananalaba.springcdtemplate.persistence.model.entity.OrderEntity;
+import org.bananalaba.springcdtemplate.persistence.model.entity.OrderLineItemEntity;
+import org.bananalaba.springcdtemplate.persistence.repository.jdbc.OrderEntitiesRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -21,7 +21,7 @@ import org.springframework.test.context.ActiveProfiles;
 public class OrderRepositoryTest {
 
     @Autowired
-    private OrderRepository repository;
+    private OrderEntitiesRepository repository;
 
     @Test
     public void shouldSaveOrder() {

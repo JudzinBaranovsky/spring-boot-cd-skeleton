@@ -13,6 +13,6 @@ import lombok.extern.jackson.Jacksonized;
 @EqualsAndHashCode
 public class OrderReferenceDto {
 
-    private final Long id;
+    private final String id;
 
 }

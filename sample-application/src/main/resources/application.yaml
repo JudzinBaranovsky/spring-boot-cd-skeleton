@@ -1,6 +1,8 @@
 spring:
   application:
     name: sample-application
+  liquibase:
+    enabled: false
 
 management:
   otlp:

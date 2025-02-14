@@ -1,4 +1,4 @@
-package org.bananalaba.springcdtemplate.persistence.model;
+package org.bananalaba.springcdtemplate.persistence.model.entity;
 
 import static org.apache.commons.lang3.Validate.isTrue;
 

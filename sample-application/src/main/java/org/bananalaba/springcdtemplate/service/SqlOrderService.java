@@ -3,23 +3,28 @@ package org.bananalaba.springcdtemplate.service;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
 import org.bananalaba.springcdtemplate.model.OrderDto;
-import org.bananalaba.springcdtemplate.persistence.repository.OrderRepository;
+import org.bananalaba.springcdtemplate.persistence.repository.jdbc.OrderEntitiesRepository;
 
 @AllArgsConstructor
 public class SqlOrderService implements OrderService {
 
     @NonNull
-    private final OrderRepository repository;
+    private final OrderEntitiesRepository repository;
     @NonNull
     private final OrderMapper mapper;
 
-    public long create(@NonNull final OrderDto order) {
+    @Override
+    public String create(@NonNull final OrderDto order) {
         var model = mapper.toEntity(order);
-        return repository.save(model).getId();
+        var generatedId = repository.save(model).getId();
+
+        return String.valueOf(generatedId);
     }
 
-    public OrderDto get(final long id) {
-        var model = repository.findById(id);
+    @Override
+    public OrderDto get(@NonNull final String id) {
+        var numericId = Long.valueOf(id);
+        var model = repository.findById(numericId);
         return model.map(mapper::toDto)
             .orElseThrow(() -> new EntityNotFoundException("Order not found"));
     }

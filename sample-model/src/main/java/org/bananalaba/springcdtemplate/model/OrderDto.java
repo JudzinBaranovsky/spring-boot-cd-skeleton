@@ -7,6 +7,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import lombok.With;
 import lombok.extern.jackson.Jacksonized;
 
 @Getter
@@ -16,8 +17,9 @@ import lombok.extern.jackson.Jacksonized;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class OrderDto {
 
+    @With
     @EqualsAndHashCode.Include
-    private final Long id;
+    private final String id;
     @NonNull
     private final List<OrderLineItemDto> lineItems;
 

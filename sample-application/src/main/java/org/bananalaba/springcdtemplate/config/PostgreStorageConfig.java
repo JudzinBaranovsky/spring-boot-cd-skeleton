@@ -2,8 +2,8 @@ package org.bananalaba.springcdtemplate.config;
 
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
-import org.bananalaba.springcdtemplate.persistence.repository.OrderRepository;
-import org.bananalaba.springcdtemplate.persistence.repository.Repositories;
+import org.bananalaba.springcdtemplate.persistence.repository.jdbc.EntityRepositories;
+import org.bananalaba.springcdtemplate.persistence.repository.jdbc.OrderEntitiesRepository;
 import org.bananalaba.springcdtemplate.service.OrderMapper;
 import org.bananalaba.springcdtemplate.service.OrderService;
 import org.bananalaba.springcdtemplate.service.SqlOrderService;
@@ -18,7 +18,7 @@ import org.springframework.data.relational.core.mapping.RelationalPersistentEnti
 
 @Configuration
 @Slf4j
-@EnableJdbcRepositories(basePackageClasses = Repositories.class)
+@EnableJdbcRepositories(basePackageClasses = EntityRepositories.class)
 @Profile("postgresql")
 public class PostgreStorageConfig extends AbstractJdbcConfiguration {
 
@@ -36,7 +36,7 @@ public class PostgreStorageConfig extends AbstractJdbcConfiguration {
     }
 
     @Bean
-    public OrderService orderService(final @NonNull OrderRepository repository, final @NonNull OrderMapper mapper) {
+    public OrderService orderService(final @NonNull OrderEntitiesRepository repository, final @NonNull OrderMapper mapper) {
         return new SqlOrderService(repository, mapper);
     }
 
