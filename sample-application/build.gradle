@@ -52,6 +52,7 @@ dependencies {
     implementation project(":sample-model")
 
     testImplementation "org.springframework.boot:spring-boot-starter-test"
+    testImplementation 'commons-io:commons-io:2.18.0'
 }
 
 tasks.register("itest", Test) {
