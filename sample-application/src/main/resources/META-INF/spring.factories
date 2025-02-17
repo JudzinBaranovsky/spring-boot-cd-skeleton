@@ -1,0 +1,1 @@
+org.springframework.boot.BootstrapRegistryInitializer=org.bananalaba.springcdtemplate.test.TestAwsSecretsManagerConfig

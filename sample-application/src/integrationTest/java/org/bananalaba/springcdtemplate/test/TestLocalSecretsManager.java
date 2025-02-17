@@ -11,7 +11,7 @@ import org.springframework.core.Ordered;
 import org.springframework.test.context.TestContext;
 import org.springframework.test.context.TestExecutionListener;
 
-public class TestSecretsManager implements TestExecutionListener, Ordered {
+public class TestLocalSecretsManager implements TestExecutionListener, Ordered {
 
     private File tmpDirectory;
 
