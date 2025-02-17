@@ -32,7 +32,7 @@
 1. Build, test, and analyse the code: `gradlew build`.
 2. Build an application image: `gradlew bootBuildImage`.
 
-## Running locally
+## Running locally - DOES NOT WORK OUT-OF-BOX, SEE WORKAROUND BELOW
 0. **One-time setup**
     1. Create a `local-infrastructure/env/docker/.env` file with the following properties:
    ```
@@ -56,6 +56,12 @@
     3. `manage-env.ps1 stop` - stop the application and monitoring containers
     4. `manage-app.ps1 stop` - stop the application container
     5. `manage-app.ps1 destroy` - stop and remove the application container
+
+## Running locally - WORKAROUND
+- this branch requires to choose one of the Spring profiles:
+  - basic - relies on two secrets written in a file specified via the `security.secrets.filePath` system property
+  - aws - relies on two secrets written in AWS Secrets Manager under the `/database-secrets`
+- both profiles are properly configured using a temp file and LocalStack respectively in the integration tests
 
 ## Local E2E
 1. Run locally (see above).
