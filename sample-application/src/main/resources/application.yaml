@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: sample-application
+
+management:
+    otlp:
+      tracing:
+        endpoint: http://localhost:4318/v1/traces
+    tracing:
+      sampling:
+        probability: 1.0
+    endpoints:
+      web:
+        exposure:
+          include: health
+
+okta:
+  oauth2:
+    issuer: ${auth0.resource.issuer}
+    audience: ${auth0.resource.audience}
