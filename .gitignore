@@ -12,3 +12,4 @@ gradle-app.setting
 
 /local-infrastructure/**/generated/
 /local-infrastructure/secrets.properties
+/local-infrastructure/app/secrets/
