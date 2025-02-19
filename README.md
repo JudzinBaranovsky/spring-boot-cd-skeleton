@@ -37,7 +37,21 @@
 This method is not updated for this branch. Need to align the env variables and add missing containers if need to use this way.
 
 ### IDE
-Run the LocalRunner main class from `sample-application/src/integrationTest`.
+The setup assumes that there is an Auth0 API with a machine-to-machine application auth.
+1. Follow this guide and prepare values for the following env variables:
+```
+auth0.resource.audience
+auth0.resource.issuer
+```
+2. Run the LocalRunner main class from `sample-application/src/integrationTest` with the env variables from step 1.
+3. Follow this guide and prepare values for the following env variables:
+```
+auth0.resource.audience
+auth0.client.id
+auth0.client.secret
+auth0.issuer.uri
+```
+4. Run the ProxyLocalRunner main class from `proxy-application/src/test` with the env variables from step 3.
 
 ## Local E2E
 1. Run locally (see above).

@@ -1,0 +1,16 @@
+server:
+  port: 9080
+
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          status-api-client:
+            provider: auth0-server
+            client-id: ${auth0.client.id}
+            client-secret: ${auth0.client.secret}
+            authorization-grant-type: client_credentials
+        provider:
+          auth0-server:
+            issuer-uri: ${auth0.issuer.uri}
