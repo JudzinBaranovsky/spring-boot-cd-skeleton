@@ -1,10 +1,9 @@
 package org.bananalaba.springcdtemplate.config;
 
-import java.util.List;
 import java.util.UUID;
 
-import org.bananalaba.springcdtemplate.dto.FileTransformationRequest;
 import org.bananalaba.springcdtemplate.queue.FileTransformationQueue;
+import org.bananalaba.springcdtemplate.queue.InMemoryFileTransformationQueue;
 import org.bananalaba.springcdtemplate.service.SystemClock;
 import org.bananalaba.springcdtemplate.service.TaskIdGenerator;
 import org.springframework.context.annotation.Bean;
@@ -27,17 +26,7 @@ public class FileTransformationModule {
 
     @Bean
     public FileTransformationQueue fileTransformationQueue() {
-        return new FileTransformationQueue() {
-            @Override
-            public void send(FileTransformationRequest request) {
-                throw new UnsupportedOperationException();
-            }
-
-            @Override
-            public List<FileTransformationRequest> poll() {
-                return List.of();
-            }
-        };
+        return new InMemoryFileTransformationQueue();
     }
 
 }

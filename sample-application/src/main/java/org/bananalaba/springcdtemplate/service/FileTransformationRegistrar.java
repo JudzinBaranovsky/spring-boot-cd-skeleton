@@ -34,6 +34,7 @@ public class FileTransformationRegistrar {
                     .outputFilePath(taskDefinition.getOutputFilePath())
                     .parameters(taskDefinition.getParameters())
                     .submissionTime(request.getSubmissionTime())
+                    .updateTimestamp(request.getSubmissionTime())
                     .build();
 
                 storage.create(registration);
