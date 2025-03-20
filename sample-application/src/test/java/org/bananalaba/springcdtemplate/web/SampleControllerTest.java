@@ -2,17 +2,17 @@ package org.bananalaba.springcdtemplate.web;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import org.bananalaba.springcdtemplate.model.SampleDto;
+import org.bananalaba.springcdtemplate.dto.FileTransformationRequest;
 import org.junit.jupiter.api.Test;
 
 public class SampleControllerTest {
 
-    private final SampleController controller = new SampleController("192.168.0.1");
+    private final FileTransformationController controller = new FileTransformationController("192.168.0.1");
 
     @Test
     public void shouldGreet() {
         var actual = controller.hello();
-        assertThat(actual).isEqualTo(new SampleDto("Hello, World", "192.168.0.1"));
+        assertThat(actual).isEqualTo(new FileTransformationRequest("Hello, World", "192.168.0.1"));
     }
 
 }

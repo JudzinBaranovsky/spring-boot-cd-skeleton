@@ -1,4 +1,6 @@
-package org.bananalaba.springcdtemplate.model;
+package org.bananalaba.springcdtemplate.dto;
+
+import java.time.Instant;
 
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -12,11 +14,13 @@ import lombok.extern.jackson.Jacksonized;
 @Jacksonized
 @Builder
 @EqualsAndHashCode
-public class SampleDto {
+public class FileTransformationRequest {
 
     @NonNull
-    private final String message;
+    private final String taskId;
     @NonNull
-    private final String nodeIp;
+    private final FileTransformationDefinitionDto definition;
+    @NonNull
+    private final Instant submissionTime;
 
 }
