@@ -51,6 +51,12 @@ dependencies {
 
     implementation project(":sample-model")
 
+    integrationTestImplementation 'org.springframework.boot:spring-boot-testcontainers'
+    integrationTestImplementation 'org.testcontainers:junit-jupiter'
+
+    implementation "org.springframework.kafka:spring-kafka"
+    integrationTestImplementation "org.testcontainers:kafka"
+
     testImplementation "org.springframework.boot:spring-boot-starter-test"
 }
 

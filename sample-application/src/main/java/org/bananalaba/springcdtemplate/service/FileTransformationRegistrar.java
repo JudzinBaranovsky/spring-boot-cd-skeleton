@@ -1,13 +1,14 @@
 package org.bananalaba.springcdtemplate.service;
 
+import java.util.List;
+
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.bananalaba.springcdtemplate.dto.FileTransformationRequest;
 import org.bananalaba.springcdtemplate.dto.FileTransformationStatusDto.StatusCode;
 import org.bananalaba.springcdtemplate.model.FileTransformationTask;
-import org.bananalaba.springcdtemplate.queue.FileTransformationQueue;
 import org.bananalaba.springcdtemplate.storage.FileTransformationTaskStorage;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -16,15 +17,11 @@ import org.springframework.stereotype.Component;
 public class FileTransformationRegistrar {
 
     @NonNull
-    private final FileTransformationQueue queue;
-    @NonNull
     private final FileTransformationTaskStorage storage;
 
-    @Scheduled(fixedDelay = 1000)
-    public void registerNewTasks() {
+    public void registerNewTasks(@NonNull final List<FileTransformationRequest> requests) {
         log.info("registering new tasks");
-        queue.poll()
-            .forEach(request -> {
+        requests.forEach(request -> {
                 var taskDefinition = request.getDefinition();
 
                 var registration = FileTransformationTask.builder()
