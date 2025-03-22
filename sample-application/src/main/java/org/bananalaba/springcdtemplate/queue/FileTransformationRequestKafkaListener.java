@@ -17,9 +17,7 @@ public class FileTransformationRequestKafkaListener {
     private final FileTransformationRegistrar registrar;
 
     @KafkaListener(
-        id = "file-transformation-request-registrar",
         topics = "${fileTransformation.kafka.topic.name}",
-        properties = "max.poll.interval.ms:${fileTransformation.kafka.topic.pollMs:1000}",
         containerFactory = "fileTransformationRequestKafkaListenerContainerFactory"
     )
     public void handle(@NonNull final List<FileTransformationRequest> requests) {

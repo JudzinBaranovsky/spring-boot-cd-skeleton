@@ -10,6 +10,7 @@ import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.bananalaba.springcdtemplate.dto.FileTransformationRequest;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.kafka.KafkaConnectionDetails;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -30,6 +31,8 @@ import org.springframework.kafka.support.serializer.JsonSerializer;
 public class FileTransformationKafkaQueueModule {
 
     private final KafkaConnectionDetails kafkaConnectionDetails;
+    @Value("${fileTransformation.kafka.topic.pollMs:1000}")
+    private final int maxPollMs;
 
     @Bean
     public KafkaTemplate<String, FileTransformationRequest> fileTransformationRequestKafkaTemplate() {
@@ -59,6 +62,8 @@ public class FileTransformationKafkaQueueModule {
     public ConsumerFactory<String, FileTransformationRequest> consumerFactory() {
         var props = new HashMap<String, Object>();
         props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaConnectionDetails.getBootstrapServers());
+        props.put(ConsumerConfig.GROUP_ID_CONFIG, "file-transformation-request-registrar");
+        props.put(ConsumerConfig.MAX_POLL_INTERVAL_MS_CONFIG, maxPollMs);
 
         var valueDeserializer = new JsonDeserializer<>(fileTransformationKafkaJsonMapper())
             .copyWithType(FileTransformationRequest.class);
