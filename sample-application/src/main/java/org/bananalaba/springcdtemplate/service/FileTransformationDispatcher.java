@@ -56,7 +56,7 @@ public class FileTransformationDispatcher {
 
     public FileTransformationStatusDto submitSync(@NonNull final FileTransformationDefinitionDto definition) {
         var request = createRequest(definition);
-        log.info("processing sync request {}", request);
+        log.info("submitting sync request {}", request);
 
         return exchange.sendAndReceive(request);
     }

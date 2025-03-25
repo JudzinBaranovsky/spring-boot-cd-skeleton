@@ -38,7 +38,7 @@ public class FileTransformationTest {
     private ObjectMapper jsonMapper;
 
     @Test
-    public void shouldProcessTask() throws Exception {
+    public void shouldProcessAsyncTask() throws Exception {
         var taskDefinition = FileTransformationDefinitionDto.builder()
             .inputFileUrl("urlA")
             .outputFilePath("urlB")
@@ -68,6 +68,26 @@ public class FileTransformationTest {
         var statusAfterUpdate = fromJson(statusResponse.getContentAsString(), FileTransformationStatusDto.class);
         assertThat(statusAfterUpdate.getTaskId()).isEqualTo(initialStatus.getTaskId());
         assertThat(statusAfterUpdate.getStatus()).isEqualTo(COMPLETED);
+    }
+
+    @Test
+    public void shouldProcessSyncTask() throws Exception {
+        var taskDefinition = FileTransformationDefinitionDto.builder()
+            .inputFileUrl("urlA")
+            .outputFilePath("urlB")
+            .parameters(Map.of("paramA", "valueA"))
+            .build();
+        var submissionContent = toJson(taskDefinition);
+        var submissionResponse = mvc.perform(post("/api/v1/file-transformations/submitSync").content(submissionContent).contentType("application/json"))
+            .andReturn()
+            .getResponse();
+
+        assertThat(submissionResponse.getStatus()).isEqualTo(200);
+        assertThat(submissionResponse.getContentType()).isEqualTo("application/json");
+
+        var initialStatus = fromJson(submissionResponse.getContentAsString(), FileTransformationStatusDto.class);
+        assertThat(initialStatus.getTaskId()).isNotEmpty();
+        assertThat(initialStatus.getStatus()).isEqualTo(COMPLETED);
     }
 
     private String toJson(final Object object) {
