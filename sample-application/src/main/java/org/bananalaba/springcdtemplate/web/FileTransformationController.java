@@ -4,7 +4,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.bananalaba.springcdtemplate.dto.FileTransformationDefinitionDto;
 import org.bananalaba.springcdtemplate.dto.FileTransformationStatusDto;
-import org.bananalaba.springcdtemplate.service.FileTransformationManager;
+import org.bananalaba.springcdtemplate.service.FileTransformationDispatcher;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,16 +18,21 @@ import org.springframework.web.bind.annotation.RestController;
 public class FileTransformationController {
 
     @NonNull
-    private final FileTransformationManager service;
+    private final FileTransformationDispatcher dispatcher;
 
     @GetMapping(path = "/status/{id}", produces = "application/json")
     public FileTransformationStatusDto getStatus(@NonNull @PathVariable final String id) {
-        return service.getStatus(id);
+        return dispatcher.getStatus(id);
     }
 
-    @PostMapping(path = "/submit", produces = "application/json", consumes = "application/json")
-    public FileTransformationStatusDto submit(@NonNull @RequestBody final FileTransformationDefinitionDto definition) {
-        return service.submit(definition);
+    @PostMapping(path = "/submitAsync", produces = "application/json", consumes = "application/json")
+    public FileTransformationStatusDto submitAsync(@NonNull @RequestBody final FileTransformationDefinitionDto definition) {
+        return dispatcher.submitAsync(definition);
+    }
+
+    @PostMapping(path = "/submitSync", produces = "application/json", consumes = "application/json")
+    public FileTransformationStatusDto submitSync(@NonNull @RequestBody final FileTransformationDefinitionDto definition) {
+        return dispatcher.submitSync(definition);
     }
 
 }

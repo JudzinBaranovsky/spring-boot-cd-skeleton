@@ -21,6 +21,9 @@ public class FileTransformationWorker {
     private final SystemClock systemClock;
     private final long minTaskRetryDelayMs;
 
+    @NonNull
+    private final FileTransformer transformer;
+
     public void run() {
         var startTime = systemClock.currentTime();
         log.info("worker {} triggered at {}", id, startTime);
@@ -36,7 +39,7 @@ public class FileTransformationWorker {
     }
 
     private void process(final FileTransformationTask task) {
-        systemClock.sleep(1000);
+        transformer.process(task.getInputFileUrl(), task.getOutputFilePath(), task.getParameters());
 
         var endTime = systemClock.currentTime();
         storage.completeTask(task.getTaskId(), endTime);

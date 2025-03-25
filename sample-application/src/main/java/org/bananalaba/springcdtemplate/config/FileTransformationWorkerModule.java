@@ -5,6 +5,7 @@ import static org.apache.commons.lang3.Validate.isTrue;
 import java.time.Duration;
 
 import org.bananalaba.springcdtemplate.service.FileTransformationWorker;
+import org.bananalaba.springcdtemplate.service.FileTransformer;
 import org.bananalaba.springcdtemplate.service.SystemClock;
 import org.bananalaba.springcdtemplate.storage.FileTransformationTaskStorage;
 import org.springframework.beans.factory.annotation.Value;
@@ -36,13 +37,21 @@ public class FileTransformationWorkerModule {
     }
 
     @Bean
-    public TaskScheduler fileTransformationTaskScheduler(final FileTransformationTaskStorage storage, final SystemClock systemClock) {
+    public TaskScheduler fileTransformationTaskScheduler(final FileTransformationTaskStorage storage,
+                                                         final SystemClock systemClock,
+                                                         final FileTransformer transformer) {
         var scheduler = new ThreadPoolTaskScheduler();
         scheduler.setPoolSize(poolSize);
         scheduler.initialize();
 
         for (int i = 0; i < poolSize; i++) {
-            var worker = new FileTransformationWorker(storage, "ft-worker-" + i, systemClock, minTaskRetryDelayMs);
+            var worker = new FileTransformationWorker(
+                storage,
+                "ft-worker-" + i,
+                systemClock,
+                minTaskRetryDelayMs,
+                transformer
+            );
             scheduler.scheduleAtFixedRate(worker::run, Duration.ofMillis(workerTriggerRateMs));
         }
 

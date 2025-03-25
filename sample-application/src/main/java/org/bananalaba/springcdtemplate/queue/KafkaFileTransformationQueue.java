@@ -1,7 +1,5 @@
 package org.bananalaba.springcdtemplate.queue;
 
-import java.util.List;
-
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.apache.kafka.clients.producer.ProducerRecord;
@@ -24,11 +22,6 @@ public class KafkaFileTransformationQueue implements FileTransformationQueue {
     public void send(@NonNull final FileTransformationRequest request) {
         var record = new ProducerRecord<>(topicName, request.getTaskId(), request);
         kafkaTemplate.send(record);
-    }
-
-    @Override
-    public List<FileTransformationRequest> poll() {
-        throw new UnsupportedOperationException();
     }
 
 }

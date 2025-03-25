@@ -21,8 +21,15 @@ import org.springframework.test.web.servlet.MockMvc;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-@Import(TestKafkaModule.class)
-@TestPropertySource(properties = "fileTransformation.kafka.topic.name=test-transformations")
+@Import({
+    TestKafkaModule.class,
+    TestRabbitMqModule.class
+})
+@TestPropertySource(properties = {
+    "fileTransformation.kafka.topic.name=test-transformations",
+    "fileTransformation.amqp.queue.name=test-transformations",
+    "fileTransformation.amqp.routing.key=test-transformations"
+})
 public class FileTransformationTest {
 
     @Autowired
@@ -38,7 +45,7 @@ public class FileTransformationTest {
             .parameters(Map.of("paramA", "valueA"))
             .build();
         var submissionContent = toJson(taskDefinition);
-        var submissionResponse = mvc.perform(post("/api/v1/file-transformations/submit").content(submissionContent).contentType("application/json"))
+        var submissionResponse = mvc.perform(post("/api/v1/file-transformations/submitAsync").content(submissionContent).contentType("application/json"))
             .andReturn()
             .getResponse();
 

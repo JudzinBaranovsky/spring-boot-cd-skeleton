@@ -57,6 +57,10 @@ dependencies {
     implementation "org.springframework.kafka:spring-kafka"
     integrationTestImplementation "org.testcontainers:kafka"
 
+    implementation "org.springframework.amqp:spring-amqp"
+    implementation "org.springframework.amqp:spring-rabbit"
+    integrationTestImplementation "org.testcontainers:rabbitmq"
+
     testImplementation "org.springframework.boot:spring-boot-starter-test"
 }
 
