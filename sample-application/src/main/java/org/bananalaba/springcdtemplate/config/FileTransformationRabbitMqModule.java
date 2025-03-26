@@ -19,6 +19,7 @@ import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.amqp.RabbitConnectionDetails;
 import org.springframework.boot.autoconfigure.amqp.RabbitConnectionDetails.Address;
 import org.springframework.context.annotation.Bean;
@@ -35,6 +36,9 @@ public class FileTransformationRabbitMqModule implements RabbitListenerConfigure
     @NonNull
     @Qualifier("fileTransformationJsonMapper")
     private final ObjectMapper jsonMapper;
+
+    @Value("${fileTransformation.amqp.replyTimeoutMs:5000}")
+    private final long syncTransformationTimeoutMs;
 
     @Override
     public void configureRabbitListeners(RabbitListenerEndpointRegistrar registrar) {
@@ -55,6 +59,7 @@ public class FileTransformationRabbitMqModule implements RabbitListenerConfigure
         var template = new RabbitTemplate(fileTransformatioRabbitConnectionFactory());
         template.setUseTemporaryReplyQueues(true);
         template.setMessageConverter(fileTransformationAmqpMessageConverter());
+        template.setReplyTimeout(syncTransformationTimeoutMs);
 
         return template;
     }
