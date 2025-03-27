@@ -44,7 +44,7 @@ dependencies {
     implementation "org.springframework.boot:spring-boot-starter-aop"
 
     implementation "io.micrometer:micrometer-tracing"
-    implementation "io.micrometer:micrometer-tracing-bridge-otel"
+    implementation "io.micrometer:micrometer-tracing-bridge-brave"
     implementation "io.opentelemetry:opentelemetry-exporter-otlp"
 
     implementation "org.codehaus.janino:janino:3.1.8"
@@ -59,6 +59,7 @@ dependencies {
 
     implementation "org.springframework.amqp:spring-amqp"
     implementation "org.springframework.amqp:spring-rabbit"
+    implementation "io.zipkin.brave:brave-instrumentation-spring-rabbit"
     integrationTestImplementation "org.testcontainers:rabbitmq"
 
     testImplementation "org.springframework.boot:spring-boot-starter-test"

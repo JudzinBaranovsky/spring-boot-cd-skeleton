@@ -3,6 +3,9 @@ package org.bananalaba.springcdtemplate.config;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import brave.Tracing;
+import brave.messaging.MessagingTracing;
+import brave.spring.rabbit.SpringRabbitTracing;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -40,6 +43,9 @@ public class FileTransformationRabbitMqModule implements RabbitListenerConfigure
     @Value("${fileTransformation.amqp.replyTimeoutMs:5000}")
     private final long syncTransformationTimeoutMs;
 
+    @NonNull
+    private final Tracing tracing;
+
     @Override
     public void configureRabbitListeners(RabbitListenerEndpointRegistrar registrar) {
         registrar.setContainerFactory(fileTransformationRequestAmqpListenerContainerFactory());
@@ -50,8 +56,9 @@ public class FileTransformationRabbitMqModule implements RabbitListenerConfigure
         var factory = new SimpleRabbitListenerContainerFactory();
         factory.setConnectionFactory(fileTransformatioRabbitConnectionFactory());
         factory.setMessageConverter(fileTransformationAmqpMessageConverter());
+        factory.setObservationEnabled(true);
 
-        return factory;
+        return springRabbitTracing().decorateSimpleRabbitListenerContainerFactory(factory);
     }
 
     @Bean
@@ -60,8 +67,9 @@ public class FileTransformationRabbitMqModule implements RabbitListenerConfigure
         template.setUseTemporaryReplyQueues(true);
         template.setMessageConverter(fileTransformationAmqpMessageConverter());
         template.setReplyTimeout(syncTransformationTimeoutMs);
+        template.setObservationEnabled(true);
 
-        return template;
+        return springRabbitTracing().decorateRabbitTemplate(template);
     }
 
     @Bean
@@ -83,6 +91,18 @@ public class FileTransformationRabbitMqModule implements RabbitListenerConfigure
     @Bean
     public MessageConverter fileTransformationAmqpMessageConverter() {
         return new Jackson2JsonMessageConverter(jsonMapper);
+    }
+
+    @Bean
+    public SpringRabbitTracing springRabbitTracing() {
+        return SpringRabbitTracing.newBuilder(messagingTracing())
+            .remoteServiceName("my-mq-service")
+            .build();
+    }
+
+    @Bean
+    public MessagingTracing messagingTracing() {
+        return MessagingTracing.create(tracing);
     }
 
 }
