@@ -13,6 +13,7 @@ import org.bananalaba.springcdtemplate.dto.FileTransformationDefinitionDto;
 import org.bananalaba.springcdtemplate.dto.FileTransformationStatusDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.actuate.observability.AutoConfigureObservability;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
@@ -30,6 +31,7 @@ import org.springframework.test.web.servlet.MockMvc;
     "fileTransformation.amqp.queue.name=test-transformations",
     "fileTransformation.amqp.routing.key=test-transformations"
 })
+@AutoConfigureObservability
 public class FileTransformationTest {
 
     @Autowired

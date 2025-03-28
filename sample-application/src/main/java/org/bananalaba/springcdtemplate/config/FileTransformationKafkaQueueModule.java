@@ -41,7 +41,10 @@ public class FileTransformationKafkaQueueModule {
 
     @Bean
     public KafkaTemplate<String, FileTransformationRequest> fileTransformationRequestKafkaTemplate() {
-        return new KafkaTemplate<>(fileTransformationRequestProducerFactory());
+        var template = new KafkaTemplate<>(fileTransformationRequestProducerFactory());
+        template.setObservationEnabled(true);
+
+        return template;
     }
 
     @Bean
@@ -58,7 +61,7 @@ public class FileTransformationKafkaQueueModule {
     public KafkaListenerContainerFactory<?> fileTransformationRequestKafkaListenerContainerFactory() {
         var factory = new ConcurrentKafkaListenerContainerFactory<String, FileTransformationRequest>();
         factory.setConsumerFactory(consumerFactory());
-        factory.setBatchListener(true);
+        factory.getContainerProperties().setObservationEnabled(true);
 
         return factory;
     }

@@ -20,8 +20,8 @@ public class FileTransformationRequestKafkaListener {
         topics = "${fileTransformation.kafka.topic.name}",
         containerFactory = "fileTransformationRequestKafkaListenerContainerFactory"
     )
-    public void handle(@NonNull final List<FileTransformationRequest> requests) {
-        registrar.registerNewTasks(requests);
+    public void handle(@NonNull final FileTransformationRequest request) {
+        registrar.registerNewTasks(List.of(request));
     }
 
 }
