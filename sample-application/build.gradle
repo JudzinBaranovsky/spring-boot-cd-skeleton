@@ -57,7 +57,6 @@ dependencies {
 
     implementation "org.springframework.amqp:spring-amqp"
     implementation "org.springframework.amqp:spring-rabbit"
-    implementation "io.zipkin.brave:brave-instrumentation-spring-rabbit"
     integrationTestImplementation "org.testcontainers:rabbitmq"
 
     testImplementation "org.springframework.boot:spring-boot-starter-test"

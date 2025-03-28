@@ -43,9 +43,6 @@ public class FileTransformationRabbitMqModule implements RabbitListenerConfigure
     @Value("${fileTransformation.amqp.replyTimeoutMs:5000}")
     private final long syncTransformationTimeoutMs;
 
-    @NonNull
-    private final Tracing tracing;
-
     @Override
     public void configureRabbitListeners(RabbitListenerEndpointRegistrar registrar) {
         registrar.setContainerFactory(fileTransformationRequestAmqpListenerContainerFactory());
@@ -58,7 +55,7 @@ public class FileTransformationRabbitMqModule implements RabbitListenerConfigure
         factory.setMessageConverter(fileTransformationAmqpMessageConverter());
         factory.setObservationEnabled(true);
 
-        return springRabbitTracing().decorateSimpleRabbitListenerContainerFactory(factory);
+        return factory;
     }
 
     @Bean
@@ -69,7 +66,7 @@ public class FileTransformationRabbitMqModule implements RabbitListenerConfigure
         template.setReplyTimeout(syncTransformationTimeoutMs);
         template.setObservationEnabled(true);
 
-        return springRabbitTracing().decorateRabbitTemplate(template);
+        return template;
     }
 
     @Bean
@@ -91,18 +88,6 @@ public class FileTransformationRabbitMqModule implements RabbitListenerConfigure
     @Bean
     public MessageConverter fileTransformationAmqpMessageConverter() {
         return new Jackson2JsonMessageConverter(jsonMapper);
-    }
-
-    @Bean
-    public SpringRabbitTracing springRabbitTracing() {
-        return SpringRabbitTracing.newBuilder(messagingTracing())
-            .remoteServiceName("my-mq-service")
-            .build();
-    }
-
-    @Bean
-    public MessagingTracing messagingTracing() {
-        return MessagingTracing.create(tracing);
     }
 
 }
