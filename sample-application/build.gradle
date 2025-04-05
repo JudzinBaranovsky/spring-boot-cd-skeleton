@@ -35,6 +35,7 @@ dependencies {
     implementation libs.springBoot.starter.actuator
     implementation libs.springBoot.cloud.resilience4j
     implementation libs.springBoot.cloud.feign
+    implementation "org.springframework.boot:spring-boot-starter-aop"
 
     implementation project(":sample-model")
 

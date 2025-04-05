@@ -4,8 +4,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.bananalaba.springcdtemplate.client.TipsClient;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cloud.client.circuitbreaker.CircuitBreakerFactory;
+import org.bananalaba.springcdtemplate.resilience.Resilient;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -15,22 +14,10 @@ public class TipsService {
 
     @NonNull
     private final TipsClient client;
-    @NonNull
-    @Value("${service.tips.default}")
-    private final String defaultTip;
 
-    @NonNull
-    private final CircuitBreakerFactory<?, ?> circuitBreakerFactory;
-
+    @Resilient(value = "tips-service", fallback = "${service.tips.default}")
     public String getTip() {
-        return circuitBreakerFactory.create("tips-service")
-            .run(
-                client::getTipOfTheDay,
-                e -> {
-                    log.error("failed to call tips-service", e);
-                    return defaultTip;
-                }
-            );
+        return client.getTipOfTheDay();
     }
 
 }
