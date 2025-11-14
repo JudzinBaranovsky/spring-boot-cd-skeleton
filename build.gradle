@@ -78,8 +78,10 @@ subprojects {
         }
     }
 
+    var nvdApiKey = System.getProperty("nvdApiKey", null)
     dependencyCheck {
         failBuildOnCVSS = 10
+        nvd.apiKey = nvdApiKey
     }
 
 }

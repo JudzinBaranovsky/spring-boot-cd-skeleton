@@ -119,7 +119,7 @@ jobs:
         run: ./gradlew spotBugsMain
 
       - name: Scan for vulnerable dependencies
-        run: ./gradlew dependencyCheckAggregate
+        run: ./gradlew dependencyCheckAggregate -DnvdApiKey=${{ secrets.NVD_API_KEY }}
 
       - name: Calculate unit test coverage
         run: ./gradlew pitest
