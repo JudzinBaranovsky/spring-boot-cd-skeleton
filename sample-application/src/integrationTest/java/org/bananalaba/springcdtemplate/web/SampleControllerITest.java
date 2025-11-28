@@ -1,8 +1,9 @@
 package org.bananalaba.springcdtemplate.web;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 import java.util.List;
 import java.util.Map;
 
@@ -12,10 +13,12 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
+import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 
-@SpringBootTest
+@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
 @TestPropertySource(properties = {
     "auth0.resource.issuer = http://localhost:8070/default",
@@ -27,8 +30,8 @@ public class SampleControllerITest {
         System.setProperty("node.ip", "192.168.0.1");
     }
 
-    @Autowired
-    private MockMvc mvc;
+    @LocalServerPort
+    private int port;
 
     @Test
     public void shouldGreet() throws Exception {
@@ -47,13 +50,23 @@ public class SampleControllerITest {
         );
         authServer.enqueueCallback(tokenCallback);
 
-        var token = authServer.issueToken("default", "test_client", tokenCallback).serialize();
+        var client = new TestRestClient("http://localhost:" + port, "http://localhost:8070/default/token", "test-client", "test-secret");
+        var actual = client.getStatus();
 
-        var actual = mvc.perform(get("/api/v1/status").header("Authorization", "Bearer " + token)).andReturn().getResponse();
+        assertThat(actual.getMessage()).isEqualTo("status: up");
 
-        assertThat(actual.getStatus()).isEqualTo(200);
-        assertThat(actual.getContentType()).isEqualTo("application/json");
-        assertThat(actual.getContentAsString()).isEqualTo("{\"message\":\"status: up\",\"nodeIp\":\"192.168.0.1\"}");
+        var tokenRequest = authServer.takeRequest();
+        assertThat(tokenRequest.getPath()).isEqualTo("/default/token");
+
+        var tokenRequestAuth = tokenRequest.getHeader("Authorization");
+        var expectedAuth = getAuthorisationHeader("test-client", "test-secret");
+        assertThat(tokenRequestAuth).isEqualTo(expectedAuth);
+    }
+
+    private String getAuthorisationHeader(final String userName, final String password) {
+        String credentials = userName + ":" + password;
+        String encoded = Base64.getEncoder().encodeToString(credentials.getBytes(StandardCharsets.UTF_8));
+        return "Basic " + encoded;
     }
 
 }

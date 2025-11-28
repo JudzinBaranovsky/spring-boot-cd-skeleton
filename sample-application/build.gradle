@@ -58,6 +58,7 @@ dependencies {
     testImplementation "org.springframework.boot:spring-boot-starter-test"
 
     testImplementation("no.nav.security:mock-oauth2-server:3.0.1")
+    testImplementation 'com.nimbusds:oauth2-oidc-sdk:11.30.1'
 }
 
 tasks.register("itest", Test) {
