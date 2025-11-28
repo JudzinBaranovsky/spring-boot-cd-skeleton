@@ -1,6 +1,12 @@
 spring:
   application:
     name: sample-application
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${auth0.resource.issuer}
+          audiences: ${auth0.resource.audience}
 
 management:
     otlp:
@@ -13,8 +19,3 @@ management:
       web:
         exposure:
           include: health
-
-okta:
-  oauth2:
-    issuer: ${auth0.resource.issuer}
-    audience: ${auth0.resource.audience}

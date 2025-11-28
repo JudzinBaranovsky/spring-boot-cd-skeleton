@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class SampleController {
 
     @NonNull
-    @Value("${node.ip}")
+    @Value("${node.ip:127.0.0.1}")
     private final String nodeIp;
 
     @GetMapping(produces = "application/json")
