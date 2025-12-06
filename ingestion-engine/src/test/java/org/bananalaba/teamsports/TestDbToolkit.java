@@ -35,7 +35,8 @@ public class TestDbToolkit {
                 "awayScore" int,
                 "city" text,
                 "homeTeam" text,
-                "tournament" text
+                "tournament" text,
+                primary key ("date", "awayTeam", "homeTeam")
             );
             """
         );
@@ -44,7 +45,8 @@ public class TestDbToolkit {
             create table if not exists team_metrics (
                 "team" text,
                 "key" text,
-                "value" real
+                "value" real,
+                primary key ("team", "key")
             );
             """
         );

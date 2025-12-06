@@ -10,6 +10,7 @@ import org.bananalaba.springcdtemplate.model.TeamMatch;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 @Component
 @RequiredArgsConstructor
@@ -19,12 +20,15 @@ public class JdbcTeamMatchHistoryStorage implements TeamMatchHistoryStorage {
     private final JdbcOperations jdbc;
 
     @Override
+    @Transactional
     public void save(final @NonNull List<TeamMatch> history) {
         jdbc.batchUpdate("""
             insert into team_match_history
             ("date", "country", "homeScore", "awayTeam", "awayScore", "city", "homeTeam", "tournament")
             values
             (?, ?, ?, ?, ?, ?, ?, ?)
+            on conflict ("date", "awayTeam", "homeTeam") do update
+            set "country" = excluded."country", "homeScore" = excluded."homeScore", "awayScore" = excluded."awayScore", "tournament" = excluded."tournament"
             """,
             new BatchSetter(history)
         );

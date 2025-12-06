@@ -81,6 +81,8 @@ public class PostgreTeamSportsMetricsAggregatorTest extends AbstractTest {
         ingestor.ingest(2000);
 
         aggregator.precomputeMetrics();
+        aggregator.precomputeMetrics(); // to test if upserts work
+
         var actualAggregate = aggregator.aggregateAll();
         var expectedAggregate = new SportsTeamHistoryAggregate(
             new AggregateMetric("Basque Country", 2),

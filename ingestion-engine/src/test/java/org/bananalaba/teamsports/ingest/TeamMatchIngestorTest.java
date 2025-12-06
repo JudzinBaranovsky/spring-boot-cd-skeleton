@@ -80,6 +80,7 @@ public class TeamMatchIngestorTest extends AbstractTest {
             );
 
         ingestor.ingest(2000);
+        ingestor.ingest(2000); // to check if upserts work
 
         var actual = testDbToolkit.findAllTeamMatches();
         var expected = List.of(

@@ -1,11 +1,14 @@
 package org.bananalaba.teamsports.aggregate;
 
+import static org.springframework.transaction.annotation.Propagation.MANDATORY;
+
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.bananalaba.teamsports.aggregate.SportsTeamHistoryAggregate.AggregateMetric;
 import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 @Component
 @RequiredArgsConstructor
@@ -15,6 +18,7 @@ public class PostgreTeamSportsMetricsAggregator implements TeamSportsMetricsAggr
     private JdbcOperations jdbc;
 
     @Override
+    @Transactional
     public void precomputeMetrics() {
         precomputeWinsByTeams();
         precomputeAverageScoreByTeams();
@@ -34,7 +38,9 @@ public class PostgreTeamSportsMetricsAggregator implements TeamSportsMetricsAggr
               count(*) as "value"
             from team_match_history
             where "homeScore" <> "awayScore"
-            group by "team";
+            group by "team"
+            on conflict ("key", "team") do update
+            set "value" = excluded."value";
             """);
     }
 
@@ -50,7 +56,9 @@ public class PostgreTeamSportsMetricsAggregator implements TeamSportsMetricsAggr
                 union all
                 select "awayTeam" as "team", "awayScore" as score from team_match_history
             ) as all_scores
-             group by "team";
+             group by "team"
+             on conflict ("key", "team") do update
+             set "value" = excluded."value";
             """
         );
     }
@@ -67,12 +75,15 @@ public class PostgreTeamSportsMetricsAggregator implements TeamSportsMetricsAggr
                 union all
                 select "awayTeam" as "team", "homeScore" as received from team_match_history
             ) as all_received
-             group by "team";
+             group by "team"
+             on conflict ("key", "team") do update
+             set "value" = excluded."value";
             """
         );
     }
 
     @Override
+    @Transactional
     public SportsTeamHistoryAggregate aggregateAll() {
         var mostWin = jdbc.queryForObject("""
                 select "team", sum("value") as "amount"
