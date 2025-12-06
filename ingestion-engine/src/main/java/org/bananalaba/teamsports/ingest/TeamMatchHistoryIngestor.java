@@ -18,8 +18,7 @@ public class TeamMatchHistoryIngestor {
     public void ingest(final int year) {
         log.info("ingesting history by year {}", year);
 
-        var history = apiClient.getMatchHistory(year);
-        storage.save(history);
+        apiClient.getMatchHistory(year, storage::save);
 
         log.info("ingesting history by year {} - done", year);
     }

@@ -1,11 +1,9 @@
 package org.bananalaba.teamsports.ingest;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
+import java.util.function.Consumer;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -31,30 +29,22 @@ public class SoccerApiClient {
     @Qualifier("dataSourceRestTemplate")
     private final RestTemplate restClient;
     @NonNull
-    private final ObjectMapper jsonMapper;
+    private final MatchHistoryJsonStreamMapper jsonMapper;
 
-    public List<TeamMatch> getMatchHistory(final int year) {
+    public void getMatchHistory(final int year, final Consumer<List<TeamMatch>> batchConsumer) {
         log.info("fetching match history by {} year from {}", year, sourceApiBaseUrl);
 
         var url = sourceApiBaseUrl + "/soccer/" + year;
-        return restClient.execute(url, HttpMethod.GET, __ -> {}, response -> {
+        restClient.execute(url, HttpMethod.GET, __ -> {}, response -> {
             if (response.getStatusCode() == HttpStatus.OK) {
-                var result = mapAsMatches(response.getBody());
-                log.debug("fetched match history by {} year from {}: {}", year, sourceApiBaseUrl, result);
+                var result = jsonMapper.map(response.getBody());
+                result.forEach(batchConsumer);
 
-                return result;
+                return null;
             }
 
             throw new DataIngestionException("unexpected status code: " + response.getStatusCode().value());
         });
-    }
-
-    private List<TeamMatch> mapAsMatches(final InputStream input) {
-        try {
-            return jsonMapper.readValue(input, MATCH_LIST_TYPE);
-        } catch (IOException e) {
-            throw new DataSourceException("failed to parse source data", e);
-        }
     }
 
 }

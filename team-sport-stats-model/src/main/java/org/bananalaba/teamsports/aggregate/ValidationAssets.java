@@ -4,7 +4,7 @@ import java.util.regex.Pattern;
 
 public class ValidationAssets {
 
-    private static final Pattern VALID_NAME_PATTERN = Pattern.compile("([a-zA-Z\\-\\s_0-9]{1,100})|(<no-data>)");
+    private static final Pattern VALID_NAME_PATTERN = Pattern.compile("([\\p{L}\\p{N}\\-\\s_’\\.']{1,100})|(<no-data>)");
 
     private ValidationAssets() {
     }

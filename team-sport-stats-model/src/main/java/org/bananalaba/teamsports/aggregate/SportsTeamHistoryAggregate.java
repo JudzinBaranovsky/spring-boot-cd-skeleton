@@ -39,7 +39,7 @@ public class SportsTeamHistoryAggregate {
 
         @Builder
         public AggregateMetric(@NonNull String team, double amount) {
-            isTrue(isValidName(team), "invalid team name");
+            isTrue(isValidName(team), "invalid team name " + team);
             this.team = team;
 
             this.amount = amount;

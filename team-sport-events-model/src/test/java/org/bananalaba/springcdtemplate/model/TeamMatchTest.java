@@ -30,6 +30,25 @@ public class TeamMatchTest {
     }
 
     @Test
+    void supportsNamesWithAccentedOrUnicodeLetters() {
+        var match = TeamMatch.builder()
+            .homeTeam("Équipe")
+            .awayTeam("München")
+            .date(DATE)
+            .country("Côte d’Ivoire")
+            .city("Lomé")
+            .tournament("Copa São Paulo")
+            .homeScore(3)
+            .awayScore(1)
+            .build();
+        assertThat(match.getHomeTeam()).isEqualTo("Équipe");
+        assertThat(match.getAwayTeam()).isEqualTo("München");
+        assertThat(match.getCountry()).isEqualTo("Côte d’Ivoire");
+        assertThat(match.getCity()).isEqualTo("Lomé");
+        assertThat(match.getTournament()).isEqualTo("Copa São Paulo");
+    }
+
+    @Test
     void homeScoreCannotBeNegative() {
         assertThatThrownBy(() -> TeamMatch.builder()
                 .homeTeam("HomeTeam")

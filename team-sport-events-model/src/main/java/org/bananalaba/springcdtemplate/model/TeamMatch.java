@@ -19,7 +19,7 @@ import lombok.extern.jackson.Jacksonized;
 @ToString
 public class TeamMatch {
 
-    private static final Pattern VALID_NAME_PATTERN = Pattern.compile("[a-zA-Z\\-\\s_0-9]{1,100}");
+    private static final Pattern VALID_NAME_PATTERN = Pattern.compile("[\\p{L}\\p{N}\\-\\s_’\\.']{1,100}");
 
     private final String awayTeam;
     private final String homeTeam;
@@ -47,21 +47,21 @@ public class TeamMatch {
 
         isTrue(!homeTeam.equalsIgnoreCase(awayTeam), "home and away teams cannot be the same");
 
-        isTrue(isValidName(awayTeam), "invalid awayTeam");
+        isTrue(isValidName(awayTeam), "invalid awayTeam " + awayTeam);
         this.awayTeam = awayTeam;
 
-        isTrue(isValidName(homeTeam), "invalid homeTeam");
+        isTrue(isValidName(homeTeam), "invalid homeTeam" + homeTeam);
         this.homeTeam = homeTeam;
 
         this.date = date;
 
-        isTrue(isValidName(country), "invalid country");
+        isTrue(isValidName(country), "invalid country" + country);
         this.country = country;
 
-        isTrue(isValidName(city), "invalid city");
+        isTrue(isValidName(city), "invalid city" + city);
         this.city = city;
 
-        isTrue(isValidName(tournament), "invalid tournament");
+        isTrue(isValidName(tournament), "invalid tournament" + tournament);
         this.tournament = tournament;
 
         this.homeScore = homeScore;
