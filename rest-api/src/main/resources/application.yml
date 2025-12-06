@@ -1,0 +1,27 @@
+spring:
+  application:
+    name: sample-application
+  flyway:
+    locations: classpath:migrations/postgresql
+  datasource:
+    hikari:
+      connection-timeout: ${JDBC_CONNECTION_TIMEOUT_MS:30000}
+      connection-init-sql: >
+        set statement_timeout to ${JDBC_STATEMENT_TIMEOUT_MS:300000};
+        set idle_in_transaction_session_timeout to ${JDBC_TX_IDLE_TIMEOUT_MS:3600000};
+
+management:
+  otlp:
+    tracing:
+      endpoint: http://localhost:4318/v1/traces
+  tracing:
+    sampling:
+      probability: 1.0
+  endpoints:
+    web:
+      exposure:
+        include: health
+
+soccer:
+  api:
+    baseUrl: ${SOCCER_API_BASE_URL}
