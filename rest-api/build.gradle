@@ -52,6 +52,8 @@ dependencies {
     implementation project(":team-sport-stats-model")
     implementation project(":ingestion-engine")
 
+    implementation "org.flywaydb:flyway-database-postgresql"
+
     testImplementation "org.springframework.boot:spring-boot-starter-test"
     testImplementation 'org.springframework.boot:spring-boot-testcontainers'
     testImplementation 'org.testcontainers:junit-jupiter'
