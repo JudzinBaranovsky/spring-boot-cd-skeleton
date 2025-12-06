@@ -21,4 +21,12 @@ public class LocalRunner {
 
     }
 
+    public static class NeonDbRunner {
+
+        public static void main(final String[] arguments) {
+            runWithProfile("neon-db", arguments);
+        }
+
+    }
+
 }

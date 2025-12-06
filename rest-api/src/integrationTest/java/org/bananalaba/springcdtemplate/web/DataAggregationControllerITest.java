@@ -20,7 +20,7 @@ import org.springframework.test.web.servlet.MockMvc;
 @TestPropertySource(properties = {
     "SOCCER_API_BASE_URL=http://localhost:8090"
 })
-public class SampleControllerITest {
+public class DataAggregationControllerITest {
 
     @Autowired
     private MockMvc mvc;
