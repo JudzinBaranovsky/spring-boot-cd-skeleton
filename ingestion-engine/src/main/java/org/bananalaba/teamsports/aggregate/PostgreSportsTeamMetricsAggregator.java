@@ -2,6 +2,7 @@ package org.bananalaba.teamsports.aggregate;
 
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.bananalaba.teamsports.aggregate.SportsTeamHistoryAggregate.AggregateMetric;
 import org.bananalaba.teamsports.ingest.DataSourceException;
 import org.springframework.jdbc.core.JdbcOperations;
@@ -11,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Component
 @RequiredArgsConstructor
+@Slf4j
 public class PostgreSportsTeamMetricsAggregator implements SportsTeamMetricsAggregator {
 
     @NonNull
@@ -25,6 +27,7 @@ public class PostgreSportsTeamMetricsAggregator implements SportsTeamMetricsAggr
     }
 
     private void precomputeWinsByTeams() {
+        log.info("precomputing wins by teams");
         jdbc.execute("""
             insert into team_metrics ("key", "team", "value")
             select
@@ -41,9 +44,12 @@ public class PostgreSportsTeamMetricsAggregator implements SportsTeamMetricsAggr
             on conflict ("key", "team") do update
             set "value" = excluded."value";
             """);
+
+        log.info("precomputing wins by teams - done");
     }
 
     private void precomputeAverageScoreByTeams() {
+        log.info("precomputing average score teams");
         jdbc.execute("""
             insert into team_metrics ("key", "team", "value")
             select
@@ -60,9 +66,11 @@ public class PostgreSportsTeamMetricsAggregator implements SportsTeamMetricsAggr
              set "value" = excluded."value";
             """
         );
+        log.info("precomputing average score teams - done");
     }
 
     private void precomputeReceivedAverageByTeams() {
+        log.info("precomputing received average teams");
         jdbc.execute("""
             insert into team_metrics ("key", "team", "value")
             select
@@ -79,11 +87,13 @@ public class PostgreSportsTeamMetricsAggregator implements SportsTeamMetricsAggr
              set "value" = excluded."value";
             """
         );
+        log.info("precomputing received average teams - done");
     }
 
     @Override
     @Transactional
     public SportsTeamHistoryAggregate aggregateAll() {
+        log.info("aggregating all metrics");
         var mostWin = getMetric("""
                 select "team", sum("value") as "amount"
                     from team_metrics
@@ -115,6 +125,7 @@ public class PostgreSportsTeamMetricsAggregator implements SportsTeamMetricsAggr
             throw new DataSourceException("unexpected aggregation result: got more than one metric value for SQL: " + sql);
         }
 
+        log.debug("aggregate results by sql {}: {}", sql, result);
         return result.isEmpty() ? AggregateMetric.empty() : result.getFirst();
     }
 

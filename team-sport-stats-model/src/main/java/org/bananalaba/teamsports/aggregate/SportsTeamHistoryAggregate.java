@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
+import lombok.ToString;
 import lombok.extern.jackson.Jacksonized;
 
 @Getter
@@ -30,6 +31,7 @@ public class SportsTeamHistoryAggregate {
     @Builder
     @EqualsAndHashCode
     @AllArgsConstructor
+    @ToString
     public static class AggregateMetric {
 
         @NonNull

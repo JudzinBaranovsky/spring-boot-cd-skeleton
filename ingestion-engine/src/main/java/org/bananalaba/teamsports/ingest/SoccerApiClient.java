@@ -8,6 +8,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.bananalaba.springcdtemplate.model.TeamMatch;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,6 +19,7 @@ import org.springframework.web.client.RestTemplate;
 
 @Component
 @RequiredArgsConstructor
+@Slf4j
 public class SoccerApiClient {
 
     private static final TypeReference<List<TeamMatch>> MATCH_LIST_TYPE = new TypeReference<>() {};
@@ -32,10 +34,15 @@ public class SoccerApiClient {
     private final ObjectMapper jsonMapper;
 
     public List<TeamMatch> getMatchHistory(final int year) {
+        log.info("fetching match history by {} year from {}", year, sourceApiBaseUrl);
+
         var url = sourceApiBaseUrl + "/soccer/" + year;
         return restClient.execute(url, HttpMethod.GET, __ -> {}, response -> {
             if (response.getStatusCode() == HttpStatus.OK) {
-                return mapAsMatches(response.getBody());
+                var result = mapAsMatches(response.getBody());
+                log.debug("fetched match history by {} year from {}: {}", year, sourceApiBaseUrl, result);
+
+                return result;
             }
 
             throw new DataIngestionException("unexpected status code: " + response.getStatusCode().value());
