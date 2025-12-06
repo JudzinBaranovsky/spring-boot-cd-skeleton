@@ -1,6 +1,6 @@
 package org.bananalaba.teamsports.aggregate;
 
-public interface TeamSportsMetricsAggregator {
+public interface SportsTeamMetricsAggregator {
 
     void precomputeMetrics();
 

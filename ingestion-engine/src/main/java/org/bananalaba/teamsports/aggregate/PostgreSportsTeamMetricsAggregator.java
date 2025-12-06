@@ -1,7 +1,5 @@
 package org.bananalaba.teamsports.aggregate;
 
-import static org.springframework.transaction.annotation.Propagation.MANDATORY;
-
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.bananalaba.teamsports.aggregate.SportsTeamHistoryAggregate.AggregateMetric;
@@ -12,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Component
 @RequiredArgsConstructor
-public class PostgreTeamSportsMetricsAggregator implements TeamSportsMetricsAggregator {
+public class PostgreSportsTeamMetricsAggregator implements SportsTeamMetricsAggregator {
 
     @NonNull
     private JdbcOperations jdbc;

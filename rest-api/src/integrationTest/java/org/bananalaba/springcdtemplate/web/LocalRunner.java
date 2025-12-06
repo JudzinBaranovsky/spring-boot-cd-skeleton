@@ -1,0 +1,24 @@
+package org.bananalaba.springcdtemplate.web;
+
+import org.bananalaba.springcdtemplate.DataAggregationApplication;
+import org.springframework.boot.SpringApplication;
+
+public class LocalRunner {
+
+    private static void runWithProfile(final String profileName, final String[] arguments) {
+        System.setProperty("management.tracing.enabled", "false");
+        System.setProperty("spring.profiles.active", profileName);
+        SpringApplication.from(DataAggregationApplication::main)
+            .with(LocalRunnerConfig.class)
+            .run(arguments);
+    }
+
+    public static class DockerOnlyRunner {
+
+        public static void main(final String[] arguments) {
+            runWithProfile("docker", arguments);
+        }
+
+    }
+
+}

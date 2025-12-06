@@ -13,14 +13,14 @@ import org.junit.jupiter.api.Test;
 import org.mockserver.client.MockServerClient;
 import org.springframework.beans.factory.annotation.Autowired;
 
-public class PostgreTeamSportsMetricsAggregatorTest extends AbstractTest {
+public class PostgreSportsTeamMetricsAggregatorTest extends AbstractTest {
 
     private final TeamMatchHistoryIngestor ingestor;
-    private final TeamSportsMetricsAggregator aggregator;
+    private final SportsTeamMetricsAggregator aggregator;
     private final TestDbToolkit testDbToolkit;
 
     @Autowired
-    public PostgreTeamSportsMetricsAggregatorTest(TeamMatchHistoryIngestor ingestor, TeamSportsMetricsAggregator aggregator, TestDbToolkit testDbToolkit) {
+    public PostgreSportsTeamMetricsAggregatorTest(TeamMatchHistoryIngestor ingestor, SportsTeamMetricsAggregator aggregator, TestDbToolkit testDbToolkit) {
         this.ingestor = ingestor;
         this.aggregator = aggregator;
         this.testDbToolkit = testDbToolkit;

@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 public class SampleControllerTest {
 
-    private final SampleController controller = new SampleController();
+    private final DataAggregationController controller = new DataAggregationController();
 
     @Test
     public void shouldGreet() {
