@@ -17,5 +17,17 @@ services:
         value: 10000
       - key: node.ip
         value: "127.0.0.1"
+      - key: AUTH0_RESOURCE_AUDIENCE
+        value: "https://ase-data-aggregator.com/api/sports"
+      - key: AUTH0_RESOURCE_ISSUER
+        value: "https://dev-5xk4kg2ztj2u5h3n.us.auth0.com/"
+      - key: JDBC_URL
+        value: "jdbc:postgresql://ep-cool-snow-a5xhkfk4.us-east-2.aws.neon.tech/metrics?sslmode=require&channelBinding=require"
+      - key: SOCCER_API_BASE_URL
+        value: "https://jnfue27hgezyex5k7aniuvzqiu0hshdq.lambda-url.eu-central-1.on.aws"
+      - key: spring.profiles.active
+        value: "prod,s2s-auth"
+      - key: secrets.postgres.path
+        value: "/etc/secrets/creds.env"
     region: frankfurt
 version: "1"

@@ -13,6 +13,11 @@ public class LocalRunner {
             effectiveProfile += ",s2s-auth";
         }
 
+        var secretsPath = System.getenv("secrets.postgres.path");
+        if ((secretsPath != null) && !secretsPath.isBlank()) {
+            effectiveProfile += ",prod";
+        }
+
         System.setProperty("spring.profiles.active", effectiveProfile);
         SpringApplication.from(DataAggregationApplication::main)
             .with(LocalRunnerConfig.class)
