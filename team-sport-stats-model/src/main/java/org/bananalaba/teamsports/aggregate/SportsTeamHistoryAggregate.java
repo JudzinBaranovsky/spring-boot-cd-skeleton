@@ -1,5 +1,8 @@
 package org.bananalaba.teamsports.aggregate;
 
+import static org.apache.commons.lang3.Validate.isTrue;
+import static org.bananalaba.teamsports.aggregate.ValidationAssets.isValidName;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -24,19 +27,23 @@ public class SportsTeamHistoryAggregate {
     @NonNull
     private final AggregateMetric leastReceivedPerGame;
 
-
-
     @Getter
     @Jacksonized
     @Builder
     @EqualsAndHashCode
-    @AllArgsConstructor
     @ToString
     public static class AggregateMetric {
 
-        @NonNull
         private final String team;
         private final double amount;
+
+        @Builder
+        public AggregateMetric(@NonNull String team, double amount) {
+            isTrue(isValidName(team), "invalid team name");
+            this.team = team;
+
+            this.amount = amount;
+        }
 
         public static AggregateMetric empty() {
             return EMPTY_METRIC;
