@@ -11,6 +11,7 @@ dependencies {
     implementation libs.jackson.databind
 
     implementation project(":team-sport-events-model")
+    implementation project(":team-sport-stats-model")
 
     implementation "org.springframework.boot:spring-boot-starter-web"
 

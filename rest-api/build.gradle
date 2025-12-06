@@ -51,7 +51,6 @@ dependencies {
 
     implementation project(":team-sport-stats-model")
     implementation project(":ingestion-engine")
-    implementation project(":aggregation-engine")
 
     testImplementation "org.springframework.boot:spring-boot-starter-test"
 }
