@@ -7,8 +7,6 @@ import static org.mockserver.model.HttpResponse.response;
 import java.time.LocalDate;
 import java.util.List;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.bananalaba.springcdtemplate.model.TeamMatch;
 import org.bananalaba.springcdtemplate.model.TeamMatch.TournamentType;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,39 +15,37 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockserver.client.MockServerClient;
 import org.mockserver.junit.jupiter.MockServerExtension;
 import org.mockserver.junit.jupiter.MockServerSettings;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestPropertySource;
 
 @ExtendWith(MockServerExtension.class)
 @MockServerSettings(ports = {8090})
+@SpringBootTest
+@ContextConfiguration(classes = LocalTestConfig.class)
+@TestPropertySource(properties = {
+    "soccer.api.baseUrl=http://localhost:8090"
+})
 public class TeamMatchIngestorTest {
 
-    private final MockServerClient mockServer;
     private final TeamMatchHistoryIngestor ingestor;
-    private final InMemoryTeamMatchHistoryStorage storage;
+    private final TestDbToolkit testDbToolkit;
 
-    public TeamMatchIngestorTest(final MockServerClient mockServer) {
-        this.mockServer = mockServer;
-
-        storage = new InMemoryTeamMatchHistoryStorage();
-        var apiClient = new SoccerApiClient(
-            "http://localhost:8090",
-            new RestTemplate(),
-            new ObjectMapper().registerModule(new JavaTimeModule())
-        );
-
-        ingestor = new TeamMatchHistoryIngestor(
-            apiClient,
-            storage
-        );
+    @Autowired
+    public TeamMatchIngestorTest(TeamMatchHistoryIngestor ingestor, TestDbToolkit testDbToolkit) {
+        this.ingestor = ingestor;
+        this.testDbToolkit = testDbToolkit;
     }
 
     @BeforeEach
     void reset() {
-        storage.reset();
+        testDbToolkit.createTables();
+        testDbToolkit.clear();
     }
 
     @Test
-    void shouldIngestJsonFromRestApi() {
+    void shouldIngestJsonFromRestApi(final MockServerClient mockServer) {
         mockServer.when(
             request()
                 .withMethod("GET")
@@ -76,7 +72,7 @@ public class TeamMatchIngestorTest {
 
         ingestor.ingest(2000);
 
-        var actual = storage.getState();
+        var actual = testDbToolkit.findAllTeamMatches();
         var expected = List.of(TeamMatch.builder()
             .date(LocalDate.parse("2000-12-29"))
             .country("Spain")

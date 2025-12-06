@@ -9,6 +9,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.bananalaba.springcdtemplate.model.TeamMatch;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
@@ -21,8 +23,10 @@ public class SoccerApiClient {
     private static final TypeReference<List<TeamMatch>> MATCH_LIST_TYPE = new TypeReference<>() {};
 
     @NonNull
+    @Value("${soccer.api.baseUrl}")
     private final String sourceApiBaseUrl;
     @NonNull
+    @Qualifier("dataSourceRestTemplate")
     private final RestTemplate restClient;
     @NonNull
     private final ObjectMapper jsonMapper;
