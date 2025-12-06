@@ -1,5 +1,8 @@
-include("sample-application")
-include 'sample-model'
+include 'rest-api'
+include 'team-sport-events-model'
+include 'team-sport-stats-model'
+include 'ingestion-engine'
+include 'aggregation-engine'
 include 'e2e-tests'
 
 dependencyResolutionManagement {
