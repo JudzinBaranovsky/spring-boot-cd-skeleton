@@ -7,7 +7,13 @@ public class LocalRunner {
 
     private static void runWithProfile(final String profileName, final String[] arguments) {
         System.setProperty("management.tracing.enabled", "false");
-        System.setProperty("spring.profiles.active", profileName);
+
+        var effectiveProfile = profileName;
+        if ("true".equalsIgnoreCase(System.getenv("ENABLE_AUTH"))) {
+            effectiveProfile += ",s2s-auth";
+        }
+
+        System.setProperty("spring.profiles.active", effectiveProfile);
         SpringApplication.from(DataAggregationApplication::main)
             .with(LocalRunnerConfig.class)
             .run(arguments);
