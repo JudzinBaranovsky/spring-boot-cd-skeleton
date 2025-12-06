@@ -1,8 +1,25 @@
+import org.springframework.boot.gradle.plugin.SpringBootPlugin
+
+plugins {
+    id 'io.spring.dependency-management'
+}
+
 dependencies {
     implementation libs.commons.lang
     implementation libs.guava
 
     implementation libs.jackson.databind
 
-    project(":team-sport-events-model")
+    implementation project(":team-sport-events-model")
+
+    implementation "org.springframework.boot:spring-boot-starter-web"
+
+    testImplementation "org.mock-server:mockserver-client-java-no-dependencies:5.14.0"
+    testImplementation "org.mock-server:mockserver-junit-jupiter-no-dependencies:5.14.0"
+}
+
+dependencyManagement {
+    imports {
+        mavenBom SpringBootPlugin.BOM_COORDINATES
+    }
 }

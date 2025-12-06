@@ -10,7 +10,7 @@ import lombok.extern.jackson.Jacksonized;
 @Jacksonized
 @Builder
 @EqualsAndHashCode
-public class SportStatsAggregate {
+public class SportsTeamHistoryAggregate {
 
     @NonNull
     private final AggregateMetric mostWin;
