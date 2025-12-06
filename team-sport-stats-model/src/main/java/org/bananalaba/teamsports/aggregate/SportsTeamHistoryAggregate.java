@@ -14,12 +14,16 @@ import lombok.extern.jackson.Jacksonized;
 @AllArgsConstructor
 public class SportsTeamHistoryAggregate {
 
+    private static final AggregateMetric EMPTY_METRIC = new AggregateMetric("<no-data>", 0);
+
     @NonNull
     private final AggregateMetric mostWin;
     @NonNull
     private final AggregateMetric mostScoredPerGame;
     @NonNull
     private final AggregateMetric leastReceivedPerGame;
+
+
 
     @Getter
     @Jacksonized
@@ -31,6 +35,10 @@ public class SportsTeamHistoryAggregate {
         @NonNull
         private final String team;
         private final double amount;
+
+        public static AggregateMetric empty() {
+            return EMPTY_METRIC;
+        }
 
     }
 

@@ -33,6 +33,19 @@ public class PostgreSportsTeamMetricsAggregatorTest extends AbstractTest {
     }
 
     @Test
+    void shouldReturnEmptyResults() {
+        aggregator.precomputeMetrics();
+
+        var actualAggregate = aggregator.aggregateAll();
+        var expectedAggregate = new SportsTeamHistoryAggregate(
+            new AggregateMetric("<no-data>", 0),
+            new AggregateMetric("<no-data>", 0),
+            new AggregateMetric("<no-data>", 0)
+        );
+        assertThat(actualAggregate).usingRecursiveComparison().isEqualTo(expectedAggregate);
+    }
+
+    @Test
     void shouldIngestJsonFromRestApi(final MockServerClient mockServer) {
         mockServer.when(
                 request()

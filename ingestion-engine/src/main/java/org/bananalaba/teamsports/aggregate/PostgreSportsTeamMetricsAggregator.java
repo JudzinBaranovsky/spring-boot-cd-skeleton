@@ -3,6 +3,7 @@ package org.bananalaba.teamsports.aggregate;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.bananalaba.teamsports.aggregate.SportsTeamHistoryAggregate.AggregateMetric;
+import org.bananalaba.teamsports.ingest.DataSourceException;
 import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
@@ -83,35 +84,38 @@ public class PostgreSportsTeamMetricsAggregator implements SportsTeamMetricsAggr
     @Override
     @Transactional
     public SportsTeamHistoryAggregate aggregateAll() {
-        var mostWin = jdbc.queryForObject("""
+        var mostWin = getMetric("""
                 select "team", sum("value") as "amount"
                     from team_metrics
                     where "key" = 'victoryCount'
                     group by "team"
                     order by "amount" desc limit 1
-                """,
-            new MetricTupleRowMapper()
-        );
-        var mostScoredPerGame = jdbc.queryForObject("""
+                """);
+        var mostScoredPerGame = getMetric("""
                 select "team", sum("value") as "amount"
                     from team_metrics
                     where "key" = 'averageScore'
                     group by "team"
                     order by "amount" desc limit 1
-                """,
-            new MetricTupleRowMapper()
-        );
-        var leastReceivedPerGame = jdbc.queryForObject("""
+                """);
+        var leastReceivedPerGame = getMetric("""
                 select "team", sum("value") as "amount"
                   from team_metrics
                   where "key" = 'averageReceived'
                   group by "team"
                   order by "amount" asc limit 1
-                """,
-            new MetricTupleRowMapper()
-        );
+                """);
 
         return new SportsTeamHistoryAggregate(mostWin, mostScoredPerGame, leastReceivedPerGame);
+    }
+
+    private AggregateMetric getMetric(final String sql) {
+        var result = jdbc.query(sql, new MetricTupleRowMapper());
+        if (result.size() > 1) {
+            throw new DataSourceException("unexpected aggregation result: got more than one metric value for SQL: " + sql);
+        }
+
+        return result.isEmpty() ? AggregateMetric.empty() : result.getFirst();
     }
 
     private static class MetricTupleRowMapper implements RowMapper<AggregateMetric> {

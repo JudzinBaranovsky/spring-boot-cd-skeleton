@@ -22,6 +22,7 @@ public class TestDbToolkit {
 
     public void clear() {
         jdbc.execute("delete from team_match_history");
+        jdbc.execute("delete from team_metrics");
     }
 
     public void createTables() {
