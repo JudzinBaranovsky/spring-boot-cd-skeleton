@@ -1,4 +1,4 @@
-package org.bananalaba.teamsports.ingest;
+package org.bananalaba.teamsports;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -36,6 +36,15 @@ public class TestDbToolkit {
                 "city" text,
                 "homeTeam" text,
                 "tournament" text
+            );
+            """
+        );
+
+        jdbc.execute("""
+            create table if not exists team_metrics (
+                "team" text,
+                "key" text,
+                "value" real
             );
             """
         );

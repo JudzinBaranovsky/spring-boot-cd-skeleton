@@ -1,4 +1,4 @@
-package org.bananalaba.teamsports.ingest;
+package org.bananalaba.teamsports;
 
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.testcontainers.service.connection.ServiceConnection;

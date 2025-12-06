@@ -32,7 +32,6 @@
         <module name="RightCurly"/>
         <module name="TypecastParenPad"/>
         <module name="UnusedLocalVariable"/>
-        <module name="WhitespaceAround"/>
 
         <module name="PackageDeclaration"/>
 

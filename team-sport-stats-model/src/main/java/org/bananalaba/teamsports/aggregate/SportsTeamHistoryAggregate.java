@@ -1,5 +1,6 @@
 package org.bananalaba.teamsports.aggregate;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -10,6 +11,7 @@ import lombok.extern.jackson.Jacksonized;
 @Jacksonized
 @Builder
 @EqualsAndHashCode
+@AllArgsConstructor
 public class SportsTeamHistoryAggregate {
 
     @NonNull
@@ -17,12 +19,13 @@ public class SportsTeamHistoryAggregate {
     @NonNull
     private final AggregateMetric mostScoredPerGame;
     @NonNull
-    private final AggregateMetric lessReceivedPerGame;
+    private final AggregateMetric leastReceivedPerGame;
 
     @Getter
     @Jacksonized
     @Builder
     @EqualsAndHashCode
+    @AllArgsConstructor
     public static class AggregateMetric {
 
         @NonNull

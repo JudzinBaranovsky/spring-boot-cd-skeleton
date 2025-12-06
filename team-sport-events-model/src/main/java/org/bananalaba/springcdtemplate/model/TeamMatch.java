@@ -8,12 +8,14 @@ import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
+import lombok.ToString;
 import lombok.extern.jackson.Jacksonized;
 
 @Getter
 @Jacksonized
 @Builder
 @EqualsAndHashCode
+@ToString
 public class TeamMatch {
 
     private final String awayTeam;
