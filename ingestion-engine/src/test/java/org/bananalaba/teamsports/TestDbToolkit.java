@@ -8,7 +8,6 @@ import java.util.List;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.bananalaba.springcdtemplate.model.TeamMatch;
-import org.bananalaba.springcdtemplate.model.TeamMatch.TournamentType;
 import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
@@ -68,7 +67,7 @@ public class TestDbToolkit {
                 .awayScore(rs.getInt("awayScore"))
                 .city(rs.getString("city"))
                 .homeTeam(rs.getString("homeTeam"))
-                .tournament(TournamentType.valueOf(rs.getString("tournament")))
+                .tournament(rs.getString("tournament"))
                 .build();
         }
 

@@ -8,7 +8,6 @@ import java.time.LocalDate;
 import java.util.List;
 
 import org.bananalaba.springcdtemplate.model.TeamMatch;
-import org.bananalaba.springcdtemplate.model.TeamMatch.TournamentType;
 import org.bananalaba.teamsports.AbstractTest;
 import org.bananalaba.teamsports.TestDbToolkit;
 import org.junit.jupiter.api.BeforeEach;
@@ -92,7 +91,7 @@ public class TeamMatchIngestorTest extends AbstractTest {
                 .awayScore(2)
                 .city("Bilbao")
                 .homeTeam("Basque Country")
-                .tournament(TournamentType.Friendly)
+                .tournament("Friendly")
                 .build(),
             TeamMatch.builder()
                 .date(LocalDate.parse("2000-12-30"))
@@ -102,7 +101,7 @@ public class TeamMatchIngestorTest extends AbstractTest {
                 .awayScore(0)
                 .city("Paris")
                 .homeTeam("TeamB")
-                .tournament(TournamentType.Friendly)
+                .tournament("Friendly")
                 .build(),
             TeamMatch.builder()
                 .date(LocalDate.parse("2001-12-29"))
@@ -112,7 +111,7 @@ public class TeamMatchIngestorTest extends AbstractTest {
                 .awayScore(2)
                 .city("Bilbao")
                 .homeTeam("Basque Country")
-                .tournament(TournamentType.Friendly)
+                .tournament("Friendly")
                 .build()
         );
         assertThat(actual).usingRecursiveFieldByFieldElementComparator().containsExactlyInAnyOrderElementsOf(expected);

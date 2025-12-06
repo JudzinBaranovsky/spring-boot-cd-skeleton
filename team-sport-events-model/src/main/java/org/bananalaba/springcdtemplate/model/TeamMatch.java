@@ -25,7 +25,7 @@ public class TeamMatch {
     private final String country;
     private final String city;
 
-    private final TournamentType tournament;
+    private final String tournament;
 
     private final int homeScore;
     private final int awayScore;
@@ -36,7 +36,7 @@ public class TeamMatch {
                      @NonNull LocalDate date,
                      @NonNull String country,
                      @NonNull String city,
-                     @NonNull TournamentType tournament,
+                     @NonNull String tournament,
                      int homeScore,
                      int awayScore) {
         isTrue(homeScore >= 0, "home score cannot be < 0");
@@ -52,10 +52,6 @@ public class TeamMatch {
         this.tournament = tournament;
         this.homeScore = homeScore;
         this.awayScore = awayScore;
-    }
-
-    public enum TournamentType {
-        Friendly
     }
 
 }

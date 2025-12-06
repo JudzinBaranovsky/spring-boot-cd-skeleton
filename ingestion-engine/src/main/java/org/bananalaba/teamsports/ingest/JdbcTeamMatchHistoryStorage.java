@@ -49,7 +49,7 @@ public class JdbcTeamMatchHistoryStorage implements TeamMatchHistoryStorage {
             ps.setInt(5, item.getAwayScore());
             ps.setString(6, item.getCity());
             ps.setString(7, item.getHomeTeam());
-            ps.setString(8, item.getTournament().name());
+            ps.setString(8, item.getTournament());
         }
 
         @Override
