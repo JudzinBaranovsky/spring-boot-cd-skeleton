@@ -56,6 +56,7 @@ Key points:
 moderate DTO batches, and forward the batches to the SQL DB.
 - Key points in the code are covered with logs for troubleshooting.
 - Both the REST API and SQL integrations are configured with finite timeouts to avoid hanging up in the event of network and other issues.
+- The REST API may be optionally configured to require authorisation with JWT bearer tokens obtained over the OAuth2 protocol (see the details in `Local deployment of the application`).
 
 ## Running locally
 
@@ -70,6 +71,31 @@ moderate DTO batches, and forward the batches to the SQL DB.
       - `logging.file.enabled=false`
       - `SOCCER_API_BASE_URL=https://jnfue27hgezyex5k7aniuvzqiu0hshdq.lambda-url.eu-central-1.on.aws`
 3. Trigger the IDE run configuration above: this will run the application with a minimal setup with a transient Docker container for PostgreSQL.
+
+### Enable authorisation (optional)
+
+The following env variables should be set in the IDE run configuration:
+- `AUTH0_RESOURCE_AUDIENCE=<your-value>`
+- `AUTH0_RESOURCE_ISSUER=<your-value>`
+- `ENABLE_AUTH=true`
+
+Authorisation flow:
+- issue a JWT bearer token with the `AUTH0_RESOURCE_ISSUER` above but **ensure the following**:
+  - the token must have `audience` set to the same as `AUTH0_RESOURCE_AUDIENCE` env variable
+  - the token must have a claim `use:api`
+- supply the token in the `Authorization: Bearer <token>` HTTP header.
+
+How to get a token with Auth0:
+- it's easy to get a free Auth0 account and set up a protected API
+- once you have an account
+  - create an API protected with OAuth2
+  - in the API
+    - add a `use:api` permission
+    - make sure to enable RBAC and "include claims in the token"
+  - create a test application (though, Auth0 usually creates one automatically per API)
+  - make sure the test application uses the "client credentials" flow
+  - give the test application the `use:api` claim on the test API
+  - in the `quickstart` tab, issue a token
 
 ### Local monitoring stack (optional)
 
