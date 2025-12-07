@@ -49,7 +49,7 @@
     2. Run `manage-app.ps1 start`.
     3. Use `http://localhost:8080` to interact with the application.
     4. Use `http://localhost:5601` to search logs in Kibana (authorise as `elastic` with ELASTIC_PASSWORD).
-    5. Use 'http:localhost:16686' to search traces in Jaeger.
+    5. Use `http:localhost:16686` to search traces in Jaeger.
 2. Other commands
     1. `manage-env.ps1 recreate` - delete the application and monitoring containers, and create the monitoring containers from scratch
     2. `manage-env.ps1 destroy` - delete the application and monitoring containers

@@ -6,7 +6,11 @@ import org.springframework.boot.SpringApplication;
 public class LocalRunner {
 
     private static void runWithProfile(final String profileName, final String[] arguments) {
-        System.setProperty("management.tracing.enabled", "false");
+        if ("true".equalsIgnoreCase(System.getenv("ENABLE_TRACING"))) {
+            System.setProperty("management.tracing.enabled", "true");
+        } else {
+            System.setProperty("management.tracing.enabled", "false");
+        }
 
         var effectiveProfile = profileName;
         if ("true".equalsIgnoreCase(System.getenv("ENABLE_AUTH"))) {

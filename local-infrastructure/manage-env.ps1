@@ -10,7 +10,7 @@ if (($action -eq "recreate") -or ($action -eq "destroy"))
 
 if (($action -eq "recreate") -or ($action -eq "setup"))
 {
-    docker compose --project-directory env/docker --env-file env/docker/.env up setup
+    docker compose --project-directory env/docker --env-file env/docker/.env up setup -d
 }
 
 if (($action -eq "recreate") -or ($action -eq "start"))
