@@ -8,6 +8,55 @@
 ## Building
 Build, test, and analyse the code: `./gradlew build`.
 
+## Application components overview
+Modules overview
+- `team-sport-events-model` - a library module containing the data models for the data to be ingested
+- `team-sport-stats-model` - a library module containing the data models for the data aggregations
+- `ingestion-engine` - a library Spring Boot module with the core abstractions for data ingestion and transformation + implementations based on REST API data source and PostgreSQL aggregation storage.
+- `rest-api` - a Spring Boot application that instantiates the `ingestion-engine` and exposes two REST API endpoints:
+  - `POST /api/v1/sports/ingest` - initiate (re)ingestion from two predefined REST API data sources and pre-computation of some aggregations
+  - `GET /api/v1/sports/aggregate` - query the data aggregations on the ingested team match history
+
+Why PostgreSQL?
+- Main rationale is that it's convenient to bring up a local Docker container with this DB. What's more important, NeonDB offers a reasonable free-tier
+for a small PostgreSQL cluster in the cloud with minimal configuration.
+
+Ingestion/aggregation flow:
+```mermaid
+sequenceDiagram
+    participant apiClient
+    participant restController
+    participant ingestionPipeline
+    participant restApiDataSource
+    participant streamingJsonMapper
+    participant sqlDb
+    participant sqlAggregator
+
+    apiClient ->> restController: POST /api/v1/sports/ingest
+    restController ->> ingestionPipeline: trigger
+    ingestionPipeline ->> restApiDataSource: get data for 2000-2001 years
+    restApiDataSource ->> ingestionPipeline: JSON stream
+    ingestionPipeline ->> streamingJsonMapper: parse JSON in batches
+    streamingJsonMapper ->> ingestionPipeline: DTO batches
+    ingestionPipeline ->> sqlDb: store DTO batches
+    ingestionPipeline ->> sqlAggregator: trigger
+    sqlAggregator ->> sqlDb: SQL to materialise per-team metrics in a separate table
+    restController ->> apiClient: 200 OK
+
+    apiClient ->> restController: GET /api/v1/sports/ingest
+    restController ->> sqlAggregator: aggregate metrics SQL
+    sqlAggregator ->> restController: aggregate DTO
+    restController ->> apiClient: aggregateDTO
+```
+
+Key points:
+- The overall dataset may be quite large. So, we separate the ingestion and aggregation processes.
+- Also, we pre-compute some metrics grouped by teams to speed up subsequent analytical queries.
+- The input JSON files may be huge, so we avoid materialising the whole JSON stream in memory. Instead, we parse it using Jackson Streaming API, accumulate
+moderate DTO batches, and forward the batches to the SQL DB.
+- Key points in the code are covered with logs for troubleshooting.
+- Both the REST API and SQL integrations are configured with finite timeouts to avoid hanging up in the event of network and other issues.
+
 ## Running locally
 
 ### Local deployment of the application
@@ -34,8 +83,9 @@ Build, test, and analyse the code: `./gradlew build`.
     BEATS_SYSTEM_PASSWORD=<some password>
     ELASTIC_VERSION=8.7.1
    ```
-    2. Run `local-infrastructure/manage-env.ps1 setup` - this will deploy ElasticSearch 8 + Kibana 8 + Jaeger all-in-one for monitoring.
-    3. Change the env variables for the `DockerOnlyRunner` (see the local deployment steps above).
+    2. Open a terminal/shell in the `local-infrastructure` folder.
+    3. Run `local-infrastructure/manage-env.ps1 setup` - this will deploy ElasticSearch 8 + Kibana 8 + Jaeger all-in-one for monitoring.
+    4. Change the env variables for the `DockerOnlyRunner` (see the local deployment steps above).
       - `logging.file.enabled=true`
       - `ENABLE_TRACING=true`
 1. From the `local-infrastructure` folder
