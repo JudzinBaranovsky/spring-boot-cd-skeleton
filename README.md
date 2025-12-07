@@ -1,38 +1,29 @@
-# Skeleton instantiation steps
-
-1. Folders
-    1. Rename `sample-model` and `sample-application` folders.
-2. Gradle
-    1. Update the group in the root build file.
-    2. Update the model dependency in the application build file.
-3. Code
-    1. Rename the root packages in model and application folders.
-    2. Rename the SampleController and SampleApplication classes and their tests from the application module.
-    3. Rename the SampleDto from the model module.
-    4. Change the `spring.application.name` in the `application.properties`.
-    5. Change the `FileNamePattern` in inside the `RollingFile` appender in the `logback-spring.xml`.
-6. Docker
-    1. Change the `imageName` in the `buildBootImage` task in the application build script.
-    2. Change the service name in the `local-infrastructure/app/docker/docker-compose.yaml`.
-7. GitHub Workflow
-    1. `build.yml`
-        1. Change the `PACKAGE_NAME` parameter everywhere in the script.
-        2. Change the `docker tag` command parameters in the `Docker Build-Tag-Push` step.
-    2. Change the Maven repository name in the application build script in the publishing section.
-
 # How to build and run
 
 ## Prerequisites
 1. Docker daemon and Docker Compose CLI.
-2. K8s (minikube or K8s built into Docker Desktop).
-3. Kubectl.
-4. Helm.
+2. JDK 23 or 24
+3. PowerShell 7.4.13+
 
 ## Building
-1. Build, test, and analyse the code: `gradlew build`.
-2. Build an application image: `gradlew bootBuildImage`.
+Build, test, and analyse the code: `./gradlew build`.
 
 ## Running locally
+
+### Local deployment of the application
+
+1. Build the project with `./gradlew build`.
+2. In your IDE
+    - Locate the `org.bananalaba.springcdtemplate.web.LocalRunner` class (in the `rest-api/src/integrationTest/java` folder).
+    - Create a Java app run configuration based on `DockerOnlyRunner` inside the `LocalRunner`.
+    - Configure some env variables for the run configuration
+      - `ENABLE_AUTH=false`
+      - `logging.file.enabled=false`
+      - `SOCCER_API_BASE_URL=https://jnfue27hgezyex5k7aniuvzqiu0hshdq.lambda-url.eu-central-1.on.aws`
+3. Trigger the IDE run configuration above: this will run the application with a minimal setup with a transient Docker container for PostgreSQL.
+
+### Local monitoring stack (optional)
+
 0. **One-time setup**
     1. Create a `local-infrastructure/env/docker/.env` file with the following properties:
    ```
@@ -44,6 +35,9 @@
     ELASTIC_VERSION=8.7.1
    ```
     2. Run `local-infrastructure/manage-env.ps1 setup` - this will deploy ElasticSearch 8 + Kibana 8 + Jaeger all-in-one for monitoring.
+    3. Change the env variables for the `DockerOnlyRunner` (see the local deployment steps above).
+      - `logging.file.enabled=true`
+      - `ENABLE_TRACING=true`
 1. From the `local-infrastructure` folder
     1. Run `manage-env.ps1 start`.
     2. Run `manage-app.ps1 start`.
@@ -56,7 +50,3 @@
     3. `manage-env.ps1 stop` - stop the application and monitoring containers
     4. `manage-app.ps1 stop` - stop the application container
     5. `manage-app.ps1 destroy` - stop and remove the application container
-
-## Local E2E
-1. Run locally (see above).
-2. Run the tests: `gradlew :e2e-tests:acceptanceTest`
