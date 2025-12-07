@@ -1,4 +1,4 @@
-package org.bananalaba.springcdtemplate.model;
+package org.bananalaba.springcdtemplate.dto;
 
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -12,11 +12,17 @@ import lombok.extern.jackson.Jacksonized;
 @Jacksonized
 @Builder
 @EqualsAndHashCode
-public class SampleDto {
+public class FileTransformationStatusDto {
 
     @NonNull
-    private final String message;
+    private final String taskId;
     @NonNull
-    private final String nodeIp;
+    private final StatusCode status;
+
+    public enum StatusCode {
+        IN_PROGRESS,
+        COMPLETED,
+        FAILED
+    }
 
 }

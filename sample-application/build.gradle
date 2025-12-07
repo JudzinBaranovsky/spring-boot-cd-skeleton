@@ -43,13 +43,21 @@ dependencies {
     implementation "org.springframework.boot:spring-boot-starter-actuator"
     implementation "org.springframework.boot:spring-boot-starter-aop"
 
-    implementation "io.micrometer:micrometer-tracing"
-    implementation "io.micrometer:micrometer-tracing-bridge-otel"
-    implementation "io.opentelemetry:opentelemetry-exporter-otlp"
+    implementation "io.micrometer:micrometer-tracing-bridge-brave"
 
     implementation "org.codehaus.janino:janino:3.1.8"
 
     implementation project(":sample-model")
+
+    integrationTestImplementation 'org.springframework.boot:spring-boot-testcontainers'
+    integrationTestImplementation 'org.testcontainers:junit-jupiter'
+
+    implementation "org.springframework.kafka:spring-kafka"
+    integrationTestImplementation "org.testcontainers:kafka"
+
+    implementation "org.springframework.amqp:spring-amqp"
+    implementation "org.springframework.amqp:spring-rabbit"
+    integrationTestImplementation "org.testcontainers:rabbitmq"
 
     testImplementation "org.springframework.boot:spring-boot-starter-test"
 }
