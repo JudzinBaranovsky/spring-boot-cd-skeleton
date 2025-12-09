@@ -2,7 +2,7 @@
 *.iml
 
 .gradle/
-*/build/
+**/build/
 */out/
 /**/logs/
 local-infrastructure/env/docker/.env
@@ -13,3 +13,5 @@ gradle-app.setting
 /local-infrastructure/**/generated/
 /local-infrastructure/secrets.properties
 /local-infrastructure/app/secrets/
+
+**/*.env
